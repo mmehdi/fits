@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Your FITS Query Result</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="${name}">
+        </p>
+        <p>
+            You submitted a query on
+            <span th:text="${#dates.format(sentDate)}">28-12-2012</span>
+        </p>
+        <p>Here is the link to the query result:</p>
+     
+        
+        
+        <a href="" th:href="${link}" ><label th:text="${link}" >
+        </label></a>
+        
+        <p style="font-size: 90%">Please note that the link will expire in 24 hours.</p>
+        <p>
+            Regards, <br />
+            &emsp; <em></em>
+        </p>
+    </body>
+</html>

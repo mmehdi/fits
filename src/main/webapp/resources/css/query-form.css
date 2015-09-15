@@ -1,0 +1,66 @@
+body {
+			font-family: Lucida Grande, sans-serif;
+			font-size: .75em;
+			margin: 1em auto;
+			width: 763px;
+		}
+		#navigation ul li {	padding: 5px;}
+		#quote span {	margin: 5px 0px 5px 5px; }
+		span.error {	color: #D8000C;}
+		span.compulsory {color: #D8000C; font-size:10px; margin-left:2px;}
+		h2 { color: #2567ee; } 
+		div.prefer_img {	position: relative; width: 80px; }
+		div.prefer_img p.up{	margin:0 0 -4 0; }
+		div.prefer_img p.down{	margin:-12 0 0 0; }
+		div.prefer_img img{	margin:0px; }
+		div .wrapper {
+			margin-left:0px;
+			height: 160px;
+			margin-bottom:12px;
+		}
+		div .left{
+			float:left;
+			width:280px;
+		}
+		div .right{
+			padding-left:5px;
+			padding-top:5px;
+			float:left;
+		}
+		.ui-datepicker-trigger img, #datepicker, #timepicker, #datepicker_rtn, #timepicker_rtn{
+		    display: inline-block;
+		    vertical-align: top;
+		}
+		#sortable { list-style-type: none; margin: 5 0 0 3; padding: 0; width: 100%; }
+		#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+		#sortable li span { position: absolute; margin-left: -1.3em; }
+		#sortable2 { list-style-type: none; margin: 5 0 0 3; padding: 0; width: 100%; }
+		#sortable2 li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+		#sortable2 li span { position: absolute; margin-left: -1.3em; }
+		.form-group { display: inline;}
+		.title-group select{margin-top: 2px;}
+		.name-group input{width:35%;}
+		.form-group label{
+		 	text-align: left;
+    		clear: both;
+    		float:left;
+    		margin-right:15px;
+    		width: 100px;
+    	}
+    	.form-group input{width: 70%;}
+    	.extra label{width: 140px;}
+    	.extra input{width: 458px;}
+    	div.sub-title {margin-top: 10px;margin-bottom: 10px;}
+    	.sub-title label{font-size: 16px;}
+    	.checkbox input{
+    		text-align: left;
+    		margin-right:15px;
+    		vertical-align: middle;
+    	}
+    	.checkbox p{display:inline;vertical-align: middle;}
+    	.journey-group {margin-left: 5px;}
+    	.journey-title label{font-size: 12px;}
+    	.datepicker {padding: 0px;}
+    	.hidden{
+    		display: none;
+    	}

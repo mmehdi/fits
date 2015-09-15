@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Review/update service info</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+       
+        This mail is coming to you because we think that one of your transport services registered 
+        with the THInK travel info service is due for update/review. If any aspect of the service(<p th:text="${name}">
+        </p>) was changed since <span th:text="${#dates.format(last_update)}">28-12-2012</span>, and you would like to update this info on the THInk 
+        online travel info system, please click the following link <a href="" th:href="${link1}" ><label th:text="${link1}" >
+        </label></a>, otherwise, please click the following link <a href="" th:href="${link2}" ><label th:text="${link2}" >
+        </label></a>
+        
+    </body>
+</html>

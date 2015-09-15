@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<!--  property name="protocol" value="${mail.server.protocol}" /-->
+		<property name="username" value="info.fitske" />
+		<property name="password" value="dotrural2011" />
+		<property name="javaMailProperties">
+	   	<props>
+       	      <prop key="mail.smtp.auth">true</prop>
+       	      <prop key="mail.smtp.starttls.enable">true</prop>
+       	</props>
+	</property>
+	</bean>
+
+	<!-- this is a template message that we can pre-load with default state -->
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+	    <property name="from" value="fiteke.dotrural@gmail.com"/>
+	    <property name="subject" value="Your order"/>
+	</bean>
+
+	<bean id="orderManager" class="uk.ac.abdn.fits.support.javamail.SimpleOrderManager">
+	    <property name="mailSender" ref="mailSender"/>
+	    <property name="templateMessage" ref="templateMessage"/>
+	</bean>
+	
+	<bean id="mimeMessageOrderManager" class="uk.ac.abdn.fits.support.javamail.MimeMessageOrderManager">
+	    <property name="mailSender" ref="mailSender"/>
+	</bean>
+    
+    
+	<!--  bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  <property name="host" value="${mail.server.host}" />
+	  <property name="port" value="${mail.server.port}" />
+	  <property name="protocol" value="${mail.server.protocol}" />
+	  <property name="username" value="${mail.server.username}" />
+	  <property name="password" value="${mail.server.password}" />
+	  <property name="javaMailProperties">
+	    <util:properties location="classpath:javamail.properties" />
+	  </property>
+	</bean-->
+	
+	
+	<!-- THYMELEAF: Template Resolver for email templates -->
+	<bean id="emailTemplateResolver" class="org.thymeleaf.templateresolver.ClassLoaderTemplateResolver">
+	  <property name="prefix" value="mail/" />
+	  <property name="templateMode" value="HTML5" />
+	  <property name="characterEncoding" value="UTF-8" />
+	  <property name="order" value="1" />
+	</bean>
+	 
+	<!-- THYMELEAF: Template Resolver for webapp pages   -->
+	<!-- (we would not need this if our app was not web) -->
+	<bean id="webTemplateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+	  <property name="prefix" value="/WEB-INF/templates/" />
+	  <property name="templateMode" value="HTML5" />
+	  <property name="characterEncoding" value="UTF-8" />
+	  <property name="order" value="2" />
+	</bean>
+	 
+	<!-- THYMELEAF: Template Engine (Spring3-specific version) -->
+	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+	  <property name="templateResolvers">
+	    <set>
+	      <ref bean="emailTemplateResolver" />
+	      <ref bean="webTemplateResolver" />
+	    </set>
+	  </property>
+	</bean>
+	 
+	<!-- THYMELEAF: View Resolver - implementation of Spring's ViewResolver interface -->
+	<!-- (we would not need this if our app was not web)                              -->
+	<bean id="viewResolver" class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+	  <property name="templateEngine" ref="templateEngine" />
+	  <property name="characterEncoding" value="UTF-8" />
+	</bean>
+	
+</beans>

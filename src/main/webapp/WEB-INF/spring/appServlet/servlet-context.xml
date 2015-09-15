@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	<resources mapping="/files/**" location="/WEB-INF/files/match_outputs/" />
+	
+	
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	<!-- Only needed because we install custom converters to support the examples in the org.springframewok.samples.mvc.convert package -->
+	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<beans:property name="formatters">
+            <beans:bean class="uk.ac.abdn.fits.mvc.convert.MaskFormatAnnotationFormatterFactory" />
+		</beans:property>
+	</beans:bean>
+	
+	<!-- 
+	<beans:bean id="runMeTask" class="uk.ac.abdn.fits.support.thymeleaf.springmail.service.FileClearningTask" />
+	
+	<beans:bean id="schedulerTask" 
+	  class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+		<beans:property name="targetObject" ref="runMeTask" />
+		<beans:property name="targetMethod" value="clear" />
+	</beans:bean>
+
+	<beans:bean id="timerTask"
+		class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<beans:property name="timerTask" ref="schedulerTask" />
+		<beans:property name="delay" value="1000" />
+		<beans:property name="period" value="6000" />
+	</beans:bean>
+	 -->
+	 
+	<beans:bean id="demoTimerTask" class="uk.ac.abdn.fits.support.thymeleaf.springmail.service.FileClearningTask"></beans:bean>
+ 
+    <beans:bean id="scheduledTimerTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <!-- run every 3 secs = 3000 -->
+        <beans:property name="period" value="3000000000"></beans:property>
+        <beans:property name="timerTask" ref="demoTimerTask"></beans:property>
+    </beans:bean>
+    
+    
+    <beans:bean id="reminderTimerTask" class="uk.ac.abdn.fits.support.thymeleaf.springmail.service.ReminderEmailService"></beans:bean>
+ 
+    <beans:bean id="scheduledReminderTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <!-- run every 3 secs -->
+        <beans:property name="period" value="10000000000000"></beans:property> <!-- 1000*3600*24 -->
+        <beans:property name="timerTask" ref="reminderTimerTask"></beans:property>
+    </beans:bean>
+    
+    
+    
+    <beans:bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <beans:property name="scheduledTimerTasks">
+            <beans:list>
+                <beans:ref local="scheduledTimerTask"></beans:ref>
+                <beans:ref local="scheduledReminderTask"></beans:ref>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+	 
+	
+	
+	<!-- Imports user-defined @Controller beans that process client requests -->
+	<!--  beans:import resource="controllers.xml" /-->
+	<context:component-scan base-package="uk.ac.abdn" />
+	
+	<!-- Maps '/' requests to the 'home' view -->
+	<view-controller path="/" view-name="home"/>
+	<!-- <context:component-scan base-package="org.springframework.samples.mvc" />  -->
+	<context:component-scan base-package="uk.ac.abdn" />
+	
+	
+	
+	
+</beans:beans>

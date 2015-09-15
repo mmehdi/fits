@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//src/main/java/uk/ac/abdn/fits/business/bc/BusinessOperaotor.java=UTF-8
+encoding//src/main/java/uk/ac/abdn/fits/business/client/option/TOption.java=UTF-8
+encoding//src/main/java/uk/ac/abdn/fits/mvc/control/operator/OperatorDataInputController.java=UTF-8
+encoding//src/main/java/uk/ac/abdn/fits/mvc/control/operator/_4TupleEntry.java=UTF-8
+encoding//src/main/java/uk/ac/abdn/fits/query/operator/BABSCarService.java=UTF-8
+encoding//src/main/java/uk/ac/abdn/fits/query/operator/TaxiOperator.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/query-fts.jsp=UTF-8
