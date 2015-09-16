@@ -33,9 +33,7 @@ import uk.ac.abdn.fits.hibernate.model.Role;
 import uk.ac.abdn.fits.hibernate.model.User;
 import uk.ac.abdn.fits.hibernate.model.UserRole;
 import uk.ac.abdn.fits.hibernate.user.UserManager;
-import uk.ac.abdn.fits.mvc.control.admin.form.edit.user.Employee;
-import uk.ac.abdn.fits.mvc.control.admin.form.edit.user.HttpServletRequest;
-import uk.ac.abdn.fits.mvc.control.admin.form.edit.user.HttpServletResponse;
+import uk.ac.abdn.fits.mvc.control.form.register.RegisterFormBean;
 import uk.ac.abdn.fits.mvc.extensions.ajax.AjaxUtils;
 
 
@@ -47,11 +45,6 @@ public class AdminController {
 	// Invoked on every request
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
-	@ModelAttribute
-	public void ajaxAttribute(WebRequest request, Model model) {
-		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(request));
-	}
 
 	// Invoked initially to create the "form" attribute
 	// Once created the "form" attribute comes from the HTTP session (see @SessionAttributes)
@@ -67,107 +60,53 @@ public class AdminController {
 		UserManager userManager = (UserManager) ctx.getBean("userManagerImpl");
 		
 		List<User> users = userManager.getUsers();
-
-		System.out.println("printing user");
-
-		for(User u: users){
-			//System.out.println(u.getRole().getRole());
-		}
-		//model.addAttribute(arg0)
 		model.addAttribute("Users", users);
+		
 		return new ModelAndView("admin");
 		
 	}
 
-	@RequestMapping("/edit_user")
-	public class EmployeeController {
-		@RequestMapping(method = RequestMethod.POST)
-		ModelAndView add(HttpServletRequest request, HttpServletResponse response)
-				throws Exception {
-			Employee employee = new Employee();
-			
-			String firstName = request.getParameter("firstName");
-			String lastName = request.getParameter("lastName");
-			String email = request.getParameter("email");
-			
-			employee.setEmail(email);
-			employee.setFirstName(firstName);
-			employee.setLastName(lastName);
-
-			return new ModelAndView("employeesuccess", "employee",employee);
-
-		}
 		
-	/*@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(@Valid RegisterFormBean registerFormBean, BindingResult result, 
-								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
+	@RequestMapping(method=RequestMethod.POST)
+	public String processSubmit(@Valid EditUserFormBean editUserFormBean, BindingResult result, 
 								Model model, RedirectAttributes redirectAttrs) {
 		
 		if (result.hasErrors()) {
 			return null;
 		}
-		// Typically you would save to a db and clear the "form" attribute from the session 
-		// via SessionStatus.setCompleted(). For the demo we leave it in the session.
-		String message = "Form submitted successfully. " ;
+
+		List <String> messages = new ArrayList<String>() ;
 		
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		UserManager userManager = (UserManager) ctx.getBean("userManagerImpl");
 		
-		User user = new User();
-		user.setUsername(registerFormBean.getUserName());
-		user.setFname(registerFormBean.getFname());
-		user.setLname(registerFormBean.getLname());
-		user.setEmail(registerFormBean.getEmail());
-		user.setPhone_number(registerFormBean.getPhone());
-		if(registerFormBean.getPassword() !=null && registerFormBean.getPasswordRepeat() != null
-				&& registerFormBean.getPassword().equals(registerFormBean.getPasswordRepeat())){
-			user.setPassword(registerFormBean.getPassword());
-		}else{
-			message = "Register Error: the two passwords are not the same.";
-			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/register";	
-		}
-		user.setEnabled(true);
-//		Role role = new Role();
-//		role.setId(3);
-//		role.setRole("user");
-//		user.setRole(role);
-		userManager.insertUser(user);
-		System.out.println("user "+ user.getUsername() +" is created.");
-		user = userManager.getUser(registerFormBean.getUserName());
-		UserRole userRole = new UserRole();
-		userRole.setUser_id(user.getId());
-		userRole.setRole_id(""+3);
-		userManager.insertUserRole(userRole);
-		System.out.println("user role is created.");
+		User user = userManager.getUserByIdString(editUserFormBean.getUser_id());
 		
+		if(userManager.getUsersByUsername(editUserFormBean.getUserName()).size()>1)
+			messages.add("Username already in use");
+		if(userManager.getUsersByEmail(editUserFormBean.getEmail()).size()>1)
+			messages.add("Email already in use");
+		if(editUserFormBean.getUserName()==null)
+			messages.add("Username cannot be blank");
+		if(editUserFormBean.getPassword()==null)
+			messages.add("Password cannot be blank");
 		
-		
-		// Success response handling
-		if (ajaxRequest) {
-			// prepare model for rendering success message in this request
-			model.addAttribute("message", message);
-			return null;
-		} else {
+		if(messages.size()==0){
+			user.setUsername(editUserFormBean.getUserName());
+			user.setFname(editUserFormBean.getFname());
+			user.setLname(editUserFormBean.getLname());
+			user.setEmail(editUserFormBean.getEmail());
+			user.setPhone_number(editUserFormBean.getPhone());
 			
-			if(user.getFname()!=null && user.getLname()!=null){
-				redirectAttrs.addFlashAttribute("name", user.getFname()+" "+ user.getLname());
-			}else if(user.getFname()!=null){
-				redirectAttrs.addFlashAttribute("name", user.getFname());
-			}else{
-				redirectAttrs.addFlashAttribute("name", "Customer");
-			}
-			redirectAttrs.addFlashAttribute("suc", "suc");
-			redirectAttrs.addFlashAttribute("username", user.getUsername());
-//			model.addAttribute("suc", "suc");
-//			model.addAttribute("username", user.getUsername());
-			return "redirect:/register";		
-			
-			// store a success message for rendering on the next request after redirect
-			// redirect back to the form to render the success message along with newly bound values
-//			redirectAttrs.addFlashAttribute("message", message);
-//			return "redirect:/register";			
+			redirectAttrs.addFlashAttribute("success", "yes");
 		}
-	}*/
+		else
+			redirectAttrs.addFlashAttribute("success", "no");
+	
+		redirectAttrs.addFlashAttribute("userName", editUserFormBean.getUserName());
+		redirectAttrs.addFlashAttribute("messages", messages);
+	
+		return "redirect:/admin";	
+	}
 	
 }

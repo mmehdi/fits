@@ -1,4 +1,7 @@
 package uk.ac.abdn.fits.hibernate.dao.impl;
+/**
+ *  @author Mujtaba Mehdi, University of Aberdeen. Updated 20/09/2015
+ */
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,13 @@ public class UserRoleDAOImpl implements UserRoleDAO{
 	@Override
 	public void insertUserRole(UserRole userRole) {
 		 sessionFactory.getCurrentSession().save(userRole);
+	}
+
+
+	@Override
+	public void updateUserRole(UserRole userRole) {
+		 sessionFactory.getCurrentSession().update(userRole);
+		
 	}
 
 }

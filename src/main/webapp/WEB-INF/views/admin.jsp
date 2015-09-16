@@ -47,6 +47,22 @@
 
 
 					<div class="col-md-10">
+					
+					<c:if test="${success != null}">
+					    <c:when test="${success}.equals('yes')">
+					    	<div class="alert alert-success">
+					    		<strong>Success!</strong> Indicates a successful or positive action.
+					    	</div>
+					    </c:when>
+
+					    <c:when test="${success}.equals('no')">
+					    	<c:forEach items="${messages}" var="message" varStatus="loop">
+					    		<div class="alert alert-danger"> <strong>Error!</strong> ${user}
+					    		</div>
+					    	</c:forEach>
+					    </c:when>
+				</c:if>
+					    
 						<h4>Manage Users</h4>
 						<div class="table-responsive">
 
@@ -67,7 +83,7 @@
 								<tbody>
 									<c:forEach items="${Users}" var="user" varStatus="loop">
 
-										<tr data-toggle="modal" data-id="${user.id}" data-email="${user.email}" data-fname="${user.fname}" data-lname="${user.lname}" data-phone="${user.phone_number}" data-password="${user.password}">
+										<tr data-toggle="modal" data-username="${user.username}" data-id="${user.id}" data-email="${user.email}" data-fname="${user.fname}" data-lname="${user.lname}" data-phone="${user.phone_number}" data-password="${user.password}">
 											<td>${loop.index+1}</td>
 											<td>${user.username}</td>
 											<td>${user.fname}</td>
@@ -75,13 +91,15 @@
 											<td>${user.email}</td>
 											<td>${user.phone_number}</td>
 											<td>${user.role.role}</td>
-											<td><p data-placement="top" data-toggle="tooltip"
+											<td><a href="edit_user/${user.id}" class="btn btn-primary btn-sm">Edit</a>
+												<!--  
+												<p data-placement="top" data-toggle="tooltip"
 													title="Edit">
-													<button class="btn btn-primary btn-xs" data-title="Edit"
+												 <button class="btn btn-primary btn-xs" data-title="Edit"
 														data-toggle="modal" data-target="#userEditModal" 
 														data-backdrop="true" data-keyboard="true">
 														<span class="glyphicon glyphicon-pencil"></span>
-													</button>
+													</button>-->
 												</p></td>
 										</tr>
 									</c:forEach>
@@ -98,7 +116,7 @@
 
 
 
-				<div class="modal fade" id="userEditModal" tabindex="-1"
+				<div class="modal fade" id="userEditModal1" tabindex="-1"
 					role="dialog" aria-labelledby="userEditModal" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -111,10 +129,13 @@
 									details</h4>
 							</div>
 							<div class="modal-body">
-
 								<fieldset>
-									<form class="form-horizontal" method="post" action=''
-										name="userEditForm" id="userEditForm">
+								
+									<form class="form-horizontal" method="post" modelAttribute="editUserFormBean" name="userEditForm" id="userEditForm">
+									
+									<input type="hidden" name="user_id" id="user_id"
+													value="">
+													
 										<div class="control-group">
 											<label class="control-label">First Name</label>
 											<div class="controls">
@@ -130,10 +151,17 @@
 											</div>
 										</div>
 										<div class="control-group">
+											<label class="control-label">Username</label>
+											<div class="controls">
+												<input type="text" name="username" id="username" title="Username"
+													value="" readonly>
+											</div>
+										</div>
+										<div class="control-group">
 											<label class="control-label">Email</label>
 											<div class="controls">
 												<input type="text" name="email" id="email" title="Email"
-													value="" required>
+													value="" readonly>
 											</div>
 										</div>
 										<div class="control-group">
@@ -217,7 +245,11 @@
 				$('#userEditModal').modal({
 					show : false,
 
-				}).on('show', function() { //subscribe to show method
+				}).on('show', function() {
+							var userID = $(event.target).closest(
+							'tr').data('id');
+							var username = $(event.target).closest(
+							'tr').data('username'); 
 							var firstNameFromRow = $(event.target).closest(
 									'tr').data('fname'); 
 							var lastNameFromRow = $(event.target).closest(
@@ -228,7 +260,9 @@
 							'tr').data('email'); 
 							var password = $(event.target).closest(
 							'tr').data('password'); 
-							
+								
+								$('#user_id').val(userID);
+								$('#username').val(username);
 								$('#firstName').val(firstNameFromRow);
 								$('#lastName').val(lastNameFromRow);
 								$('#phone').val(phone);
