@@ -16,12 +16,19 @@
 <link href="<c:url value="/resources/css/screen.css" />" type="text/css"
 	rel="stylesheet" />
 
-<link href="<c:url value="/resources/css/bootstrap.css" />"
+<link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	type="text/css" rel="stylesheet" />
+<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />"
+	type="text/css" rel="stylesheet" />
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+
+	
 </head>
 <body>
 	<div id="layout">
@@ -67,7 +74,7 @@
 						<div class="table-responsive">
 
 
-							<table id="usersTable" class="table table-bordred table-striped">
+							<table id="usersTable" class="display" cellspacing="0" width="100%">
 
 								<thead>
 									<th>No</th>
@@ -109,7 +116,11 @@
 			</div>
 		</div>
 		<div id="footer">
-		
+		<script type="text/javascript">
+		$(document).ready(function() {
+			    $('#usersTable	').DataTable();
+			} );
+		</script>
 			<%@ include file="footer.jsp"%>
 		</div>
 	</div>

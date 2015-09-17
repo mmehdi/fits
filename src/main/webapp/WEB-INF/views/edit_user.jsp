@@ -50,12 +50,12 @@
 					
 					<c:if test="${success != null}">
 						<c:choose>
-                			 <c:when test="${success}.equals('yes')">
+                			 <c:when test="${success eq true}">
 						    	<div class="alert alert-success">
 						    		<strong>Success!</strong> User successfully updated.
 						    	</div>                    		
 						    </c:when>
-                			 <c:when test="${success}.equals('no')">
+                			 <c:when test="${success eq false}">						    		
 						    	<c:forEach items="${messages}" var="message" varStatus="loop">
 						    		<div class="alert alert-danger"> <strong>Error!</strong> ${message}
 						    		</div>
@@ -82,7 +82,7 @@
 											<label class="control-label">Email</label>
 											<div class="controls">
 												<input type="text" name="email" id="email" title="Email"
-													value="${email}">
+													value="${email}" readyonly>
 											</div>
 										</div>
 															
@@ -90,7 +90,7 @@
 											<label class="control-label">First Name</label>
 											<div class="controls">
 												<input type="text" name="fname" id="fname"
-													title="First Name" value="${fname}" required>
+													title="First Name" value="${fname}">
 											</div>
 										</div>
 										<div class="control-group">

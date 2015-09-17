@@ -34,7 +34,7 @@ import uk.ac.abdn.fits.mvc.extensions.ajax.AjaxUtils;
 public class EditUserFormController {
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView form(@PathVariable(value="user_id") String user_id, Locale locale, Model model, HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView form(@PathVariable(value="user_id") String user_id, Locale locale, Model model) {
 		
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		UserManager userManager = (UserManager) ctx.getBean("userManagerImpl");		
@@ -82,8 +82,12 @@ public class EditUserFormController {
 			messages.add("Email already in use");
 		if(editUserFormBean.getUserName()==null)
 			messages.add("Username cannot be blank");
-		if(editUserFormBean.getPassword()==null)
+		if(editUserFormBean.getPassword()==null || editUserFormBean.getPassword().length()<=0)
 			messages.add("Password cannot be blank");
+		if(editUserFormBean.getFname()==null || editUserFormBean.getFname().length()<=0)
+			messages.add("First name cannot be blank");
+		if(editUserFormBean.getLname()==null || editUserFormBean.getLname().length()<=0)
+			messages.add("Last name cannot be blank");
 		
 		if(messages.size()==0){
 			user.setUsername(editUserFormBean.getUserName());
@@ -93,21 +97,15 @@ public class EditUserFormController {
 			user.setPhone_number(editUserFormBean.getPhone());
 			
 			userManager.updateUser(user);
-			redirectAttrs.addFlashAttribute("success", "yes");
-			model.addAttribute("success", "yes");
+			redirectAttrs.addFlashAttribute("success", true);
 		}
 		else{
-			redirectAttrs.addFlashAttribute("success", "no");
-			model.addAttribute("success", "no");
-
+			redirectAttrs.addFlashAttribute("success", false);
 		}
 	
 		redirectAttrs.addFlashAttribute("userName", editUserFormBean.getUserName());
 		redirectAttrs.addFlashAttribute("messages", messages);
 	
-		model.addAttribute("userName", editUserFormBean.getUserName());
-		model.addAttribute("messages", messages);
-
 		return "redirect:/edit_user/"+user.getId();		
 
 	}
