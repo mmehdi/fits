@@ -95,7 +95,8 @@ public class EditUserFormController {
 			user.setLname(editUserFormBean.getLname());
 			user.setEmail(editUserFormBean.getEmail());
 			user.setPhone_number(editUserFormBean.getPhone());
-			
+			user.setPassword(editUserFormBean.getPassword());
+
 			userManager.updateUser(user);
 			redirectAttrs.addFlashAttribute("success", true);
 		}

@@ -11,13 +11,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="cs" />
 <title>Admin Dashboard</title>
-<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"
-	type="text/css" />
-<link href="<c:url value="/resources/css/screen.css" />" type="text/css"
-	rel="stylesheet" />
 
-<link href="<c:url value="/resources/css/bootstrap.min.css" />"
-	type="text/css" rel="stylesheet" />
 <link href="<c:url value="/resources/css/jquery.dataTables.min.css" />"
 	type="text/css" rel="stylesheet" />
 
@@ -98,7 +92,7 @@
 											<td>${user.email}</td>
 											<td>${user.phone_number}</td>
 											<td>${user.role.role}</td>
-											<td><a href="edit_user/${user.id}" class="btn btn-primary btn-sm">Edit</a>
+											<td><a href="edit_user/${user.id}" class="btn btn-default btn-xs">Edit</a>
 												</p></td>
 										</tr>
 									</c:forEach>
