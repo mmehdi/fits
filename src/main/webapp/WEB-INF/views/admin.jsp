@@ -83,7 +83,7 @@
 								<tbody>
 									<c:forEach items="${Users}" var="user" varStatus="loop">
 
-										<tr data-toggle="modal" data-username="${user.username}" data-id="${user.id}" data-email="${user.email}" data-fname="${user.fname}" data-lname="${user.lname}" data-phone="${user.phone_number}" data-password="${user.password}">
+										<tr>
 											<td>${loop.index+1}</td>
 											<td>${user.username}</td>
 											<td>${user.fname}</td>
@@ -92,14 +92,6 @@
 											<td>${user.phone_number}</td>
 											<td>${user.role.role}</td>
 											<td><a href="edit_user/${user.id}" class="btn btn-primary btn-sm">Edit</a>
-												<!--  
-												<p data-placement="top" data-toggle="tooltip"
-													title="Edit">
-												 <button class="btn btn-primary btn-xs" data-title="Edit"
-														data-toggle="modal" data-target="#userEditModal" 
-														data-backdrop="true" data-keyboard="true">
-														<span class="glyphicon glyphicon-pencil"></span>
-													</button>-->
 												</p></td>
 										</tr>
 									</c:forEach>
@@ -114,165 +106,10 @@
 					</div>
 				</div>
 
-
-
-				<div class="modal fade" id="userEditModal1" tabindex="-1"
-					role="dialog" aria-labelledby="userEditModal" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Edit user
-									details</h4>
-							</div>
-							<div class="modal-body">
-								<fieldset>
-								
-									<form class="form-horizontal" method="post" modelAttribute="editUserFormBean" name="userEditForm" id="userEditForm">
-									
-									<input type="hidden" name="user_id" id="user_id"
-													value="">
-													
-										<div class="control-group">
-											<label class="control-label">First Name</label>
-											<div class="controls">
-												<input type="text" name="firstName" id="firstName"
-													title="First Name" value="" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">Last Name</label>
-											<div class="controls">
-												<input type="text" name="lastName" id="lastName"
-													title="Last Name" value="" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">Username</label>
-											<div class="controls">
-												<input type="text" name="username" id="username" title="Username"
-													value="" readonly>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">Email</label>
-											<div class="controls">
-												<input type="text" name="email" id="email" title="Email"
-													value="" readonly>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">Phone number</label>
-											<div class="controls">
-												<input type="text" name="phone" id="phone"
-													title="Phone Number" value="" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">password</label>
-											<div class="controls">
-												<input type="password" name="password" id="password"
-													title="Password" value="">
-											</div>
-										</div>
-										<div class="form-actions">
-											<button type="submit" class="btn btn-success">Submit</button>
-											<button type="button" class="btn">Cancel</button>
-										</div>
-									</form>
-								</fieldset>
-							</div>
-							<div class="modal-footer ">
-								<!-- <button type="button" class="btn btn-warning btn-lg"
-									style="width: 100%;">
-									<span class="glyphicon glyphicon-ok-sign"></span> Update
-								</button> -->
-							</div>
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-
-
-
-				<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-					aria-labelledby="edit" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-								<h4 class="modal-title custom_align" id="Heading">Delete
-									this user</h4>
-							</div>
-							<div class="modal-body">
-
-								<div class="alert alert-danger">
-									<span class="glyphicon glyphicon-warning-sign"></span> Are you
-									sure you want to delete this user?
-								</div>
-
-							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-success">
-									<span class="glyphicon glyphicon-ok-sign"></span> Yes
-								</button>
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">
-									<span class="glyphicon glyphicon-remove"></span> No
-								</button>
-							</div>
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-
-
-
 			</div>
 		</div>
 		<div id="footer">
 		
-		<script type="text/javascript">
-	$(document).ready(function() {
-				$('#userEditModal').modal({
-					show : false,
-
-				}).on('show', function() {
-							var userID = $(event.target).closest(
-							'tr').data('id');
-							var username = $(event.target).closest(
-							'tr').data('username'); 
-							var firstNameFromRow = $(event.target).closest(
-									'tr').data('fname'); 
-							var lastNameFromRow = $(event.target).closest(
-							'tr').data('lname'); 
-							var phone = $(event.target).closest(
-							'tr').data('phone'); 
-							var email = $(event.target).closest(
-							'tr').data('email'); 
-							var password = $(event.target).closest(
-							'tr').data('password'); 
-								
-								$('#user_id').val(userID);
-								$('#username').val(username);
-								$('#firstName').val(firstNameFromRow);
-								$('#lastName').val(lastNameFromRow);
-								$('#phone').val(phone);
-								$('#email').val(email);
-								$('#password').val(password);
-						});
-			});
-		</script>
-
-
 			<%@ include file="footer.jsp"%>
 		</div>
 	</div>

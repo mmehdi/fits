@@ -6,25 +6,18 @@ import uk.ac.abdn.fits.mvc.convert.MaskFormat;
 
 public class EditUserFormBean{
 	
-	@NotEmpty
 	private String user_id;
 	
-	@NotEmpty
 	private String fname;
 	
-	@NotEmpty
 	private String lname;
 	
-	@MaskFormat("#### ### ####")
 	private String phone;
 	
-	@NotEmpty
 	private String password;
 	
-	@NotEmpty
 	private String userName;
 	
-	@NotEmpty
 	private String email;
 	
 	public String getEmail() {

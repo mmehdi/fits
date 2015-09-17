@@ -49,65 +49,69 @@
 					<div class="col-md-10">
 					
 					<c:if test="${success != null}">
-					    <c:when test="${success}.equals('yes')">
-					    	<div class="alert alert-success">
-					    		<strong>Success!</strong> Indicates a successful or positive action.
-					    	</div>
-					    </c:when>
-
-					    <c:when test="${success}.equals('no')">
-					    	<c:forEach items="${messages}" var="message" varStatus="loop">
-					    		<div class="alert alert-danger"> <strong>Error!</strong> ${user}
-					    		</div>
-					    	</c:forEach>
-					    </c:when>
-				</c:if>
+						<c:choose>
+                			 <c:when test="${success}.equals('yes')">
+						    	<div class="alert alert-success">
+						    		<strong>Success!</strong> User successfully updated.
+						    	</div>                    		
+						    </c:when>
+                			 <c:when test="${success}.equals('no')">
+						    	<c:forEach items="${messages}" var="message" varStatus="loop">
+						    		<div class="alert alert-danger"> <strong>Error!</strong> ${message}
+						    		</div>
+						    	</c:forEach>
+					    	</c:when>
+              			  </c:choose>
+              		</c:if>
 					    	
-									<form class="form-horizontal" method="post" modelAttribute="editUserFormBean" name="userEditForm" id="userEditForm">
+					    	<c:if test="${user_id!= null}">
+					    	
+									<form class="form-horizontal" method="post" modelAttribute="editUserFormBean" name="editUserForm" id="editUserForm">
 											
 											<input type="hidden" name="user_id" id="user_id"
-													value="">
+													value="${user_id}">
 													
-										<div class="control-group">
-											<label class="control-label">First Name</label>
-											<div class="controls">
-												<input type="text" name="firstName" id="firstName"
-													title="First Name" value="" required>
-											</div>
-										</div>
-										<div class="control-group">
-											<label class="control-label">Last Name</label>
-											<div class="controls">
-												<input type="text" name="lastName" id="lastName"
-													title="Last Name" value="" required>
-											</div>
-										</div>
 										<div class="control-group">
 											<label class="control-label">Username</label>
 											<div class="controls">
-												<input type="text" name="username" id="username" title="Username"
-													value="" readonly>
+												<input type="text" name="userName" id="userName" title="Username"
+													value="${username}" readonly>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Email</label>
 											<div class="controls">
 												<input type="text" name="email" id="email" title="Email"
-													value="" readonly>
+													value="${email}">
+											</div>
+										</div>
+															
+										<div class="control-group">
+											<label class="control-label">First Name</label>
+											<div class="controls">
+												<input type="text" name="fname" id="fname"
+													title="First Name" value="${fname}" required>
+											</div>
+										</div>
+										<div class="control-group">
+											<label class="control-label">Last Name</label>
+											<div class="controls">
+												<input type="text" name="lname" id="lname"
+													title="Last Name" value="${lname}" required>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Phone number</label>
 											<div class="controls">
 												<input type="text" name="phone" id="phone"
-													title="Phone Number" value="" required>
+													title="Phone Number" value="${phone}" required>
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">password</label>
 											<div class="controls">
 												<input type="password" name="password" id="password"
-													title="Password" value="">
+													title="Password" value="${password}">
 											</div>
 										</div>
 										<div class="form-actions">
@@ -115,7 +119,7 @@
 											<button type="button" class="btn">Cancel</button>
 										</div>
 									</form>
-								</fieldset>
+				</c:if>
 							</div>
 
 

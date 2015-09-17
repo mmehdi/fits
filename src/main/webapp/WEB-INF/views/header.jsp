@@ -6,7 +6,7 @@
 
 <div id="navigation">
 	<ul>
-		<li id="first"><a href="home" title="home">Home</a></li>
+		<li id="first"><a href="/home" title="home">Home</a></li>
 	  	<li>
 	  	<security:authorize ifAnyGranted="ROLE_USER">
 	  	<span style = "font-size: 120%; margin: 5px 1px 5px 0px;">Login: <security:authentication property="principal.username"/>,</span>
