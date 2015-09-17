@@ -16,10 +16,6 @@
 	type="text/css" rel="stylesheet" />
 
 <script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
-<script type="text/javascript"
 	src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 
 	
