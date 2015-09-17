@@ -3,6 +3,8 @@
 <link href="<c:url value="/resources/css/form.css" />" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
 	
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
 	
 	
 <h1 id="logo"><a href="#" title="#">
@@ -53,12 +55,6 @@
 						</ul>
 					</li>
 				</ul>
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="javascript:void(0)">Link</a></li>
 					<li class="dropdown">
