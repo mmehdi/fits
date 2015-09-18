@@ -1,5 +1,6 @@
 package uk.ac.abdn.fits.hibernate.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -12,4 +13,5 @@ public interface QueryLogDAO {
 	  void insertQueryLog(QueryLog query_log);
 	  QueryLog getQueryLogById(int log_id);
 	  List<QueryLog> getQueryLog();
+	  List<QueryLog> getQueryLogByDateRange(Timestamp start, Timestamp end);
 }
