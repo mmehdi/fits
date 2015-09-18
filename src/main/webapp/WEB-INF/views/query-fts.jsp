@@ -20,7 +20,7 @@
 	<link href="<c:url value="/resources/css/jquery impromptu/jquery-impromptu.css" />" rel="stylesheet"  type="text/css" />
 	<link href="<c:url value="/resources/css/query-form.css" />" rel="stylesheet"  type="text/css" />
 	
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jqueryui/1.10/jquery-ui-1.10.js" />"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery.timepicker.js" />"></script>

@@ -47,62 +47,14 @@ public class AdminReportingController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminReportingController.class);
 
-
-	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
+	//public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
+	public ModelAndView form(Locale locale, Model model) {
 		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
-		UserManager userManager = (UserManager) ctx.getBean("QueryDAOImpl");
+		//ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+		//UserManager userManager = (UserManager) ctx.getBean("QueryDAOImpl");
 		
-		List<User> users = userManager.getUsers();
-		model.addAttribute("Users", users);
-		
-		return new ModelAndView("admin");
+		return new ModelAndView("reports");
 		
 	}
-
-		
-	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(@Valid EditUserFormBean editUserFormBean, BindingResult result, 
-								Model model, RedirectAttributes redirectAttrs) {
-		
-		if (result.hasErrors()) {
-			return null;
-		}
-
-		List <String> messages = new ArrayList<String>() ;
-		
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
-		UserManager userManager = (UserManager) ctx.getBean("userManagerImpl");
-		
-		User user = userManager.getUserByIdString(editUserFormBean.getUser_id());
-		
-		if(userManager.getUsersByUsername(editUserFormBean.getUserName()).size()>1)
-			messages.add("Username already in use");
-		if(userManager.getUsersByEmail(editUserFormBean.getEmail()).size()>1)
-			messages.add("Email already in use");
-		if(editUserFormBean.getUserName()==null)
-			messages.add("Username cannot be blank");
-		if(editUserFormBean.getPassword()==null)
-			messages.add("Password cannot be blank");
-		
-		if(messages.size()==0){
-			user.setUsername(editUserFormBean.getUserName());
-			user.setFname(editUserFormBean.getFname());
-			user.setLname(editUserFormBean.getLname());
-			user.setEmail(editUserFormBean.getEmail());
-			user.setPhone_number(editUserFormBean.getPhone());
-			
-			redirectAttrs.addFlashAttribute("success", "yes");
-		}
-		else
-			redirectAttrs.addFlashAttribute("success", "no");
-	
-		redirectAttrs.addFlashAttribute("userName", editUserFormBean.getUserName());
-		redirectAttrs.addFlashAttribute("messages", messages);
-	
-		return "redirect:/admin";	
-	}
-	
 }
