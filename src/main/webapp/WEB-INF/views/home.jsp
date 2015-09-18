@@ -9,7 +9,18 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="content-language" content="cs" />
 	<title>Home</title>
-	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" media="screen,projection" />
+	
+		<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />	
+	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
+	<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />" type="text/css" rel="stylesheet" />
+
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+
+	
 </head>
 <body>
 

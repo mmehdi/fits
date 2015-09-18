@@ -105,7 +105,7 @@
 										</div>
 										<div class="form-actions">
 											<button type="submit" class="btn btn-success">Submit</button>
-											<button type="button" class="btn">Cancel</button>
+											<a type="button" class="btn btn-info" href="${pageContext.request.contextPath}/admin">Cancel</a>
 										</div>
 									</form>
 				</c:if>

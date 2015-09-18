@@ -12,7 +12,6 @@
 	<title>Query</title>
 	
 
-	
 	<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />	
 	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
 	<link href="<c:url value="/resources/css/jquery-ui/1.10.3/jquery-ui.css" />" type="text/css" rel="stylesheet" />
@@ -20,13 +19,6 @@
 	<link href="<c:url value="/resources/css/jquery.timepicker.css" />" rel="stylesheet"  type="text/css" />	
 	<link href="<c:url value="/resources/css/jquery impromptu/jquery-impromptu.css" />" rel="stylesheet"  type="text/css" />
 	<link href="<c:url value="/resources/css/query-form.css" />" rel="stylesheet"  type="text/css" />
-	
-	<style>
-
-		td.label{
-			 width: 100px; 
-		}
-	</style>
 	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jqueryui/1.10/jquery-ui-1.10.js" />"></script>
@@ -41,7 +33,24 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/autocomplete.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/query-form.js" />"></script>
 	
+	<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
 	
+	
+		<style>
+		td{
+			padding:4px 6px 0px !important;
+		}
+		td.label{
+			 width: 100px;
+			 color:black; 
+			 vertical-align: inherit; 
+			 font-size: 100%;    
+			 font-weight: inherit; 
+		}
+	</style>
 	
 	
 	<script language="JavaScript">
@@ -165,7 +174,7 @@
              			<div class = "table_from">
 				  			<table class="address">
 				  			<tr>
-						        <td class="label">House number</td>
+						        <td class="label" style="padding:4px 6px 0px; color:black; vertical-align: inherit; font-size: 100%;    font-weight: inherit; ">House number</td>
 						        <td class="wideField">
 						        	<form:input path="street_number_f_outward" class="field"   style="width: 200px;float:left;margin-right: 0px;"/><span class="compulsory">*</span><form:errors path="street_number_f_outward" cssClass="error" />
 						        </td>

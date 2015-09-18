@@ -3,12 +3,6 @@
 	<img class = "dotrural" src="<c:url value="/resources/img/dotrural_rgb_transparent.png" />"></img>
 </h1> 
 
-<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
-<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
-	
-
 <!--  ${pageContext.request.servletPath} -->
  
 <nav class="navbar navbar-default" role="navigation">
@@ -18,13 +12,17 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
+				
+				<security:authorize ifAnyGranted="ROLE_ADMIN">
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="${pageContext.request.contextPath}/admin">Manage users</a></li>
-							<li><a href="${pageContext.request.contextPath}/reporting">Reporting</a></li>
+							<li><a href="${pageContext.request.contextPath}/reports">Reports</a></li>
 						</ul>
 					</li>
+					</security:authorize>
+					
 					<li><a href="${pageContext.request.contextPath}/query_fts">Search for trips</a></li>
 					<li class="dropdown">
 						<a href="" class="dropdown-toggle" data-toggle="dropdown">Service Data <b class="caret"></b></a>

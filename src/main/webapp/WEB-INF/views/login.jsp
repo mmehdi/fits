@@ -9,10 +9,17 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="content-language" content="cs" />
 	<title>User Login</title>
-	<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />		
-	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="<c:url value="/resources/css/messages/messages.css" />" rel="stylesheet"  type="text/css" />
+	<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />	
+	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
+
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
+		
+	
+	
 	 <style TYPE="text/css">
 		.errormessage { color:red;}
 		.successmessage{color:red;}
@@ -39,7 +46,6 @@
 			<div id="formsContent">
 				<form:form id="login" method="post" action = "j_spring_security_check" modelAttribute="loginFormBean" cssClass="cleanform">
 					<div class="header">
-				  		<h2>Login</h2>
 				  		<c:if test="${not empty param.authfailed}">
 						    <span id="infomessage" class="errormessage" >
 						    Login failed due to: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
