@@ -31,42 +31,44 @@
 	</ul>
 </div>
 
+<!--  ${pageContext.request.servletPath} -->
+
 <nav class="navbar navbar-default" role="navigation">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				</button>
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/home">Home</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="javascript:void(0)">Link</a></li>
-					<li><a href="javascript:void(0)">Link</a></li>
 					<li class="dropdown">
-						<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="javascript:void(0)">Action</a></li>
-							<li><a href="javascript:void(0)">Another action</a></li>
-							<li><a href="javascript:void(0)">Something else here</a></li>
-							<li class="divider"></li>
-							<li><a href="javascript:void(0)">Separated link</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin">Manage users</a></li>
+							<li><a href="${pageContext.request.contextPath}/reporting">Reporting</a></li>
+						</ul>
+					</li>
+					<li><a href="${pageContext.request.contextPath}/query_fts">Search for trips</a></li>
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">Service Data <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="${pageContext.request.contextPath}/operator_data_input_constraint">Enter Service Data</a></li>
+							<li><a href="${pageContext.request.contextPath}/operator_data_input_constraint_update">Update Service Data</a></li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="javascript:void(0)">Link</a></li>
-					<li class="dropdown">
-						<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="javascript:void(0)">Action</a></li>
-							<li><a href="javascript:void(0)">Another action</a></li>
-							<li><a href="javascript:void(0)">Something else here</a></li>
-							<li class="divider"></li>
-							<li><a href="javascript:void(0)">Separated link</a></li>
-						</ul>
-					</li>
+				
+					  	<security:authorize ifAnyGranted="ROLE_USER">
+					  	<li class="navbar-text">Logged in: <security:authentication property="principal.username"/>,</li> 
+					  		<li><a href=<c:url value='${pageContext.request.contextPath}/logout'/>>Logout</a></li>
+				   		</security:authorize>
+				    	<security:authorize ifNotGranted="ROLE_USER">
+				    	<li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+				    	</security:authorize>
+    					    	<li><a href="${pageContext.request.contextPath}/about">About us</a></li>
+    
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>

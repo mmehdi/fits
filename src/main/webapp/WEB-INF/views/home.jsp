@@ -8,7 +8,7 @@
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="content-language" content="cs" />
-	<title>Home page</title>
+	<title>Home</title>
 	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" media="screen,projection" />
 </head>
 <body>

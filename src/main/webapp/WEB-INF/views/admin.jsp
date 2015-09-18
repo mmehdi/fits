@@ -11,13 +11,6 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="cs" />
 <title>Admin Dashboard</title>
-
-<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />"
-	type="text/css" rel="stylesheet" />
-
-<script type="text/javascript"
-	src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
-
 	
 </head>
 <body>
@@ -106,9 +99,14 @@
 			</div>
 		</div>
 		<div id="footer">
+		
+		<link href="<c:url value="/resources/css/jquery.dataTables.min.css" />" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
+		
+		
 		<script type="text/javascript">
 		$(document).ready(function() {
-			    $('#usersTable	').DataTable();
+			    $('#usersTable').DataTable();
 			} );
 		</script>
 			<%@ include file="footer.jsp"%>
