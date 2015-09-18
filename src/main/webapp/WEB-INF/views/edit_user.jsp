@@ -11,17 +11,6 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="cs" />
 <title>Edit User</title>
-<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"
-	type="text/css" />
-<link href="<c:url value="/resources/css/screen.css" />" type="text/css"
-	rel="stylesheet" />
-
-<link href="<c:url value="/resources/css/bootstrap.css" />"
-	type="text/css" rel="stylesheet" />
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
 </head>
 <body>
 	<div id="layout">

@@ -10,6 +10,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="content-language" content="cs" />
 	<title>Query</title>
+	
+
+	
 	<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />	
 	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
 	<link href="<c:url value="/resources/css/jquery-ui/1.10.3/jquery-ui.css" />" type="text/css" rel="stylesheet" />
@@ -37,6 +40,9 @@
 	
 	<script type="text/javascript" src="<c:url value="/resources/js/autocomplete.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/query-form.js" />"></script>
+	
+	
+	
 	
 	<script language="JavaScript">
 	function disableEnterKey(e)
