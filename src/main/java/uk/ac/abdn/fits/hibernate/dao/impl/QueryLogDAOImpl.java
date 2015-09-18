@@ -34,9 +34,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   @Override
   @SuppressWarnings("unchecked")
   public List<QueryLog> getQueryLog() {
-    Criteria criteria = sessionFactory.
-      getCurrentSession().
-      createCriteria(QueryLog.class);
+    Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QueryLog.class);
     return criteria.list();
   }
 

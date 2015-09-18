@@ -6,6 +6,7 @@ package uk.ac.abdn.fits.mvc.control.query;
  */
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,7 +49,9 @@ import uk.ac.abdn.fits.business.client.OriginalRequest;
 import uk.ac.abdn.fits.business.client.QueryCommand;
 import uk.ac.abdn.fits.business.client.option.TOption;
 import uk.ac.abdn.fits.business.ws.FITSWebServiceBroker;
+import uk.ac.abdn.fits.hibernate.dao.QueryLogDAO;
 import uk.ac.abdn.fits.hibernate.model.OtherEligTable;
+import uk.ac.abdn.fits.hibernate.model.QueryLog;
 import uk.ac.abdn.fits.hibernate.model.User;
 import uk.ac.abdn.fits.hibernate.operator.OperatorDataManager;
 import uk.ac.abdn.fits.hibernate.user.UserManager;
@@ -199,6 +202,10 @@ public class FtsQueryController {
 	}
 	
 	private QueryCommand createQuery(FtsQueryFormBean queryFormBean){
+		
+		//store query log
+		storeQueryLog(queryFormBean, false);
+		
 		QueryCommand query = null;
 		OriginalRequest request = new OriginalRequest();
 		long logged_time = Calendar.getInstance().getTimeInMillis();
@@ -223,6 +230,9 @@ public class FtsQueryController {
 		}
 		request.setPreference(preference);
 		query = new QueryCommand(fits_webservice_broker, request);
+		
+
+		
 		return query;
 	}
 	
@@ -246,10 +256,56 @@ public class FtsQueryController {
 		}
 		request.setPreference(preference);
 		query = new QueryCommand(fits_webservice_broker, request);
+		
+		//store query log
+		storeQueryLog(queryFormBean, true);
+		
 		return query;
 	}
 	
-	
+	/*
+	 * stores the FITS query into database table query_log for reporting
+	 */
+	private void storeQueryLog(FtsQueryFormBean queryFormBean, boolean is_return){
+		
+		try{
+			QueryLog query_log = new QueryLog();
+			
+			query_log.setIs_return(is_return);
+			
+			if(is_return){
+				query_log.setFrom_address((getOriginAddrReturn(queryFormBean)).replace("+", " "));
+				query_log.setTo_address((getDestnAddrReturn(queryFormBean)).replace("+", " "));
+				query_log.setFrom_postcode(queryFormBean.getPostal_code_f_return());
+				query_log.setTo_postcode(queryFormBean.getPostal_code_t_return());
+				query_log.setTimestamp(new java.sql.Timestamp(getTimeReturn(queryFormBean).getTimeInMillis()- (60 * 60 * 1000)));
+			}
+			else{
+				query_log.setFrom_address((getOriginAddr(queryFormBean)).replace("+", " "));
+				query_log.setTo_address((getDestnAddr(queryFormBean)).replace("+", " "));
+				query_log.setFrom_postcode(queryFormBean.getPostal_code_f_outward());
+				query_log.setTo_postcode(queryFormBean.getPostal_code_t_outward());
+				query_log.setTimestamp(new java.sql.Timestamp(getTime(queryFormBean).getTimeInMillis()- (60 * 60 * 1000)));
+
+			}
+			query_log.setMobility_status(queryFormBean.getMobility_status());
+			query_log.setAge_group(queryFormBean.getAge_group());
+			query_log.setPurpose(queryFormBean.getJourney_purpose());
+			
+			
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+			QueryLogDAO queryLogDAO = (QueryLogDAO) ctx.getBean("QueryLogDAO");
+			
+			queryLogDAO.insertQueryLog(query_log);
+
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		//query_log.setTimestamp(new Timestamp());
+		
+	}
 	private String getOriginAddr(FtsQueryFormBean queryFormBean){
 		
 		StringBuilder sb = new StringBuilder();

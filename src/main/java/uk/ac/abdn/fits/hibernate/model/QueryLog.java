@@ -7,16 +7,14 @@ import java.sql.Timestamp;
  * 
  */
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+
 
 
 @Entity
@@ -27,6 +25,35 @@ public class QueryLog {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name="id", nullable = false)
   private int id;
+  
+  @Column(name="from_postcode", nullable = false)
+  private String from_postcode;
+  
+  @Column(name="from_address", nullable = false)
+  private String from_address;
+  
+  @Column(name="to_postcode", nullable = false)
+  private String to_postcode;
+  
+  @Column(name="to_address", nullable = false)
+  private String to_address;
+  
+  @Column(name="age_group", nullable = false)
+  private String age_group;
+ 
+  @Column(name="mobility_status", nullable = false)
+  private String mobility_status;
+  
+  @Column(name="purpose", nullable = false)
+  private String purpose;
+  
+  @Column(name="is_return", nullable = true)
+  private boolean is_return;
+  
+
+@Column(name="timestamp", nullable = true)
+  private Timestamp timestamp;
+  
   
   public String getFrom_postcode() {
 	return from_postcode;
@@ -92,31 +119,6 @@ public void setTimestamp(Timestamp timestamp) {
 	this.timestamp = timestamp;
 }
 
-@Column(name="from_postcode", nullable = false)
-  private String from_postcode;
-  
-  @Column(name="from_address", nullable = false)
-  private String from_address;
-  
-  @Column(name="to_postcode", nullable = false)
-  private String to_postcode;
-  
-  @Column(name="to_address", nullable = false)
-  private String to_address;
-  
-  @Column(name="age_group", nullable = false)
-  private String age_group;
- 
-  @Column(name="mobility_status", nullable = false)
-  private String mobility_status;
-  
-  @Column(name="purpose", nullable = false)
-  private String purpose;
-  
-  @Column(name="timestamp", nullable = false)
-  private Timestamp timestamp;
-  
-
   public int getId() {
 	  return id;
   }
@@ -125,4 +127,12 @@ public void setTimestamp(Timestamp timestamp) {
 	  this.id = id;
   }
   
+  public boolean isIs_return() {
+	return is_return;
+}
+
+public void setIs_return(boolean is_return) {
+	this.is_return = is_return;
+}
+
 }

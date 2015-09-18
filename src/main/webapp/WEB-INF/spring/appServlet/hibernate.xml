@@ -49,5 +49,7 @@
 	<bean id="operatorDataManagerImpl"
 		class="uk.ac.abdn.fits.hibernate.operator.impl.OperatorDataManagerImpl">
 	</bean>
-	
+		<bean id="QueryLogDAO"
+		class="uk.ac.abdn.fits.hibernate.dao.impl.QueryLogDAOImpl">
+	</bean>
 </beans>

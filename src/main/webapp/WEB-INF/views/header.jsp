@@ -1,13 +1,4 @@
-<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
-<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"  type="text/css" />
-<link href="<c:url value="/resources/css/form.css" />" rel="stylesheet" type="text/css" />
-<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" />
-	
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
-	
-	
-<h1 id="logo"><a href="#" title="#">
+	<h1 id="logo"><a href="#" title="#">
 	Flexible Integrated Transport System</a> 
 	<img class = "dotrural" src="<c:url value="/resources/img/dotrural_rgb_transparent.png" />"></img>
 </h1> 
@@ -32,14 +23,12 @@
 </div>
 
 <!--  ${pageContext.request.servletPath} -->
-
+<!-- 
 <nav class="navbar navbar-default" role="navigation">
-			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/home">Home</a>
 			</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
@@ -70,5 +59,6 @@
     					    	<li><a href="${pageContext.request.contextPath}/about">About us</a></li>
     
 				</ul>
-			</div><!-- /.navbar-collapse -->
+			</div>
 		</nav>
+	-->
