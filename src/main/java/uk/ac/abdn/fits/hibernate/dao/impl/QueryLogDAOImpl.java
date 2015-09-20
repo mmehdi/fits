@@ -15,6 +15,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -109,7 +110,8 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 
 	  projectionList.add(Projections.groupProperty("mobility_status"),"column_name");
 	  projectionList.add(Projections.rowCount(), "count");  
-    
+	  criteria.addOrder(Order.desc(("timestamp")));
+
 	  criteria.setProjection(projectionList);
 	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class));
     
