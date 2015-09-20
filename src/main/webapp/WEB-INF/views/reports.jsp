@@ -31,9 +31,11 @@
 		</div>
 		<div id="main">
 			<div id="content">
-
-
-				<div id="myfirstchart" style="height: 250px;"></div>
+			
+				<c:forEach items="${all_data}" var="query" varStatus="loop">
+				<label>${query.column_name}</label>
+				</c:forEach>
+				<div id="month-line-chart" style="height: 250px;"></div>
 
 
 			</div>
@@ -41,25 +43,25 @@
 		<div id="footer">
 		
 		<script type="text/javascript">
+		
+		var newData = new Array();
+		newData.push({day:'2012-02-24', value:1});
+		newData.push({day:'2012-02-25', value:2});
+		newData.push({day:'2012-02-26', value:1});
+
 		new Morris.Line({
 			  // ID of the element in which to draw the chart.
-			  element: 'myfirstchart',
+			  element: 'month-line-chart',
 			  // Chart data records -- each entry in this array corresponds to a point on
 			  // the chart.
-			  data: [
-			    { year: '2008', value: 20 },
-			    { year: '2009', value: 10 },
-			    { year: '2010', value: 5 },
-			    { year: '2011', value: 5 },
-			    { year: '2012', value: 20 }
-			  ],
+			  data: newData,
 			  // The name of the data record attribute that contains x-values.
-			  xkey: 'year',
+			  xkey: 'day',
 			  // A list of names of data record attributes that contain y-values.
 			  ykeys: ['value'],
 			  // Labels for the ykeys -- will be displayed when you hover over the
 			  // chart.
-			  labels: ['Value']
+			  labels: ['Queries']
 			});
 		</script>
 			<%@ include file="footer.jsp"%>

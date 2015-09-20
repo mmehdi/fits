@@ -1,5 +1,7 @@
 package uk.ac.abdn.fits.mvc.control.admin;
 
+import java.math.BigInteger;
+
 /**
  * @author Mujtaba Mehdi, University of Aberdeen
  * 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -29,7 +32,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import uk.ac.abdn.fits.hibernate.dao.QueryLogDAO;
+import uk.ac.abdn.fits.hibernate.dao.impl.QueryLogDAOImpl;
 import uk.ac.abdn.fits.hibernate.model.OtherEligTable;
+import uk.ac.abdn.fits.hibernate.model.QueryLog;
+import uk.ac.abdn.fits.hibernate.model.QueryLogGroupedDTO;
 import uk.ac.abdn.fits.hibernate.model.Role;
 import uk.ac.abdn.fits.hibernate.model.User;
 import uk.ac.abdn.fits.hibernate.model.UserRole;
@@ -51,10 +58,20 @@ public class AdminReportingController {
 	//public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
 	public ModelAndView form(Locale locale, Model model) {
 		
-		//ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
-		//UserManager userManager = (UserManager) ctx.getBean("QueryDAOImpl");
+		List<QueryLogGroupedDTO> query_log = generateMonthData();
 		
+		model.addAttribute("all_data", query_log);
 		return new ModelAndView("reports");
 		
+	}
+	
+	private List<QueryLogGroupedDTO> generateMonthData(){
+		System.out.println("inside generateMonthData");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
+	
+		//List<Map<String, Long>> query_log = new ArrayList<QueryLogGroupedDTO>();
+		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getQueryTotalGroupByDate(null,null);
+		return query_log;
 	}
 }

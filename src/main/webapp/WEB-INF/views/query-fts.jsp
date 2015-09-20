@@ -526,7 +526,7 @@
 					</div>
 				</fieldset>
 				<form:hidden path="prefered_options" />
-				<p><button type="submit">Submit</button></p>
+				<p><button class="btn btn-success" type="submit">Submit</button></p>
 			</form:form>
 			
 			
