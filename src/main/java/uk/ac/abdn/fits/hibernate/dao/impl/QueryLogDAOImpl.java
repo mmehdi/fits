@@ -1,5 +1,6 @@
 package uk.ac.abdn.fits.hibernate.dao.impl;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,7 +124,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	  for(Object[] item:rows){
 		  QueryLogGroupedDTO query_log_dto = new QueryLogGroupedDTO();
 		  	Map<String, BigInteger> map_obj = new HashMap<String,BigInteger>();
-		  	query_log_dto.setCount((BigInteger)item[1]);
+		  	query_log_dto.setCount(((BigInteger)item[1]).longValue());
 		  	query_log_dto.setColumn_name((String)item[0].toString());
 		  	
 		  	map_obj.put((String)item[0].toString(),((BigInteger) item[1]));
