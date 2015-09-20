@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,18 +79,27 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	  Criteria criteria = session.createCriteria(QueryLog.class);
 
 	  try{
-
-		  startDate = formatter.parse("2015-09-19 00:00:00");
-		  criteria.add(Restrictions.ge("timestamp", startDate)); 
+		  if(start!=null && start.length()>0){
+			  startDate = formatter.parse(start);
+			  criteria.add(Restrictions.ge("timestamp", startDate)); 
+		  }
 	  }
 	  catch (Exception e){
 		  e.printStackTrace();
 	  }
 	  
 	  try{
-
-		  endDate = formatter.parse("2015-09-21 00:00:00");
-		  criteria.add(Restrictions.lt("timestamp", endDate));
+		  if(end!=null && end.length()>0){
+			  endDate = formatter.parse(end);
+			 
+			  //increment end date by one day - 
+			  Calendar c = Calendar.getInstance(); 
+			  c.setTime(endDate); 
+			  c.add(Calendar.DATE, 1);
+			  endDate = c.getTime();
+			  
+			  criteria.add(Restrictions.lt("timestamp", endDate));
+		  }
 	  }
 	  catch (Exception e){
 		  e.printStackTrace();

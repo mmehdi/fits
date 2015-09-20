@@ -86,7 +86,7 @@ public class AdminReportingController {
 		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
 	
 		//List<Map<String, Long>> query_log = new ArrayList<QueryLogGroupedDTO>();
-		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getMobilityStatusByDate(null,null);
+		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getMobilityStatusByDate(startDate,endDate);
 		return query_log;
 	}
 }
