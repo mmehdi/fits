@@ -16,10 +16,14 @@
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
 	<link href="<c:url value="/resources/morris/morris.css" />" rel="stylesheet" type="text/css" />
 
+	<link href="<c:url value="/resources/css/bootstrap-datepicker.css" />" rel="stylesheet"  type="text/css" />	
+
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/morris/raphael-min.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/morris/morris.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap-datepicker.js" />"></script>
+	
 	
 <title>Reporting</title>
 	
@@ -32,8 +36,37 @@
 		<div id="main">
 			<div id="content">
 			
+					<p id="datepair_rtn1">
+					    <input id="start_date" class="date"/>
+					    <input id="end_date" class="date"/>
+						<a onClick="submitDates();"class="btn btn-default">Reload</a>
+					</p>
+
+					<script>
+					   
+					    $('#start_date').datepicker({
+					        'format': 'yyyy-mm-dd',
+					        'autoclose': true
+					    });
+					    $('#end_date').datepicker({
+					        'format': 'yyyy-mm-dd',
+					        'autoclose': true
+					    });
+
+					    //on clicking reload button
+					    function submitDates(){
+					    	var start_date = $('#start_date').val();
+					    	var end_date = $('#end_date').val();
+					    	
+					    	window.location.href = 'reports?start='+start_date+'&end='+end_date;
+
+					    }
+					    // initialize datepair
+					    
+					</script>
+					
 				<c:forEach items="${all_data}" var="query" varStatus="loop">
-				<label>${query.column_name}</label>
+				<label>${query.count}</label>
 				</c:forEach>
 				<div id="month-line-chart" style="height: 250px;"></div>
 

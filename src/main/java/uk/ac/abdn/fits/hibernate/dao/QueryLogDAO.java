@@ -17,5 +17,5 @@ public interface QueryLogDAO {
 	  QueryLog getQueryLogById(int log_id);
 	  List<QueryLog> getQueryLog();
 	  List<QueryLog> getQueryLogByDateRange(Timestamp start, Timestamp end);
-	  List<QueryLogGroupedDTO> getQueryTotalGroupByDate(Timestamp start, Timestamp end);
+	  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end);
 }

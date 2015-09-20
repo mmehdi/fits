@@ -2,7 +2,10 @@ package uk.ac.abdn.fits.hibernate.dao.impl;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
@@ -63,36 +67,45 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 
   @SuppressWarnings("unchecked")
 @Override
-  public  List<QueryLogGroupedDTO> getQueryTotalGroupByDate(Timestamp start, Timestamp end) {
-	  System.out.println("inside getQueryTotalGroupByDate");
+  public  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end) {
+	  List<QueryLogGroupedDTO> results = null;
+	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	  Date startDate = null;
+	  Date endDate = null;
 
 	  Session session = sessionFactory.getCurrentSession();
-	  //String sql = "SELECT * FROM query_log";
-	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS Total FROM query_log WHERE timestamp > '2015-09-02 11:00:00' GROUP BY Cast(timestamp as date)";
-	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS count FROM query_log GROUP BY Cast(timestamp as date)";
-	  //SQLQuery query = session.createSQLQuery(sql);
-	  //query.addEntity(QueryLogGroupedDTO.class);
-	  //query.setParameter("start_timestamp", start);
-	   	Criteria criteria = session.createCriteria(QueryLog.class);
 
-	    ProjectionList projectionList = Projections.projectionList(); 
+	  Criteria criteria = session.createCriteria(QueryLog.class);
 
-        projectionList.add(Projections.groupProperty("mobility_status"),"column_name");
-        projectionList.add(Projections.rowCount(), "count");  
-        
-        criteria.setProjection(projectionList);
-        criteria.setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class));
-        
-	  //List<Map<String, Integer>> res = new ArrayList<Map<String,Integer>>();
-        //List<Map<String, Long>> res = query.list();
-        //Map<String, Long> q1 = res.get(0);
+	  try{
 
-		List<QueryLogGroupedDTO> results = criteria.list();
-	
+		  startDate = formatter.parse("2015-09-19 00:00:00");
+		  criteria.add(Restrictions.ge("timestamp", startDate)); 
+	  }
+	  catch (Exception e){
+		  e.printStackTrace();
+	  }
+	  
+	  try{
 
-		//System.out.println("return size ----------- " + res.size() + q1.get("queryDate"));
+		  endDate = formatter.parse("2015-09-21 00:00:00");
+		  criteria.add(Restrictions.lt("timestamp", endDate));
+	  }
+	  catch (Exception e){
+		  e.printStackTrace();
+	  }
+	  
+	  ProjectionList projectionList = Projections.projectionList(); 
 
-	    return results;
+	  projectionList.add(Projections.groupProperty("mobility_status"),"column_name");
+	  projectionList.add(Projections.rowCount(), "count");  
+    
+	  criteria.setProjection(projectionList);
+	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class));
+    
+	  results = criteria.list();
+	  
+	  return results;
 	    
 	    //List<QueryLogGroupedDTO> results = session.createCriteria(QueryLog.class).
 	    	//	setProjection(Projections.projectionList().add(Projections.groupProperty("mobility_status"), "grouped_column").add(Projections.rowCount(), "count"))  

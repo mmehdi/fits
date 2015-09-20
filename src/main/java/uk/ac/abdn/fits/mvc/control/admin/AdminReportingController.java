@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -46,7 +47,6 @@ import uk.ac.abdn.fits.mvc.extensions.ajax.AjaxUtils;
 
 
 @Controller
-@RequestMapping("/reports")
 //@SessionAttributes("registerFormBean")
 public class AdminReportingController {
 
@@ -54,24 +54,39 @@ public class AdminReportingController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminReportingController.class);
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/reportsss",method=RequestMethod.GET)
 	//public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
 	public ModelAndView form(Locale locale, Model model) {
 		
-		List<QueryLogGroupedDTO> query_log = generateMonthData();
+		List<QueryLogGroupedDTO> mobility_status_data = generateGroupedData(null, null, null);
 		
-		model.addAttribute("all_data", query_log);
+		model.addAttribute("all_data", mobility_status_data);
 		return new ModelAndView("reports");
 		
 	}
 	
-	private List<QueryLogGroupedDTO> generateMonthData(){
+	@RequestMapping(value="/reports",method=RequestMethod.GET) 
+	public ModelAndView form(Locale locale, Model model,HttpServletRequest request) {
+		
+		String startDate = request.getParameter("start");
+		String endDate = request.getParameter("end");
+		
+		System.out.println("start date: "+startDate);
+		List<QueryLogGroupedDTO> mobility_status_grouped_data = generateGroupedData("mobility_status",startDate,endDate);
+		
+		model.addAttribute("all_data", mobility_status_grouped_data);	
+		return new ModelAndView("reports");
+		
+	}
+	
+	
+	private List<QueryLogGroupedDTO> generateGroupedData(String dataType, String startDate, String endDate){
 		System.out.println("inside generateMonthData");
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
 	
 		//List<Map<String, Long>> query_log = new ArrayList<QueryLogGroupedDTO>();
-		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getQueryTotalGroupByDate(null,null);
+		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getMobilityStatusByDate(null,null);
 		return query_log;
 	}
 }
