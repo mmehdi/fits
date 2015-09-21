@@ -290,6 +290,7 @@
 			<version>2.4</version>
 		</dependency>
 	    
+	    <!-- Gson library -->
  		<dependency>
 	        <groupId>com.google.code.gson</groupId>
 	        <artifactId>gson</artifactId>

@@ -10,6 +10,12 @@
     <meta http-equiv="content-language" content="cs" />
 	<title>Home page</title>
 	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" media="screen,projection" />
+	
+	<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
+	
 	<style>
 	h1 { font-size:200%; } /*  #93b21a;*/
 	h2 { font-size:160%; font-weight: normal; } /*  #93b21a;*/
@@ -52,16 +58,6 @@
          <%@ include file="header.jsp" %>
       </div>
       <div id="main">
-      	<div id="main-box">
-        	<div id="quote">
-        	"If we could get a system in place...with a common booking entry, 
-        	so that somebody could call up a vehicle that was available, irrespective
-        	 of whether that was actually in the ownership of the health board, the council, 
-        	 the third sector, then it might lead to more viability, more sustainability 
-        	 all round...That is what we should be aiming for."
-		        <span style = "font-size: 14px;">---  Audit Scotland, 2011.</span>
-        	</div>
-        </div>
         <div id="content">
         	 <h1 >People</h1>
                 <h2>Investigators:</h2>
@@ -73,7 +69,7 @@
 				<p><strong>Research Fellow (ITS):</strong> <a href="http://www.abdn.ac.uk/geosciences/people/profiles/r.mounce/" target="_blank">Dr. Richard Mounce</a>  <!--  a href="http://www.civil.iitb.ac.in/~velaga/">Dr. Nagendra R Velaga(IIT Bombay)</a></p-->
 				<p><strong>Research Fellow (Computing science):</strong> <a href="http://homepages.abdn.ac.uk/c.emele/pages/davidsite/index.html" target="_blank">Dr. Chukwuemeka  David Emele</a></p>
 				<p><strong>Research Assistant (Computing science): </strong><a href="http://www.abdn.ac.uk/ncs/profiles/c.zeng/" target="_blank">Cheng Zeng</a></p>
-				<!--  p><strong>Research Assistant (Computing science): </strong><a href="mailto:mmehdi@abdn.ac.uk">Mujtaba Mehdi</a></p -->
+				<p><strong>Research Assistant (Computing science): </strong><a href="mailto:mmehdi@abdn.ac.uk">Mujtaba Mehdi</a>
 				<!--  h2>Ph.D Students</h2>
 					<p>Robert Henry Craig</p-->
 				<!-- h2>Other</h2>

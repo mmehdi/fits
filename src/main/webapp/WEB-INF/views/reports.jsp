@@ -68,7 +68,6 @@
 					</script>
 					
 				<c:forEach items="${mobility_data}" var="query" varStatus="loop">
-					<label>${query.count}</label>				
 				</c:forEach>
 				
 				<c:forEach items="${age_group_data}" var="query" varStatus="loop">

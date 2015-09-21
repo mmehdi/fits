@@ -18,8 +18,6 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
 		
-	
-	
 	 <style TYPE="text/css">
 		.errormessage { color:red;}
 		.successmessage{color:red;}

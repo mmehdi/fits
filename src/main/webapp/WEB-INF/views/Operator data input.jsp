@@ -20,9 +20,9 @@
     <!--  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"> -->
     <link rel="stylesheet" href="<c:url value="/resources/css/jquery-ui/1.10.3/jquery-ui.css" />">
     <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet"> 
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"  type="text/css" />
     <link href="<c:url value="/resources/css/bootstrap-datepicker.css" />" rel="stylesheet"  type="text/css" />	
     <link rel="stylesheet" href="<c:url value="/resources/bootstrapvalidator/css/bootstrapValidator.min.css" />"/>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"  type="text/css" />
     <link href="<c:url value="/resources/css/form.css" />" rel="stylesheet"  type="text/css" />		
 	<link href="<c:url value="/resources/css/screen.css" />" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="<c:url value="/resources/css/messages/messages.css" />" rel="stylesheet"  type="text/css" />
@@ -168,16 +168,6 @@
 			<%@ include file="header.jsp" %>
         </div>
         <div id="main">
-            <div id="main-box">
-                <div id="quote">
-                    "If we could get a system in place...with a common booking entry, 
-                    so that somebody could call up a vehicle that was available, irrespective
-                    of whether that was actually in the ownership of the health board, the council, 
-                    the third sector, then it might lead to more viability, more sustainability 
-                    all round...That is what we should be aiming for."
-                    <span style = "font-size: 14px;">---  Audit Scotland, 2011.</span>
-                </div>
-            </div>
             <div id="input-content">
                 <div class="container">
 				<div class="row">

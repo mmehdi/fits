@@ -1,5 +1,10 @@
 package uk.ac.abdn.fits.mvc.control.admin;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 /**
@@ -7,6 +12,7 @@ import java.math.BigInteger;
  * 
  */
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -150,4 +157,59 @@ public class AdminReportingController {
 		
 		return query_log;
 	}
+	
+	
+	  @Column(name="age_group", nullable = false)
+	  private String age_group;
+	 
+	  @Column(name="mobility_status", nullable = false)
+	  private String mobility_status;
+	  
+	  @Column(name="purpose", nullable = false)
+	  private String purpose;
+	  
+	  @Column(name="is_return", nullable = true)
+	  private boolean is_return;
+	  
+
+	@Column(name="timestamp", nullable = true)
+	  private Timestamp timestamp;
+	  
+	  
+	
+	private void writeToCSV(List<QueryLog> query_log_array)
+    {
+	    String CSV_SEPARATOR = ",";
+
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("query_log.csv"), "UTF-8"));
+            for (QueryLog query : query_log_array)
+            {
+                StringBuffer oneLine = new StringBuffer();
+                oneLine.append(query.getId() <=0 ? "" : query.getId());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getFrom_postcode().trim().length() == 0? "" : query.getFrom_postcode());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getTo_postcode().trim().length() == 0? "" : query.getTo_postcode());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getFrom_address().trim().length() == 0? "" : query.getFrom_address());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getTo_address().trim().length() == 0? "" : query.getTo_address());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getAge_group().trim().length() == 0? "" : query.getAge_group());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getMobility_status().trim().length() == 0? "" : query.getMobility_status());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(query.getPurpose().trim().length() == 0? "" : query.getPurpose());
+                bw.write(oneLine.toString());
+                bw.newLine();
+            }
+            bw.flush();
+            bw.close();
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        }
+    }
 }
