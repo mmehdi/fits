@@ -18,6 +18,7 @@
 						<a href="" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="${pageContext.request.contextPath}/admin">Manage users</a></li>
+							<li><a href="${pageContext.request.contextPath}/register">Add user</a></li>
 							<li><a href="${pageContext.request.contextPath}/reports">Reports</a></li>
 						</ul>
 					</li>

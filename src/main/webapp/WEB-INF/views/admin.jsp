@@ -56,10 +56,7 @@
 				</c:if>
 					    
 						<h4>Manage Users</h4>
-						<div class="table-responsive">
-
-
-							<table id="usersTable" class="display" cellspacing="0" width="100%">
+							<table id="usersTable" class="stripe" cellspacing="0" width="100%">
 
 								<thead>
 									<th>No</th>
@@ -93,7 +90,6 @@
 							</table>
 
 							<div class="clearfix"></div>
-						</div>
 
 					</div>
 				</div>
