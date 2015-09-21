@@ -134,40 +134,50 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   	  return results;
     }
   
-  public  List<QueryLogGroupedDTO> getQueryTotalGroupByDate1(Timestamp start, Timestamp end) {
-	  System.out.println("inside getQueryTotalGroupByDate");
+  @SuppressWarnings("unchecked")
+  @Override
+  public  List<QueryLogGroupedDTO> getAllQueryLogDataGroupByDate(String start, String end) {
 
 	  Session session = sessionFactory.getCurrentSession();
 	  //String sql = "SELECT * FROM query_log";
 	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS Total FROM query_log WHERE timestamp > '2015-09-02 11:00:00' GROUP BY Cast(timestamp as date)";
-	  String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS count FROM query_log GROUP BY Cast(timestamp as date)";
-	  SQLQuery query = session.createSQLQuery(sql);
-        
+	  String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS count FROM query_log";
 	  List<QueryLogGroupedDTO> res = new ArrayList<QueryLogGroupedDTO>();
-
-	  List<Object[]> rows = query.list();
-
-	  for(Object[] item:rows){
-		  QueryLogGroupedDTO query_log_dto = new QueryLogGroupedDTO();
-		  	Map<String, BigInteger> map_obj = new HashMap<String,BigInteger>();
-		  	query_log_dto.setCount(((BigInteger)item[1]).longValue());
-		  	query_log_dto.setColumn_name((String)item[0].toString());
-		  	
-		  	map_obj.put((String)item[0].toString(),((BigInteger) item[1]));
-		  	res.add(query_log_dto);
-//			System.out.println("return size ----------- " + item[0] +":"+item[1]);
-
-		}
-
-
 	  
-	  	for(QueryLogGroupedDTO map_obj: res){
+	  try{
+		  String where_clause="";
+		  if(start!=null && start.length()>0){
+			  where_clause = " WHERE timestamp>='"+start+"'";
+			  	if(end!=null && end.length()>0)
+			  		where_clause = where_clause +" && timestamp<='"+end+"'";
+		  }
+		  else if(end!=null && end.length()>0)
+			  	where_clause = " WHERE timestamp<='"+end+"'";
+		   
+		  sql = sql + where_clause;
+		  sql = sql + " GROUP BY Cast(timestamp as date) ORDER BY timestamp ASC";
+		  
+		  SQLQuery query = session.createSQLQuery(sql);
+	        
+	
+		  List<Object[]> rows = query.list();
+	
+		  for(Object[] item:rows){
+			  QueryLogGroupedDTO query_log_dto = new QueryLogGroupedDTO();
+			  	Map<String, BigInteger> map_obj = new HashMap<String,BigInteger>();
+			  	query_log_dto.setCount(((BigInteger)item[1]).longValue());
+			  	query_log_dto.setColumn_name((String)item[0].toString());
+			  	
+			  	map_obj.put((String)item[0].toString(),((BigInteger) item[1]));
+			  	res.add(query_log_dto);
+	//			System.out.println("return size ----------- " + item[0] +":"+item[1]);
+	
+			}
 
-				System.out.println("return size ----------- " + map_obj.getCount() +":"+map_obj.getColumn_name());
-	  	}
-
-		//System.out.println("return size ----------- " + res.size() + q1.get("queryDate"));
-
+	  }
+	  catch (Exception e){
+		  e.printStackTrace();
+	  }
 	    return res;
   }
   

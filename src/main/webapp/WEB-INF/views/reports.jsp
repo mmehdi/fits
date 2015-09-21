@@ -43,21 +43,23 @@
 					</p>
 
 					<script>
-					   
+					var date_data = JSON.parse('${date_data_json}');
+
+					
 					    $('#start_date').datepicker({
 					        'format': 'yyyy-mm-dd',
-					        'autoclose': true
+					        'autoclose': true,
 					    });
 					    $('#end_date').datepicker({
 					        'format': 'yyyy-mm-dd',
-					        'autoclose': true
+					        'autoclose': true,
 					    });
 
 					    //on clicking reload button
 					    function submitDates(){
 					    	var start_date = $('#start_date').val();
 					    	var end_date = $('#end_date').val();
-					    	
+
 					    	window.location.href = 'reports?start='+start_date+'&end='+end_date;
 
 					    }
@@ -70,57 +72,99 @@
 				</c:forEach>
 				
 				<c:forEach items="${age_group_data}" var="query" varStatus="loop">
-					<label>${query.count}</label>				
 				</c:forEach>
 				
 				<c:forEach items="${purpose_data}" var="query" varStatus="loop">
-					<label>${query.count}</label>				
 				</c:forEach>
 				
-				<div id="month-line-chart" style="height: 250px;"></div>
+				<div class="col-md-12" >
+								
+					<div class="panel panel-default">
+					  <div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Query data from ${start_date} to ${end_date}</div>
+					  <div class="panel-body">
+							<div id="month-line-chart"><p class="no-data">No data found</p></div>
+					  </div>
+					</div>
+				</div>
+				
+				<!-- div id="month-line-chart" style="height: 250px;"></div> -->
+				<div class="row">
+					<div class="col-md-4">
 
-				<div id="age-group-chart-donut" style="height: 250px;"></div>
+					<div class="panel panel-default">
+					  <div class="panel-heading">Mobility Status</div>
+					  <div class="panel-body">
+							<div id="mobility-status-chart-donut"><p class="no-data">No data found</p></div>
+					  </div>
+					</div>
+				
+					</div>
+					
+					<div class="col-md-4">
 
+					<div class="panel panel-default">
+					  <div class="panel-heading">Age Group</div>
+					  <div class="panel-body">
+							<div id="age-group-chart-donut"><p class="no-data">No data found</p></div>
+					  </div>
+					</div>
+				
+					</div>
+					
+					<div class="col-md-4">
+
+					<div class="panel panel-default">
+					  <div class="panel-heading">Journey Purpose</div>
+					  <div class="panel-body">
+							<div id="purpose-chart-donut"><p class="no-data">No data found</p></div>
+					  </div>
+					</div>
+				
+					</div>
+					
+				</div>
+				
 			</div>
 		</div>
-		<div id="footer">
-		//http://stackoverflow.com/questions/9361977/how-to-access-model-attribute-in-javascript
-		<c:forEach items="${age_group_data}" var="query" varStatus="loop">
-				<script type="text/javascript">
-					<label>${query.count}</label>				
-				</script>
-		</c:forEach>
-				
+		<div id="footer">				
 		<script type="text/javascript">
-		var newData = new Array();
-		newData.push({day:'2012-02-24', value:1});
-		newData.push({day:'2012-02-25', value:2});
-		newData.push({day:'2012-02-26', value:1});
-
+		
+		//alert('${mobility_data_json}');
+		var date_data = JSON.parse('${date_data_json}');
+		
+		if(date_data.length)
+			$(".no-data").remove();
+		
 		new Morris.Line({
-			  // ID of the element in which to draw the chart.
 			  element: 'month-line-chart',
-			  // Chart data records -- each entry in this array corresponds to a point on
-			  // the chart.
-			  data: newData,
-			  // The name of the data record attribute that contains x-values.
+			  data: date_data,
 			  xkey: 'day',
-			  // A list of names of data record attributes that contain y-values.
 			  ykeys: ['value'],
-			  // Labels for the ykeys -- will be displayed when you hover over the
-			  // chart.
 			  labels: ['Queries']
 			});
 		
+		var mobility_data = JSON.parse('${mobility_data_json}');
+		var age_data = JSON.parse('${age_group_data_json}');
+		var purpose_data = JSON.parse('${purpose_data_json}');
+		 var colors_array= ["blue", "green", "grey","yellow"];
+
+		Morris.Donut({
+		    element: 'mobility-status-chart-donut',
+		    data: mobility_data,
+		    colors:colors_array,
+		    formatter: function (y) { return y }
+		  });
+		
 		Morris.Donut({
 		    element: 'age-group-chart-donut',
-		    data: [
-		      {label: 'Jam', value: 25 },
-		      {label: 'Frosted', value: 40 },
-		      {label: 'Custard', value: 25 },
-		      {label: 'Sugar', value: 10 }
-		    ],
-		    formatter: function (y) { return y + "%" }
+		    data: age_data,
+		    formatter: function (y) { return y }
+		  });
+		
+		Morris.Donut({
+		    element: 'purpose-chart-donut',
+		    data: purpose_data,
+		    formatter: function (y) { return y }
 		  });
 		</script>
 			<%@ include file="footer.jsp"%>

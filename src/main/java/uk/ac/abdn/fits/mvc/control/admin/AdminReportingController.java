@@ -33,6 +33,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+
 import uk.ac.abdn.fits.hibernate.dao.QueryLogDAO;
 import uk.ac.abdn.fits.hibernate.dao.impl.QueryLogDAOImpl;
 import uk.ac.abdn.fits.hibernate.model.OtherEligTable;
@@ -75,10 +77,49 @@ public class AdminReportingController {
 		List<QueryLogGroupedDTO> mobility_status_grouped_data = generateGroupedData("mobility_status",startDate,endDate);
 		List<QueryLogGroupedDTO> age_grouped_data = generateGroupedData("age_group",startDate,endDate);
 		List<QueryLogGroupedDTO> purpose_data = generateGroupedData("purpose",startDate,endDate);
+		List<QueryLogGroupedDTO> date_data = generateGroupedData("date",startDate,endDate);
+
+		try{
+			if(startDate==null || startDate.length()<=0)
+				startDate=date_data.get(0).getColumn_name();
+			if(endDate==null || endDate.length()<=0)
+				endDate=date_data.get(date_data.size()-1).getColumn_name();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("start_date", startDate);
+		model.addAttribute("end_date", endDate);
+		
+		String mobility_data_json = new Gson().toJson(mobility_status_grouped_data);
+		mobility_data_json=mobility_data_json.replace("column_name", "label");
+		mobility_data_json=mobility_data_json.replace("count", "value");
+
+		String age_group_data_json = new Gson().toJson(age_grouped_data);
+		age_group_data_json=age_group_data_json.replace("column_name", "label");
+		age_group_data_json=age_group_data_json.replace("count", "value");
+
+		String purpose_data_json = new Gson().toJson(purpose_data);
+		purpose_data_json=purpose_data_json.replace("column_name", "label");
+		purpose_data_json=purpose_data_json.replace("count", "value");
+
+		String date_data_json = new Gson().toJson(date_data);
+		date_data_json=date_data_json.replace("column_name", "day");
+		date_data_json=date_data_json.replace("count", "value");
+
 
 		model.addAttribute("mobility_data", mobility_status_grouped_data);
 		model.addAttribute("age_group_data", age_grouped_data);	
 		model.addAttribute("purpose_data", purpose_data);	
+		model.addAttribute("date_data", date_data);	
+
+		model.addAttribute("mobility_data_json", mobility_data_json);
+		model.addAttribute("age_group_data_json", age_group_data_json);	
+		model.addAttribute("purpose_data_json", purpose_data_json);	
+		model.addAttribute("date_data_json", date_data_json);	
+
+
 
 		return new ModelAndView("reports");
 		
@@ -99,6 +140,9 @@ public class AdminReportingController {
 				break;
 			case "purpose":
 				query_log = queryLogDAOImpl.getPurposeByDate(startDate,endDate);
+				break;
+			case "date":
+				query_log = queryLogDAOImpl.getAllQueryLogDataGroupByDate(startDate,endDate);
 				break;
 			default:
 				break;
