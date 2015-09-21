@@ -18,4 +18,6 @@ public interface QueryLogDAO {
 	  List<QueryLog> getQueryLog();
 	  List<QueryLog> getQueryLogByDateRange(Timestamp start, Timestamp end);
 	  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end);
+	  List<QueryLogGroupedDTO> getAgeGroupByDate(String start, String end);
+	  List<QueryLogGroupedDTO> getPurposeByDate(String start, String end);
 }

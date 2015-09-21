@@ -67,71 +67,72 @@ public class QueryLogDAOImpl implements QueryLogDAO {
     //return (QueryLog) sessionFactory.getCurrentSession().get(QueryLog.class, log_id);
   }
 
-  @SuppressWarnings("unchecked")
-@Override
+  @Override
   public  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end) {
-	  List<QueryLogGroupedDTO> results = null;
-	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	  Date startDate = null;
-	  Date endDate = null;
-
-	  Session session = sessionFactory.getCurrentSession();
-
-	  Criteria criteria = session.createCriteria(QueryLog.class);
-
-	  try{
-		  if(start!=null && start.length()>0){
-			  startDate = formatter.parse(start);
-			  criteria.add(Restrictions.ge("timestamp", startDate)); 
-		  }
-	  }
-	  catch (Exception e){
-		  e.printStackTrace();
-	  }
-	  
-	  try{
-		  if(end!=null && end.length()>0){
-			  endDate = formatter.parse(end);
-			 
-			  //increment end date by one day - 
-			  Calendar c = Calendar.getInstance(); 
-			  c.setTime(endDate); 
-			  c.add(Calendar.DATE, 1);
-			  endDate = c.getTime();
-			  
-			  criteria.add(Restrictions.lt("timestamp", endDate));
-		  }
-	  }
-	  catch (Exception e){
-		  e.printStackTrace();
-	  }
-	  
-	  ProjectionList projectionList = Projections.projectionList(); 
-
-	  projectionList.add(Projections.groupProperty("mobility_status"),"column_name");
-	  projectionList.add(Projections.rowCount(), "count");  
-	  criteria.addOrder(Order.desc(("timestamp")));
-
-	  criteria.setProjection(projectionList);
-	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class));
-    
-	  results = criteria.list();
-	  
-	  return results;
-	    
-	    //List<QueryLogGroupedDTO> results = session.createCriteria(QueryLog.class).
-	    	//	setProjection(Projections.projectionList().add(Projections.groupProperty("mobility_status"), "grouped_column").add(Projections.rowCount(), "count"))  
-              //  .setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class))  
-                //.list(); 
-	    
-	  //List results = query.list();
-	
-	 // System.out.println("return size ----------- " + results.size());
-	    //List<QueryLogGroupedDTO> results = criteria.list();
-
-//	  return results;
-    //return (QueryLog) sessionFactory.getCurrentSession().get(QueryLog.class, log_id);
+	  return getGroupedDataByDate("mobility_status", start, end);
   }
+  
+  @Override
+  public  List<QueryLogGroupedDTO> getAgeGroupByDate(String start, String end) {
+	  return getGroupedDataByDate("age_group", start, end);
+  }
+  
+  @Override
+  public  List<QueryLogGroupedDTO> getPurposeByDate(String start, String end) {
+	  return getGroupedDataByDate("purpose", start, end);
+  }
+  
+  @SuppressWarnings("unchecked")
+    private  List<QueryLogGroupedDTO> getGroupedDataByDate(String column_name, String start, String end) {
+  	  List<QueryLogGroupedDTO> results = null;
+  	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+  	  Date startDate = null;
+  	  Date endDate = null;
+
+  	  Session session = sessionFactory.getCurrentSession();
+
+  	  Criteria criteria = session.createCriteria(QueryLog.class);
+
+  	  try{
+  		  if(start!=null && start.length()>0){
+  			  startDate = formatter.parse(start);
+  			  criteria.add(Restrictions.ge("timestamp", startDate)); 
+  		  }
+  	  }
+  	  catch (Exception e){
+  		  e.printStackTrace();
+  	  }
+  	  
+  	  try{
+  		  if(end!=null && end.length()>0){
+  			  endDate = formatter.parse(end);
+  			 
+  			  //increment end date by one day - 
+  			  Calendar c = Calendar.getInstance(); 
+  			  c.setTime(endDate); 
+  			  c.add(Calendar.DATE, 1);
+  			  endDate = c.getTime();
+  			  
+  			  criteria.add(Restrictions.lt("timestamp", endDate));
+  		  }
+  	  }
+  	  catch (Exception e){
+  		  e.printStackTrace();
+  	  }
+  	  
+  	  ProjectionList projectionList = Projections.projectionList(); 
+
+  	  projectionList.add(Projections.groupProperty(column_name),"column_name");
+  	  projectionList.add(Projections.rowCount(), "count");  
+  	  criteria.addOrder(Order.desc(("timestamp")));
+
+  	  criteria.setProjection(projectionList);
+  	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLogGroupedDTO.class));
+      
+  	  results = criteria.list();
+  	  
+  	  return results;
+    }
   
   public  List<QueryLogGroupedDTO> getQueryTotalGroupByDate1(Timestamp start, Timestamp end) {
 	  System.out.println("inside getQueryTotalGroupByDate");

@@ -65,18 +65,33 @@
 					    
 					</script>
 					
-				<c:forEach items="${all_data}" var="query" varStatus="loop">
-				<label>${query.count}</label>
+				<c:forEach items="${mobility_data}" var="query" varStatus="loop">
+					<label>${query.count}</label>				
 				</c:forEach>
+				
+				<c:forEach items="${age_group_data}" var="query" varStatus="loop">
+					<label>${query.count}</label>				
+				</c:forEach>
+				
+				<c:forEach items="${purpose_data}" var="query" varStatus="loop">
+					<label>${query.count}</label>				
+				</c:forEach>
+				
 				<div id="month-line-chart" style="height: 250px;"></div>
 
+				<div id="age-group-chart-donut" style="height: 250px;"></div>
 
 			</div>
 		</div>
 		<div id="footer">
-		
+		//http://stackoverflow.com/questions/9361977/how-to-access-model-attribute-in-javascript
+		<c:forEach items="${age_group_data}" var="query" varStatus="loop">
+				<script type="text/javascript">
+					<label>${query.count}</label>				
+				</script>
+		</c:forEach>
+				
 		<script type="text/javascript">
-		
 		var newData = new Array();
 		newData.push({day:'2012-02-24', value:1});
 		newData.push({day:'2012-02-25', value:2});
@@ -96,6 +111,17 @@
 			  // chart.
 			  labels: ['Queries']
 			});
+		
+		Morris.Donut({
+		    element: 'age-group-chart-donut',
+		    data: [
+		      {label: 'Jam', value: 25 },
+		      {label: 'Frosted', value: 40 },
+		      {label: 'Custard', value: 25 },
+		      {label: 'Sugar', value: 10 }
+		    ],
+		    formatter: function (y) { return y + "%" }
+		  });
 		</script>
 			<%@ include file="footer.jsp"%>
 		</div>

@@ -73,20 +73,37 @@ public class AdminReportingController {
 		
 		System.out.println("start date: "+startDate);
 		List<QueryLogGroupedDTO> mobility_status_grouped_data = generateGroupedData("mobility_status",startDate,endDate);
-		
-		model.addAttribute("all_data", mobility_status_grouped_data);	
+		List<QueryLogGroupedDTO> age_grouped_data = generateGroupedData("age_group",startDate,endDate);
+		List<QueryLogGroupedDTO> purpose_data = generateGroupedData("purpose",startDate,endDate);
+
+		model.addAttribute("mobility_data", mobility_status_grouped_data);
+		model.addAttribute("age_group_data", age_grouped_data);	
+		model.addAttribute("purpose_data", purpose_data);	
+
 		return new ModelAndView("reports");
 		
 	}
 	
 	
 	private List<QueryLogGroupedDTO> generateGroupedData(String dataType, String startDate, String endDate){
-		System.out.println("inside generateMonthData");
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
-	
+		List<QueryLogGroupedDTO> query_log = null;
 		//List<Map<String, Long>> query_log = new ArrayList<QueryLogGroupedDTO>();
-		List<QueryLogGroupedDTO> query_log = queryLogDAOImpl.getMobilityStatusByDate(startDate,endDate);
+		switch (dataType){
+			case "mobility_status":
+				query_log = queryLogDAOImpl.getMobilityStatusByDate(startDate,endDate);
+				break;
+			case "age_group":
+				query_log = queryLogDAOImpl.getAgeGroupByDate(startDate,endDate);
+				break;
+			case "purpose":
+				query_log = queryLogDAOImpl.getPurposeByDate(startDate,endDate);
+				break;
+			default:
+				break;
+		}
+		
 		return query_log;
 	}
 }
