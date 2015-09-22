@@ -120,7 +120,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   	  projectionList.add(Projections.property("is_return"),"is_return");
   	  projectionList.add(Projections.property("timestamp"),"timestamp");
 
-  	  //criteria.addOrder(Order.desc(("timestamp")));
+  	  criteria.addOrder(Order.asc(("timestamp")));
   	  criteria.setProjection(projectionList);
   	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLog.class));
       

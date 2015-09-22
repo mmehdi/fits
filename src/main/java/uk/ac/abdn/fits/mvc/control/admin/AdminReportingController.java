@@ -145,7 +145,7 @@ public class AdminReportingController {
 	 
 	        // uses the Super CSV API to generate CSV data from the model data
 	        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
-	                CsvPreference.STANDARD_PREFERENCE);
+	                CsvPreference.EXCEL_PREFERENCE);
 	 
 	        String[] header = { "id", "from_postcode", "from_address", "to_postcode",
 	                "to_address", "age_group","mobility_status", "purpose","timestamp","is_return" };
@@ -193,12 +193,16 @@ public class AdminReportingController {
 	private int countReturnJourneys(List<QueryLog>query_log){
 		int count=0;
 		for(QueryLog query: query_log){
-			System.out.println("id = " + query.getId());
+			//System.out.println("id = " + query.getTimestamp());
 			if(query.isIs_return())
 					count=count+1;
 		}
 		return count;
 	}
+	
+	/*
+	 * method not being used anymore
+	 */
 	private void writeToCSV(List<QueryLog> query_log_array)
     {
 	    String CSV_SEPARATOR = ",";
@@ -252,7 +256,7 @@ public class AdminReportingController {
 
 	    public String getFileName(){
 			String timeAsString = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			String id = RandomStringUtils.randomAlphabetic(4);
-			return timeAsString+id+".csv";
+			//String id = RandomStringUtils.randomAlphabetic(4);
+			return "query_log_"+timeAsString+".csv";
 		}
 }

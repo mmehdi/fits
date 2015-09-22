@@ -83,6 +83,7 @@
 				    <li class="list-group-item">Total queries: <strong>${total_journeys}</strong></li>
 				    <li class="list-group-item">Outward journeys: <strong>${outward_journeys}</strong></li>
 				    <li class="list-group-item">Return journeys: <strong>${return_journeys}</strong></li>
+				    <li class="list-group-item"><button onclick="window.location.href='downloadCSV?start=${start_date}&end=${end_date}'; return false;" class="btn btn-xs btn-success">Download CSV</button></li>
 				  </ul>
 				</div>
 
