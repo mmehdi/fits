@@ -37,8 +37,8 @@
 			<div id="content">
 			
 					<p id="datepair_rtn1">
-					    <input id="start_date" class="date"/>
-					    <input id="end_date" class="date"/>
+					    <label class="control-label">Date from: </label>&nbsp;&nbsp;<input id="start_date" class="date"/>
+					    <label class="control-label">Date to: </label>&nbsp;&nbsp;<input id="end_date" class="date"/>
 						<a onClick="submitDates();"class="btn btn-default">Reload</a>
 					</p>
 
@@ -76,6 +76,16 @@
 				<c:forEach items="${purpose_data}" var="query" varStatus="loop">
 				</c:forEach>
 				
+				<div class="panel panel-default">
+				  <!-- Default panel contents -->
+				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Summary</div>
+				  <ul class="list-group">
+				    <li class="list-group-item">Total queries: <strong>${total_journeys}</strong></li>
+				    <li class="list-group-item">Outward journeys: <strong>${outward_journeys}</strong></li>
+				    <li class="list-group-item">Return journeys: <strong>${return_journeys}</strong></li>
+				  </ul>
+				</div>
+
 				<div class="col-md-12" >
 								
 					<div class="panel panel-default">

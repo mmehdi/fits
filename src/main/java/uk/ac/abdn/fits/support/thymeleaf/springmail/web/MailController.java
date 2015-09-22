@@ -228,7 +228,7 @@ public class MailController implements ServletConfigAware{
 		}
     	path = request.getSession().getServletContext().getRealPath("/WEB-INF/files/");
     	System.out.println("session path: "+path);
-    	path = "http://localhost:8080/ke/result";
+    	path = "http://localhost:8585/ke/result";
 //    	path = "http://139.133.73.11:8080/ke/result";
 //    	path = "http://fits.abdn.ac.uk/ke/result";
     	

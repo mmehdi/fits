@@ -1,78 +1,52 @@
 package uk.ac.abdn.fits.mvc.control.admin;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 
 /**
  * @author Mujtaba Mehdi, University of Aberdeen
  * 
  */
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.util.ArrayList;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import com.google.gson.Gson;
 
 import uk.ac.abdn.fits.hibernate.dao.QueryLogDAO;
-import uk.ac.abdn.fits.hibernate.dao.impl.QueryLogDAOImpl;
-import uk.ac.abdn.fits.hibernate.model.OtherEligTable;
 import uk.ac.abdn.fits.hibernate.model.QueryLog;
 import uk.ac.abdn.fits.hibernate.model.QueryLogGroupedDTO;
-import uk.ac.abdn.fits.hibernate.model.Role;
-import uk.ac.abdn.fits.hibernate.model.User;
-import uk.ac.abdn.fits.hibernate.model.UserRole;
-import uk.ac.abdn.fits.hibernate.user.UserManager;
-import uk.ac.abdn.fits.mvc.control.form.register.RegisterFormBean;
-import uk.ac.abdn.fits.mvc.extensions.ajax.AjaxUtils;
 
 
 @Controller
 //@SessionAttributes("registerFormBean")
 public class AdminReportingController {
 
-	// Invoked on every request
-	
-	private static final Logger logger = LoggerFactory.getLogger(AdminReportingController.class);
-
-	@RequestMapping(value="/reportsss",method=RequestMethod.GET)
-	//public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
-	public ModelAndView form(Locale locale, Model model) {
-		
-		List<QueryLogGroupedDTO> mobility_status_data = generateGroupedData(null, null, null);
-		
-		model.addAttribute("all_data", mobility_status_data);
-		return new ModelAndView("reports");
-		
-	}
 	
 	@RequestMapping(value="/reports",method=RequestMethod.GET) 
 	public ModelAndView form(Locale locale, Model model,HttpServletRequest request) {
@@ -85,12 +59,23 @@ public class AdminReportingController {
 		List<QueryLogGroupedDTO> age_grouped_data = generateGroupedData("age_group",startDate,endDate);
 		List<QueryLogGroupedDTO> purpose_data = generateGroupedData("purpose",startDate,endDate);
 		List<QueryLogGroupedDTO> date_data = generateGroupedData("date",startDate,endDate);
+		List<QueryLog> all_data = generateQueryLogData(startDate,endDate);
+		
+		writeToCSV(all_data);
+		
+		int return_journeys_count=0;
+		int outward_journeys_count =0;
+		
+		return_journeys_count = countReturnJourneys(all_data);
+		outward_journeys_count = all_data.size()-return_journeys_count;
 
 		try{
 			if(startDate==null || startDate.length()<=0)
 				startDate=date_data.get(0).getColumn_name();
 			if(endDate==null || endDate.length()<=0)
 				endDate=date_data.get(date_data.size()-1).getColumn_name();
+			
+	
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -126,12 +111,60 @@ public class AdminReportingController {
 		model.addAttribute("purpose_data_json", purpose_data_json);	
 		model.addAttribute("date_data_json", date_data_json);	
 
+		model.addAttribute("total_journeys", all_data.size());	
+		model.addAttribute("outward_journeys", outward_journeys_count);	
+		model.addAttribute("return_journeys", return_journeys_count);	
+
+
 
 
 		return new ModelAndView("reports");
 		
 	}
 	
+	//public ModelAndView form(@PathVariable(value="start") String start, @PathVariable(value="end") String end, Locale locale, Model model) {
+	
+	   @RequestMapping(value = "/downloadCSV",method=RequestMethod.GET)
+	    public void downloadCSV(HttpServletResponse response,HttpServletRequest request) throws IOException {
+	 
+			String startDate = request.getParameter("start");
+			String endDate = request.getParameter("end");
+				
+	        //String csvFileName = "query_log.csv";
+	        String csvFileName = getFileName();
+	        response.setContentType("text/csv");
+	 
+	        // creates mock data
+	        String headerKey = "Content-Disposition";
+	        String headerValue = String.format("attachment; filename=\"%s\"",
+	                csvFileName);
+	        response.setHeader(headerKey, headerValue);
+
+	        List<QueryLog> all_data = generateQueryLogData(startDate,endDate);
+
+	 
+	        // uses the Super CSV API to generate CSV data from the model data
+	        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
+	                CsvPreference.STANDARD_PREFERENCE);
+	 
+	        String[] header = { "id", "from_postcode", "from_address", "to_postcode",
+	                "to_address", "age_group","mobility_status", "purpose","timestamp","is_return" };
+	 
+	        csvWriter.writeHeader(header);
+	 
+	        for (QueryLog query : all_data) {
+	            csvWriter.write(query, header);
+	        }
+	 
+	        csvWriter.close();
+	    }
+	   
+	private List<QueryLog> generateQueryLogData(String startDate, String endDate){
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+		QueryLogDAO QueryLog = (QueryLogDAO) ctx.getBean("QueryLogDAO");
+		List<QueryLog> query_log = QueryLog.getQueryLogByDateRange(startDate, endDate);
+		return query_log;
+	}
 	
 	private List<QueryLogGroupedDTO> generateGroupedData(String dataType, String startDate, String endDate){
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
@@ -157,51 +190,55 @@ public class AdminReportingController {
 		
 		return query_log;
 	}
-	
-	
-	  @Column(name="age_group", nullable = false)
-	  private String age_group;
-	 
-	  @Column(name="mobility_status", nullable = false)
-	  private String mobility_status;
-	  
-	  @Column(name="purpose", nullable = false)
-	  private String purpose;
-	  
-	  @Column(name="is_return", nullable = true)
-	  private boolean is_return;
-	  
-
-	@Column(name="timestamp", nullable = true)
-	  private Timestamp timestamp;
-	  
-	  
-	
+	private int countReturnJourneys(List<QueryLog>query_log){
+		int count=0;
+		for(QueryLog query: query_log){
+			System.out.println("id = " + query.getId());
+			if(query.isIs_return())
+					count=count+1;
+		}
+		return count;
+	}
 	private void writeToCSV(List<QueryLog> query_log_array)
     {
 	    String CSV_SEPARATOR = ",";
+    	String path = this.getClass().getClassLoader().getResource("").getPath();
+    	path = path+"../files";
+    	File  dir = new File(path);
+    	if(!dir.exists()){
+    		dir.mkdirs();
+    	}
+    	String fileName = getFileName();
 
         try
         {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("query_log.csv"), "UTF-8"));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path+File.separator+"log.csv"), "UTF-8"));
             for (QueryLog query : query_log_array)
             {
                 StringBuffer oneLine = new StringBuffer();
-                oneLine.append(query.getId() <=0 ? "" : query.getId());
+                //oneLine.append(query.getId() <=0 ? "" : query.getId());
+                oneLine.append(query.getId());
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getFrom_postcode().trim().length() == 0? "" : query.getFrom_postcode());
+                //oneLine.append(query.getFrom_postcode().trim().length() == 0? "" : query.getFrom_postcode());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getFrom_postcode()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getTo_postcode().trim().length() == 0? "" : query.getTo_postcode());
+                //oneLine.append(query.getTo_postcode().trim().length() == 0? "" : query.getTo_postcode());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getTo_postcode()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getFrom_address().trim().length() == 0? "" : query.getFrom_address());
+                //oneLine.append(query.getFrom_address().trim().length() == 0? "" : query.getFrom_address());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getFrom_address()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getTo_address().trim().length() == 0? "" : query.getTo_address());
+                //oneLine.append(query.getTo_address().trim().length() == 0? "" : query.getTo_address());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getTo_address()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getAge_group().trim().length() == 0? "" : query.getAge_group());
+                //oneLine.append(query.getAge_group().trim().length() == 0? "" : query.getAge_group());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getAge_group()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getMobility_status().trim().length() == 0? "" : query.getMobility_status());
+                //oneLine.append(query.getMobility_status().trim().length() == 0? "" : query.getMobility_status());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getMobility_status()));
                 oneLine.append(CSV_SEPARATOR);
-                oneLine.append(query.getPurpose().trim().length() == 0? "" : query.getPurpose());
+                //oneLine.append(query.getPurpose().trim().length() == 0? "" : query.getPurpose());
+                oneLine.append(StringEscapeUtils.escapeCsv(query.getPurpose()));
                 bw.write(oneLine.toString());
                 bw.newLine();
             }
@@ -212,4 +249,10 @@ public class AdminReportingController {
         	e.printStackTrace();
         }
     }
+
+	    public String getFileName(){
+			String timeAsString = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			String id = RandomStringUtils.randomAlphabetic(4);
+			return timeAsString+id+".csv";
+		}
 }

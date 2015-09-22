@@ -16,7 +16,7 @@ public interface QueryLogDAO {
 	  void insertQueryLog(QueryLog query_log);
 	  QueryLog getQueryLogById(int log_id);
 	  List<QueryLog> getQueryLog();
-	  List<QueryLog> getQueryLogByDateRange(Timestamp start, Timestamp end);
+	  List<QueryLog> getQueryLogByDateRange(String start, String end);
 	  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end);
 	  List<QueryLogGroupedDTO> getAgeGroupByDate(String start, String end);
 	  List<QueryLogGroupedDTO> getPurposeByDate(String start, String end);

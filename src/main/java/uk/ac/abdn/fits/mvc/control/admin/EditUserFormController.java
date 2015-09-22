@@ -1,12 +1,7 @@
 package uk.ac.abdn.fits.mvc.control.admin;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,16 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.abdn.fits.hibernate.model.User;
 import uk.ac.abdn.fits.hibernate.user.UserManager;
-import uk.ac.abdn.fits.mvc.control.form.register.RegisterFormBean;
-import uk.ac.abdn.fits.mvc.extensions.ajax.AjaxUtils;
 
 @Controller
 @RequestMapping(value="/edit_user/{user_id}")

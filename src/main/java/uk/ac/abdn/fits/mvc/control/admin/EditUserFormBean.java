@@ -1,8 +1,5 @@
 package uk.ac.abdn.fits.mvc.control.admin;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import uk.ac.abdn.fits.mvc.convert.MaskFormat;
 
 public class EditUserFormBean{
 	

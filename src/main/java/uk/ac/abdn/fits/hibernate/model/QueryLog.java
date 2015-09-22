@@ -8,12 +8,17 @@ import java.sql.Timestamp;
  */
 
 
+
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 
 
@@ -50,12 +55,18 @@ public class QueryLog {
   @Column(name="is_return", nullable = true)
   private boolean is_return;
   
-
 @Column(name="timestamp", nullable = true)
-  private Timestamp timestamp;
-  
-  
-  public String getFrom_postcode() {
+  private Date timestamp;
+
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
+public String getFrom_postcode() {
 	return from_postcode;
 }
 
@@ -111,23 +122,7 @@ public void setPurpose(String purpose) {
 	this.purpose = purpose;
 }
 
-public Timestamp getTimestamp() {
-	return timestamp;
-}
-
-public void setTimestamp(Timestamp timestamp) {
-	this.timestamp = timestamp;
-}
-
-  public int getId() {
-	  return id;
-  }
-  
-  public void setId(int id) {
-	  this.id = id;
-  }
-  
-  public boolean isIs_return() {
+public boolean isIs_return() {
 	return is_return;
 }
 
@@ -135,4 +130,13 @@ public void setIs_return(boolean is_return) {
 	this.is_return = is_return;
 }
 
+public Date getTimestamp() {
+	return timestamp;
+}
+
+public void setTimestamp(Date timestamp) {
+	this.timestamp = timestamp;
+}
+  
+  
 }

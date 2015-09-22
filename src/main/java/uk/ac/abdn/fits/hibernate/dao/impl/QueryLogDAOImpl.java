@@ -1,7 +1,6 @@
 package uk.ac.abdn.fits.hibernate.dao.impl;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
@@ -20,15 +20,12 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
-import org.hibernate.type.StandardBasicTypes;
-import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.ac.abdn.fits.hibernate.dao.QueryLogDAO;
 import uk.ac.abdn.fits.hibernate.model.QueryLog;
 import uk.ac.abdn.fits.hibernate.model.QueryLogGroupedDTO;
-import uk.ac.abdn.fits.hibernate.model.User;
 
 @Service
 public class QueryLogDAOImpl implements QueryLogDAO {
@@ -51,22 +48,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
       get(QueryLog.class, log_id);
   }
 
-  @SuppressWarnings("unchecked")
-@Override
-  public List<QueryLog> getQueryLogByDateRange(Timestamp start, Timestamp end) {
-	  Session session = sessionFactory.getCurrentSession();
-	  //String sql = "SELECT * FROM query_log WHERE timestamp >= :start_timestamp";
-	  String sql = "SELECT * FROM query_log";
-	  SQLQuery query = session.createSQLQuery(sql);
-	  query.addEntity(QueryLog.class);
-	  //query.setParameter("start_timestamp", start);
-	  
-	  List<QueryLog> results = query.list();
-	  
-	  return results;
-    //return (QueryLog) sessionFactory.getCurrentSession().get(QueryLog.class, log_id);
-  }
-
+  
   @Override
   public  List<QueryLogGroupedDTO> getMobilityStatusByDate(String start, String end) {
 	  return getGroupedDataByDate("mobility_status", start, end);
@@ -82,6 +64,76 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	  return getGroupedDataByDate("purpose", start, end);
   }
   
+  /*
+   * method to return queries by date range
+   * @see uk.ac.abdn.fits.hibernate.dao.QueryLogDAO#getQueryLogByDateRange(java.lang.String, java.lang.String)
+   */
+@SuppressWarnings("unchecked")
+@Override
+  public List<QueryLog> getQueryLogByDateRange(String start, String end) {
+	  List<QueryLog> results = null;
+	  
+  	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+  	  Date startDate = null;
+  	  Date endDate = null;
+
+  	  Session session = sessionFactory.getCurrentSession();
+
+  	  Criteria criteria = session.createCriteria(QueryLog.class);
+
+  	  try{
+  		  if(start!=null && start.length()>0){
+  			  startDate = formatter.parse(start);
+  			  criteria.add(Restrictions.ge("timestamp", startDate)); 
+  		  }
+  	  }
+  	  catch (Exception e){
+  		  e.printStackTrace();
+  	  }
+  	  
+  	  try{
+  		  if(end!=null && end.length()>0){
+  			  endDate = formatter.parse(end);
+  			 
+  			  //increment end date by one day - 
+  			  Calendar c = Calendar.getInstance(); 
+  			  c.setTime(endDate); 
+  			  c.add(Calendar.DATE, 1);
+  			  endDate = c.getTime();
+  			  
+  			  criteria.add(Restrictions.lt("timestamp", endDate));
+  		  }
+  	  }
+  	  catch (Exception e){
+  		  e.printStackTrace();
+  	  }
+  	  
+  	  ProjectionList projectionList = Projections.projectionList(); 
+  	  projectionList.add(Projections.property("id"), "id");
+  	  projectionList.add(Projections.property("from_postcode"),"from_postcode");
+  	  projectionList.add(Projections.property("from_address"),"from_address");
+  	  projectionList.add(Projections.property("to_postcode"),"to_postcode");
+  	  projectionList.add(Projections.property("to_address"),"to_address");
+  	  projectionList.add(Projections.property("age_group"),"age_group");
+  	  projectionList.add(Projections.property("mobility_status"),"mobility_status");
+  	  projectionList.add(Projections.property("purpose"),"purpose");
+  	  projectionList.add(Projections.property("is_return"),"is_return");
+  	  projectionList.add(Projections.property("timestamp"),"timestamp");
+
+  	  //criteria.addOrder(Order.desc(("timestamp")));
+  	  criteria.setProjection(projectionList);
+  	  criteria.setResultTransformer(Transformers.aliasToBean(QueryLog.class));
+      
+  	  results = criteria.list();
+  	  
+  	  return results;
+  	  
+  }
+
+
+  /*
+   * method to return grouped queries by mobility_status, age_group or journey purpose
+   */
   @SuppressWarnings("unchecked")
     private  List<QueryLogGroupedDTO> getGroupedDataByDate(String column_name, String start, String end) {
   	  List<QueryLogGroupedDTO> results = null;
@@ -134,6 +186,10 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   	  return results;
     }
   
+  /*
+   * method to return queries grouped by date.
+   * @see uk.ac.abdn.fits.hibernate.dao.QueryLogDAO#getAllQueryLogDataGroupByDate(java.lang.String, java.lang.String)
+   */
   @SuppressWarnings("unchecked")
   @Override
   public  List<QueryLogGroupedDTO> getAllQueryLogDataGroupByDate(String start, String end) {
