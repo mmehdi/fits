@@ -33,6 +33,14 @@ public class OperationalHoursDAOImpl implements OperationalHoursDAO {
 	}
 
 	@Override
+	public void updateOperationalHours(OperationalHours operational_hours) {
+		sessionFactory.
+	      getCurrentSession();
+		sessionFactory.getCurrentSession().update(operational_hours);
+	}
+	
+	
+	@Override
 	public List<OperationalHours> getOperationalHoursByOpId(int operator_id) {
 		Query query = sessionFactory.
 			      getCurrentSession().

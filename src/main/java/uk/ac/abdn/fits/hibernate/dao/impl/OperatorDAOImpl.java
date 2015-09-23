@@ -32,6 +32,12 @@ public class OperatorDAOImpl implements OperatorDAO{
 	}
 
 	@Override
+	public void updateOperator(Operator operator) {
+		sessionFactory.getCurrentSession().update(operator);
+	}
+
+	
+	@Override
 	public Operator getOperatorById(int operatorId) {
 		 return (Operator) sessionFactory.
 			      getCurrentSession().

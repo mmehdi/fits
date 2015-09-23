@@ -9,6 +9,7 @@ package uk.ac.abdn.fits.mvc.control.operator;
 
 public class OperatorDataInputForm {
 
+	private int operator_id;
 	private String service_name;
 	private String service_description;
 	private String how_to_book;
@@ -167,6 +168,12 @@ public class OperatorDataInputForm {
 	private boolean surcharge_checkbox_finish_15_hours_later;
 	private double surcharge_finish_15_hours_later;
 	
+	public int getOperator_id() {
+		return operator_id;
+	}
+	public void setOperator_id(int operator_id) {
+		this.operator_id = operator_id;
+	}
 	public String getEligible_checkbox_17_to_21(){
 		return eligible_checkbox_17_to_21;
 	}

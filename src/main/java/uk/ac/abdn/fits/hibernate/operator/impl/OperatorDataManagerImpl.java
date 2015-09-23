@@ -58,6 +58,11 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 	}
 
 	@Transactional
+	public void updateOperator(Operator operator) {
+		operatorDAO.updateOperator(operator);
+	}
+	
+	@Transactional
 	public Operator getOperatorById(int operatorId) {
 		return operatorDAO.getOperatorById(operatorId);
 	}
@@ -180,7 +185,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 
 	@Override
 	public void updateOperatingArea(OperatingArea operating_area) {
-		// TODO Auto-generated method stub
+		operatingAreaDAO.updateOperatingArea(operating_area);
 		
 	}
 
@@ -188,7 +193,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 
 	@Override
 	public void updateOperationalHours(OperationalHours operational_hours) {
-		// TODO Auto-generated method stub
+		OperationalHoursDAO.updateOperationalHours(operational_hours);
 		
 	}
 
@@ -264,6 +269,12 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		
 	}
 
+	@Override
+	public void updateVehicle(Vehicle vehicle) {
+		vehicleDAO.updateVehicle(vehicle);
+		
+	}
+	
 	@Override
 	public Vehicle getVehicleById(int id) {
 		return vehicleDAO.getVehicleById(id);

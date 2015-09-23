@@ -31,6 +31,14 @@ public class OperatingAreaDAOImpl implements OperatingAreaDAO{
 	}
 
 	@Override
+	public void updateOperatingArea(OperatingArea operating_area) {
+		sessionFactory.
+	      getCurrentSession();
+		sessionFactory.getCurrentSession().update(operating_area);
+	}
+
+	
+	@Override
 	public OperatingArea getOperatingAreaByOpId(int operator_id) {
 		Query query = sessionFactory.
 			      getCurrentSession().

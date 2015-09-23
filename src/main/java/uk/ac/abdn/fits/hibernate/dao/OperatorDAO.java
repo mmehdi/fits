@@ -16,6 +16,7 @@ import uk.ac.abdn.fits.hibernate.model.Operator;
 public interface OperatorDAO {
 	
 	void insertOperator(Operator operator);
+	void updateOperator(Operator operator);
 	Operator getOperatorById(int operatorId);
 	Operator getOperator(String name);
 	List<Operator> getOperators();

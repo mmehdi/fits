@@ -356,6 +356,113 @@ public class HibUtils {
 		
 	}
 	*/
+	public int updateGeneralInfo(int operator_id, GeneralInfo genralInfo){
+		Operator operator = operatorDataManager.getOperatorById(operator_id);
+
+		operator.setName(genralInfo.getName());
+		operator.setDescription(genralInfo.getDescription());
+		operator.setHow2book(genralInfo.getHow2book());
+		operator.setType_of_permit(genralInfo.getType_of_permit());
+		operator.setInactive(genralInfo.getCb_not_avail());
+		Date last_update = new Date(Calendar.getInstance().getTime().getTime());
+		operator.setLast_update(last_update);
+
+		operatorDataManager.updateOperator(operator);
+		
+		List<OperationalHours> operationalHours = operatorDataManager.getOperationalHoursByOpId(operator_id);
+		
+		System.out.println("going to update additional hour asdasdasdasdasdas:"+operationalHours.size());
+
+		System.out.println(getTime(genralInfo.getOprHouMon1()));
+		for(OperationalHours hours: operationalHours){
+		
+					if(hours.getDay_of_week().equals(Day.Monday.toString())){
+						if(hours.getSession().equals(DaySession.Morning.toString())){
+									hours.setOpening_time(getTime(genralInfo.getOprHouMon1()));
+									hours.setClosing_time(getTime(genralInfo.getOprHouMon2()));
+								}
+						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
+							    	hours.setOpening_time(getTime(genralInfo.getOprHouMon3()));
+							    	hours.setClosing_time(getTime(genralInfo.getOprHouMon4()));
+								}
+						else{
+							
+						}
+					}
+					else if(hours.getDay_of_week().equals(Day.Tuesday.toString())){
+						if(hours.getSession().equals(DaySession.Morning.toString())){
+								hours.setOpening_time(getTime(genralInfo.getOprHouTue1()));
+								hours.setClosing_time(getTime(genralInfo.getOprHouTue2()));
+							}
+						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
+						    	hours.setOpening_time(getTime(genralInfo.getOprHouTue3()));
+						    	hours.setClosing_time(getTime(genralInfo.getOprHouTue4()));
+							}
+					}				
+					else if(hours.getDay_of_week().equals(Day.Wednesday.toString())){
+						if(hours.getSession().equals(DaySession.Morning.toString())){
+							hours.setOpening_time(getTime(genralInfo.getOprHouWed1()));
+							hours.setClosing_time(getTime(genralInfo.getOprHouWed2()));
+							
+						}
+						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
+					    	hours.setOpening_time(getTime(genralInfo.getOprHouWed3()));
+					    	hours.setClosing_time(getTime(genralInfo.getOprHouWed4()));
+						}
+					}
+					else if(hours.getDay_of_week().equals(Day.Thursday)){
+						if(hours.getSession().equals(DaySession.Morning)){
+							hours.setOpening_time(getTime(genralInfo.getOprHouThu1()));
+							hours.setClosing_time(getTime(genralInfo.getOprHouThu2()));
+						}
+						else if(hours.getSession().equals(DaySession.Afternoon)){
+					    	hours.setOpening_time(getTime(genralInfo.getOprHouThu3()));
+					    	hours.setClosing_time(getTime(genralInfo.getOprHouThu4()));
+					}
+			
+				}
+					else if(hours.getDay_of_week().equals(Day.Friday)){
+						if(hours.getSession().equals(DaySession.Morning)){
+							hours.setOpening_time(getTime(genralInfo.getOprHouFri1()));
+							hours.setClosing_time(getTime(genralInfo.getOprHouFri2()));
+						}
+						else if(hours.getSession().equals(DaySession.Afternoon)){
+					    	hours.setOpening_time(getTime(genralInfo.getOprHouFri3()));
+					    	hours.setClosing_time(getTime(genralInfo.getOprHouFri4()));
+					    	}
+						}
+					else if(hours.getDay_of_week().equals(Day.Saturday)){
+						if(hours.getSession().equals(DaySession.Morning)){
+							hours.setOpening_time(getTime(genralInfo.getOprHouSat1()));
+							hours.setClosing_time(getTime(genralInfo.getOprHouSat2()));
+						}
+						else if(hours.getSession().equals(DaySession.Afternoon)){
+					    	hours.setOpening_time(getTime(genralInfo.getOprHouSat3()));
+					    	hours.setClosing_time(getTime(genralInfo.getOprHouSat4()));
+					    	}
+						}
+					else if(hours.getDay_of_week().equals(Day.Sunday)){
+						if(hours.getSession().equals(DaySession.Morning)){
+							hours.setOpening_time(getTime(genralInfo.getOprHouSun1()));
+							hours.setClosing_time(getTime(genralInfo.getOprHouSun2()));
+						}
+						else if(hours.getSession().equals(DaySession.Afternoon)){
+					    	hours.setOpening_time(getTime(genralInfo.getOprHouSun3()));
+					    	hours.setClosing_time(getTime(genralInfo.getOprHouSun4()));
+					}
+				}
+			
+				System.out.println("going to update additional hour:"+hours.getOpening_time());
+				operatorDataManager.updateOperationalHours(hours);
+
+			}
+			
+	
+		
+
+    	return operator.getOperator_id();
+	}
+
 	public int insertGeneralInfo(String username, GeneralInfo genralInfo){
 		
 		Operator operator = new Operator();
@@ -557,6 +664,12 @@ public class HibUtils {
 		operatorDataManager.insertOperatingArea(operating_area);
 	}
 	
+	public void updateOperatingArea(OperatingArea operating_area,OperatingAreaInfo operatingAreaInfo){
+		operating_area.setJson(operatingAreaInfo.getJsonData());
+		operating_area.setKml(operatingAreaInfo.getKmlData());
+		operatorDataManager.updateOperatingArea(operating_area);
+	}
+	
 	public void insertElig(int operator_id, Elig elig){
 		
 		PassengerElig passenger_elig = new PassengerElig();
@@ -628,6 +741,20 @@ public class HibUtils {
 		}
 		operatorDataManager.insertVehicle(vehicle);
 	}
+	
+	public void updateVehicle(int operator_id,VehicleInfo vehicleInfo){
+		
+		Vehicle vehicle = operatorDataManager.getVehicleByOpId(operator_id);
+		vehicle.setVehicle_type(vehicleInfo.getVehicleType());
+		vehicle.setReg_num(vehicleInfo.getRegNum());
+		if(vehicleInfo.getVehicleType().equals("other")){
+			vehicle.setDescription(vehicleInfo.getOtherVehicle());
+		}else{
+			vehicle.setDescription(vehicleInfo.getVehicleType());
+		}
+		operatorDataManager.updateVehicle(vehicle);
+	}
+	
 	
 	public static void main(String[] args){
 		System.out.println(Day.Monday.toString());
@@ -716,6 +843,7 @@ public class HibUtils {
 		Calendar time = new GregorianCalendar();
 		try {
 			time.setTime(dateFormat.parse(timeStr));
+			time.add(Calendar.HOUR, 1);
 		} catch (ParseException e) {
 //			e.printStackTrace();
 			return null;

@@ -15,6 +15,7 @@ import uk.ac.abdn.fits.hibernate.model.OperatingArea;
 public interface OperatingAreaDAO {
 	
 	void insertOperatingArea(OperatingArea operating_area);
+	void updateOperatingArea(OperatingArea operating_area);
 	OperatingArea getOperatingAreaByOpId(int operator_id);
 		
 }

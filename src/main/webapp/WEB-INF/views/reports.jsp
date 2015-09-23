@@ -87,7 +87,6 @@
 				  </ul>
 				</div>
 
-				<div class="col-md-12" >
 								
 					<div class="panel panel-default">
 				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Queries per day</div>
@@ -95,7 +94,6 @@
 							<div id="month-line-chart"><p class="no-data">No data found</p></div>
 					  </div>
 					</div>
-				</div>
 				
 				<!-- div id="month-line-chart" style="height: 250px;"></div> -->
 				<div class="row">

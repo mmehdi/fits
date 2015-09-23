@@ -22,7 +22,14 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 		
 	
-	
+		<style>
+		table.mytable{border:0px;}
+		.mytable thead th{}
+		.mytable tbody tr{border:0px;}
+		.mytable tbody td{border:0px;}	
+		
+
+	</style>	
 <title>Admin Dashboard</title>
 	
 </head>
@@ -56,7 +63,7 @@
 				</c:if>
 					    
 						<h4>Manage Users</h4>
-							<table id="usersTable" class="stripe" cellspacing="0" width="100%">
+							<table id="usersTable" class="stripe mytable" cellspacing="0" width="100%">
 
 								<thead>
 									<th>No</th>
@@ -73,7 +80,7 @@
 									<c:forEach items="${Users}" var="user" varStatus="loop">
 
 										<tr>
-											<td>${loop.index+1}</td>
+											<td style="border:0px;">${loop.index+1}</td>
 											<td>${user.username}</td>
 											<td>${user.fname}</td>
 											<td>${user.lname}</td>

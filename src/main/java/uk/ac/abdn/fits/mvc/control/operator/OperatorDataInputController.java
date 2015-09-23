@@ -41,6 +41,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.supercsv.cellprocessor.ParseInt;
 
 import uk.ac.abdn.fits.hibernate.model.FareMileageBands;
 import uk.ac.abdn.fits.hibernate.model.FareStructure;
@@ -168,10 +169,43 @@ public class OperatorDataInputController{
 			@Valid OperatorDataInputForm operatorInputForm,
 			HttpSession session, Principal principal) {
 		
+		int opId = operatorInputForm.getOperator_id();
+
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+		OperatorDataManager operatorDataManager = 
+		        (OperatorDataManager) ctx.getBean("operatorDataManagerImpl");
+		Operator operator = operatorDataManager.getOperatorById(opId);
+		
+		GeneralInfo generalInfo = new GeneralInfo();
+		System.out.println("monday hours " + operatorInputForm.getTab_operating_hours_field_monday_1());
+		generalInfo.setFields(operatorInputForm);
+//		session.setAttribute("general_info", generalInfo);
+		HibUtils utils = new HibUtils();
+		utils.updateGeneralInfo(opId, generalInfo);
+		
+		VehicleInfo vehInfo = new VehicleInfo();
+		vehInfo.setFields(operatorInputForm);
+		utils.updateVehicle(opId, vehInfo);
+		
+		OperatingArea operating_area = operatorDataManager.getOperatingAreaByOpId(opId);
+		OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
+		operatingAreaInfo.setFields(operatorInputForm);
+		utils.updateOperatingArea(operating_area,operatingAreaInfo);
+		
+		Elig elig = new Elig();
+		elig.setFields(operatorInputForm);
+		utils.insertElig(opId, elig);
+		
+		/*Fare fare = new Fare();
+		fare.setField(operatorInputForm);
+		utils.insertFare(opId, fare);
+		
+		
 		System.out.println("post /data_input_form_update");
 		System.out.println("added_service_not_avail: " + operatorInputForm.getAdded_service_not_avail());
-		System.out.println("not avail from: "+ operatorInputForm.getNot_valid_from());
+		System.out.println("not avail from: "+ operatorInputForm.getNot_valid_from());*/
 		return updateDataInputTemplateConstraint(locale, model, session, principal);
+	
 	}
 	
 	
@@ -186,6 +220,7 @@ public class OperatorDataInputController{
 		OperatorDataManager operatorDataManager = 
 		        (OperatorDataManager) ctx.getBean("operatorDataManagerImpl");
 		Operator operator = operatorDataManager.getOperatorById(opId);
+		model.addAttribute("operator_id",opId);
 		model.addAttribute("serv_name", operator.getName());
 		model.addAttribute("serv_desr", operator.getDescription());
 		model.addAttribute("type_of_permit", operator.getType_of_permit());
@@ -336,14 +371,22 @@ public class OperatorDataInputController{
 				vehicles.add(v.getDescription());
 			}
 		}
+		/*vehicles.add("pickup Van");
+		vehicles.add("minibus");
+		vehicles.add("Wheelchair Accessible Car");
+		vehicles.add("pickUpVan");*/
+		
 		model.addAttribute("veh_types", vehicles);
 		Vehicle veh = operatorDataManager.getVehicleByOpId(opId);
+
 		if(veh != null){
 			if(veh.getReg_num()!=null){
 				 model.addAttribute("reg_num", veh.getReg_num());
 			}
 			if(veh.getVehicle_type()!=null){
 				model.addAttribute("vehicle_type", veh.getVehicle_type());
+				model.addAttribute("vehicle_description", veh.getDescription());
+
 			}
 		}
 		OperatingArea area = operatorDataManager.getOperatingAreaByOpId(opId);

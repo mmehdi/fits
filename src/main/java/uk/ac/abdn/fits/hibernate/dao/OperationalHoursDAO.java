@@ -17,6 +17,7 @@ import uk.ac.abdn.fits.hibernate.model.OperationalHours;
 public interface OperationalHoursDAO {
 	
 	void insertOperationalHours(OperationalHours operational_hours);
+	void updateOperationalHours(OperationalHours operational_hours);
 	List<OperationalHours> getOperationalHoursByOpId(int operator_id);
 		
 }

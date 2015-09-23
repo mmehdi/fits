@@ -1021,7 +1021,7 @@
                 <div class="container">
 				<div class="row">
 
-	<form:form id="data_input_form_update" action="/ke/data_input_form_update" method="post" modelAttribute="operatorDataInputForm" > 
+	<form:form id="data_input_form_update" action="${pageContext.request.contextPath}/data_input_form_update" method="post" modelAttribute="operatorDataInputForm" > 
 			<div class="col-md-10 col-lg-8">
                <div class="panel-group" id="accordion">
                		<div class="panel panel-default" id="tab-general"> <div class="panel-heading"><h4 class="panel-title">
@@ -1037,6 +1037,8 @@
 	                <div class="col-sm-10">
 	                <input type="text" id = "service_name" name="service_name" class="form-control" placeholder="Please enter service name." value="<c:if test="${not empty serv_name}"><c:out value="${serv_name}"/></c:if>" disabled/>
 	                <input type="text" name="_service_name" style="display:none;"  value="<c:if test="${not empty serv_name}"><c:out value="${serv_name}"/></c:if>" />
+	                
+	                <input type="hidden" name="operator_id" id="operator_id" value="<c:if test="${not empty operator_id}"><c:out value="${operator_id}"/></c:if>">	               
 	                </div>
 	            </div>
                 </div>
@@ -1421,7 +1423,7 @@
 						  	</c:if>
 							<option value="other">Other</option>
 						</select>
-						<input type="text" name="_vehicle_type" value="${vehicle_type}" style="display:none;">
+						<input type="text" name="_vehicle_type" value="${vehicle_description}" style="display:none;">
 						<input type="text" id = "other_vehicle" name="other_vehicle" class="form-control" placeholder="Please enter the vehicle type." value="" style="display: none;"/>
 	                </div>
 	            </div>

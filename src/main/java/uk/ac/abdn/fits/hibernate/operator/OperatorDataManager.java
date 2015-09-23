@@ -17,6 +17,7 @@ public interface OperatorDataManager {
 	
 	User getUser(String username);
 	void insertOperator(Operator operator);
+	void updateOperator(Operator operator);
 	void insertServiceNotAvailable(ServiceNotAvailable serviceNotAvailable);
 	public List<ServiceNotAvailable> getServiceNotAvailableByOpId(int op_id);
 	void updateOperatorLastUpdateTime(int operatorId, Date date);
@@ -24,6 +25,7 @@ public interface OperatorDataManager {
 	Operator getOperator(String name);
 	List<Operator> getOperatorByUserId(int userId);
 	void insertVehicle(Vehicle vehicle);
+	void updateVehicle(Vehicle vehicle);
 	Vehicle getVehicleById(int id);
 	Vehicle getVehicleByType(String type);
 	Vehicle getVehicleByOpId(int opId);

@@ -11,6 +11,7 @@ import uk.ac.abdn.fits.hibernate.model.Vehicle;
 public interface VehicleDAO {
 	
 	void insertVehicle(Vehicle vehicle);
+	void updateVehicle(Vehicle vehicle);
 	Vehicle getVehicleById(int id);
 	Vehicle getVehicleByOpId(int OpId);
 	Vehicle getVehicleByType(String vehType);
