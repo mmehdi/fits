@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
  */
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +55,7 @@ public class AdminReportingController {
 		String startDate = request.getParameter("start");
 		String endDate = request.getParameter("end");
 		
-		System.out.println("start date: "+startDate);
+		//System.out.println("start date: "+startDate);
 		List<QueryLogGroupedDTO> mobility_status_grouped_data = generateGroupedData("mobility_status",startDate,endDate);
 		List<QueryLogGroupedDTO> age_grouped_data = generateGroupedData("age_group",startDate,endDate);
 		List<QueryLogGroupedDTO> purpose_data = generateGroupedData("purpose",startDate,endDate);
@@ -68,18 +69,38 @@ public class AdminReportingController {
 		
 		return_journeys_count = countReturnJourneys(all_data);
 		outward_journeys_count = all_data.size()-return_journeys_count;
+	  	
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat new_formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
+		String start_date_descriptive;
+		String end_date_descriptive;
 		try{
 			if(startDate==null || startDate.length()<=0)
 				startDate=date_data.get(0).getColumn_name();
-			if(endDate==null || endDate.length()<=0)
-				endDate=date_data.get(date_data.size()-1).getColumn_name();
+			
+			start_date_descriptive = new_formatter.format(formatter.parse(startDate));
+			model.addAttribute("start_date_descriptive", start_date_descriptive);
 			
 	
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		
+		try{
+			if(endDate==null || endDate.length()<=0)
+				endDate=date_data.get(date_data.size()-1).getColumn_name();
+
+			end_date_descriptive = new_formatter.format(formatter.parse(endDate));
+			model.addAttribute("end_date_descriptive", end_date_descriptive);
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		
 		model.addAttribute("start_date", startDate);
 		model.addAttribute("end_date", endDate);
@@ -131,7 +152,7 @@ public class AdminReportingController {
 			String endDate = request.getParameter("end");
 				
 	        //String csvFileName = "query_log.csv";
-	        String csvFileName = getFileName();
+	        String csvFileName = getFileName(startDate,endDate);
 	        response.setContentType("text/csv");
 	 
 	        // creates mock data
@@ -212,7 +233,6 @@ public class AdminReportingController {
     	if(!dir.exists()){
     		dir.mkdirs();
     	}
-    	String fileName = getFileName();
 
         try
         {
@@ -254,9 +274,32 @@ public class AdminReportingController {
         }
     }
 
-	    public String getFileName(){
-			String timeAsString = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			//String id = RandomStringUtils.randomAlphabetic(4);
-			return "query_log_"+timeAsString+".csv";
+	   private String getFileName(String startDate, String endDate){
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat new_formatter = new SimpleDateFormat("ddMMyyyy");
+
+			String start_date_descriptive="";
+			String end_date_descriptive="";
+			try{
+				start_date_descriptive = new_formatter.format(formatter.parse(startDate));		
+		
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			
+			try{
+				end_date_descriptive = new_formatter.format(formatter.parse(endDate));
+				
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			
+	       
+			String csvFileName = "query_log-"+start_date_descriptive+"_"+end_date_descriptive+".csv";
+
+			return csvFileName;
 		}
 }

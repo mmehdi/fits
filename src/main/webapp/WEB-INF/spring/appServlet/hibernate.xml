@@ -18,9 +18,9 @@
 		base-package="uk.ac.abdn.fits.hibernate.user.impl" />
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">   
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:8889/fits" /> <!--  jdbc:mysql://mysql.abdn.ac.uk/csc359_fits  jdbc:mysql://localhost:3306/fits --> <!-- jdbc:mysql://localhost/fits -->
-		<property name="username" value="fits" />  <!-- csc359_fits--> <!-- root-->   <!-- root--> 
-		<property name="password" value="fits2015" /> <!-- 123456-->  <!-- 123456-->   <!-- smile2015-->
+		<property name="url" value="jdbc:mysql://localhost/fits" /> <!--  jdbc:mysql://mysql.abdn.ac.uk/csc359_fits  jdbc:mysql://localhost:3306/fits --> <!-- jdbc:mysql://localhost/fits -->
+		<property name="username" value="root" />  <!-- csc359_fits--> <!-- root-->   <!-- root--> 
+		<property name="password" value="smile2015" /> <!-- 123456-->  <!-- 123456-->   <!-- smile2015-->
 	</bean>
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
        <property name="dataSource" ref="dataSource"></property>

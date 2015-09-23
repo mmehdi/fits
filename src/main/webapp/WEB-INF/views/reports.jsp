@@ -78,7 +78,7 @@
 				
 				<div class="panel panel-default">
 				  <!-- Default panel contents -->
-				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Summary</div>
+				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Summary<c:if test="${start_date_descriptive!= null}"> from ${start_date_descriptive}</c:if><c:if test="${end_date_descriptive!= null}"> to ${end_date_descriptive}</c:if></div>
 				  <ul class="list-group">
 				    <li class="list-group-item">Total queries: <strong>${total_journeys}</strong></li>
 				    <li class="list-group-item">Outward journeys: <strong>${outward_journeys}</strong></li>
@@ -90,7 +90,7 @@
 				<div class="col-md-12" >
 								
 					<div class="panel panel-default">
-					  <div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Query data from ${start_date} to ${end_date}</div>
+				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Queries per day</div>
 					  <div class="panel-body">
 							<div id="month-line-chart"><p class="no-data">No data found</p></div>
 					  </div>
