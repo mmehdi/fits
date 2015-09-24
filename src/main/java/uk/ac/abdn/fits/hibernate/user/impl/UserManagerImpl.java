@@ -45,6 +45,18 @@ public class UserManagerImpl implements UserManager{
 	}
 	
 	@Transactional
+	public void updateUserRole(UserRole userRole){
+		userRoleDAO.updateUserRole(userRole);
+	}
+	
+	
+	@Transactional
+	public UserRole getUserRoleForUserId(int userId){
+		return userRoleDAO.getUserRoleForUserId(userId);
+	}
+	
+	
+	@Transactional
 	public User getUserById(int userId) {
 		return userDAO.getUserById(userId);
 	}

@@ -72,5 +72,6 @@ public interface OperatorDataManager {
 	void deleteFareMileageBandsByFareStrctId(int fare_structure_id);
 	void deleteOperationalHoursByOpId(int operator_id);
 	void deleteServiceNotAvailTimeByOpId(int opId);
+	void deleteVehicle(Vehicle vehicle);
 
 }

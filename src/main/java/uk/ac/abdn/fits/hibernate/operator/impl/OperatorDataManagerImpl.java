@@ -294,9 +294,15 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 
 	@Override
 	public void updateVehicle(Vehicle vehicle) {
-		vehicleDAO.updateVehicle(vehicle);
+		//vehicleDAO.updateVehicle(vehicle);
 		
 	}
+	@Override
+	public void deleteVehicle(Vehicle vehicle) {
+		vehicleDAO.deleteVehicle(vehicle);
+		
+	}
+	
 	
 	@Override
 	public Vehicle getVehicleById(int id) {

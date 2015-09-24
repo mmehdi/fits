@@ -34,6 +34,7 @@ public class OperatingAreaInfo implements Serializable{
 	}
 	
 	public void setFields(OperatorDataInputForm form){
+		this.setJsonData(null);
 		this.setJsonData(form.getJsonData());
 		this.setKmlData(form.getKmlData());
 	}

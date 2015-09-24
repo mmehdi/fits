@@ -74,7 +74,7 @@ public class AdminController {
 			user.setFname(editUserFormBean.getFname());
 			user.setLname(editUserFormBean.getLname());
 			user.setEmail(editUserFormBean.getEmail());
-			user.setPhone_number(editUserFormBean.getPhone());
+			user.setPhone_number(editUserFormBean.getPhone());			
 			
 			redirectAttrs.addFlashAttribute("success", "yes");
 		}

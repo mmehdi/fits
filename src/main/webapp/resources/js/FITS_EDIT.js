@@ -1363,6 +1363,8 @@ $(document).ready(function() {
 	// initialize google map
 	BlitzMap.setMap( 'myMap', true, 'mapData' );
 	BlitzMap.init();// initialize BlitzMap
+	BlitzMap.setEditable(false);
+
 	$('#myMap').show();
 	BlitzMap.toKML();
 	kmlData = $('#kmlString').val();
@@ -1396,6 +1398,19 @@ function confirmMapChanges(){
 	editable_operating_are = false;
 	toggleOperatingArea();
 }
+
+function confirmMapChangesAtSubmit(){
+	console.log("confirm map changes");
+//	$('#undoChangeMapData').val(BlitzMap.toJSONString());
+	//isConfirmed = true;
+	BlitzMap.toKML();
+	$('#jsonString').val(BlitzMap.toJSONString());
+//	console.log("jsonString:" + $('#jsonString').val());
+//    console.log("kmlString:" + $('#kmlString').val().replace(/(\r\n|\n|\r)/gm,""));
+	//is_changed_operating_area = false;
+	BlitzMap.setEditable(false);
+}
+
 
 $( "#undoChanges" ).click(function() {
 	console.log("undo changes");

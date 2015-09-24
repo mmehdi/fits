@@ -30,7 +30,7 @@ public interface UserManager {
 
 	  
 	  void insertUserRole(UserRole userRole);
-	  
-	  
+	  UserRole getUserRoleForUserId(int userId);
+	void updateUserRole(UserRole user_role);
 
 }

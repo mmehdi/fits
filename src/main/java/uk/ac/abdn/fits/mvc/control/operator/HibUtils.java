@@ -572,13 +572,15 @@ public class HibUtils {
 		operating_area.setOperator_id(operator_id);
 		operating_area.setJson(operatingArea.getJsonData());
 		operating_area.setKml(operatingArea.getKmlData());
+		
 		operatorDataManager.insertOperatingArea(operating_area);
 	}
 	
-	public void updateOperatingArea(int operator_id, OperatingAreaInfo operatingArea){
+	public void updateOperatingArea(int operator_id, OperatingAreaInfo operatingAreaInfo){
 		OperatingArea operating_area = operatorDataManager.getOperatingAreaByOpId(operator_id);
-		operatorDataManager.deleteOperatingArea(operating_area); //update was creating duplicates so I used delete!
-		insertOperatingArea(operator_id,operatingArea);
+		if(operating_area!=null)
+			operatorDataManager.deleteOperatingArea(operating_area); //update was creating duplicates so I used delete!
+		insertOperatingArea(operator_id,operatingAreaInfo);
 	}
 	
 	public void insertElig(int operator_id, Elig elig){
@@ -707,6 +709,7 @@ public class HibUtils {
 	public void insertVehicle(int operator_id, VehicleInfo vehicleInfo){
 		
 		Vehicle vehicle = new Vehicle();
+		vehicle.setOperator_id(operator_id);
 		vehicle.setVehicle_type(vehicleInfo.getVehicleType());
 		vehicle.setReg_num(vehicleInfo.getRegNum());
 		if(vehicleInfo.getVehicleType().equals("other")){
@@ -720,14 +723,11 @@ public class HibUtils {
 	public void updateVehicle(int operator_id,VehicleInfo vehicleInfo){
 		
 		Vehicle vehicle = operatorDataManager.getVehicleByOpId(operator_id);
-		vehicle.setVehicle_type(vehicleInfo.getVehicleType());
-		vehicle.setReg_num(vehicleInfo.getRegNum());
-		if(vehicleInfo.getVehicleType().equals("other")){
-			vehicle.setDescription(vehicleInfo.getOtherVehicle());
-		}else{
-			vehicle.setDescription(vehicleInfo.getVehicleType());
-		}
-		operatorDataManager.updateVehicle(vehicle);
+		if(vehicle!=null)
+			operatorDataManager.deleteVehicle(vehicle);
+
+		insertVehicle(operator_id,vehicleInfo);
+
 	}
 	
 	

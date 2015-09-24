@@ -171,8 +171,8 @@ public class OperatorDataInputController{
 		
 		int opId = operatorInputForm.getOperator_id();
 
-		System.out.println("xxxxxxxxxxxxxxxxxxxx: "+operatorInputForm.getTab_fare_structure_radioBtns());
-		System.out.println("xxxxxxxxxxxxxxxxxxxx: "+operatorInputForm.getTab_fare_structure_how_charge_radioBtns());
+		System.out.println("xxxxxxxxxxxxxxxxxxxx json: "+operatorInputForm.getJsonData());
+		System.out.println("");
 
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		OperatorDataManager operatorDataManager = 
@@ -186,20 +186,22 @@ public class OperatorDataInputController{
 	
 //		session.setAttribute("general_info", generalInfo);
 
-		//VehicleInfo vehInfo = new VehicleInfo();
-		//vehInfo.setFields(operatorInputForm);
-		//utils.updateVehicle(opId, vehInfo);
+		VehicleInfo vehInfo = new VehicleInfo();
+		vehInfo.setFields(operatorInputForm);
+		utils.updateVehicle(opId, vehInfo);
 		
-		/*OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
+		if(operatorInputForm.getJsonData()==null)
+			operatorInputForm.setJsonData("");
+		
+		OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
 		operatingAreaInfo.setFields(operatorInputForm);
 		utils.updateOperatingArea(opId,operatingAreaInfo);
-		
 		Elig eligInfo = new Elig();
 		eligInfo.setFields(operatorInputForm);
 		PassengerElig passenger_elig = operatorDataManager.getPassengerElig(opId);
 
 		utils.updateElig(passenger_elig,eligInfo,opId);
-		*/
+		
 		//Fare fare = new Fare();
 		//fare.setField(operatorInputForm);
 		//utils.updateFare(opId, fare);

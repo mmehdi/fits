@@ -48,6 +48,9 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/blitz-gmap-editor/blitz.gmap3.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap-datepicker.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery impromptu/jquery-impromptu.js" />"></script>
+	
+	
+	
 	<script>
 	var days = {1:"monday",2:"tuesday",3:"wednesday",4:"thursday",5:"friday"};
 	$(document).ready(function() {
@@ -1021,7 +1024,7 @@
                 <div class="container">
 				<div class="row">
 
-	<form:form id="data_input_form_update" action="${pageContext.request.contextPath}/data_input_form_update" method="post" modelAttribute="operatorDataInputForm" > 
+	<form:form id="data_input_form_update" action="${pageContext.request.contextPath}/data_input_form_update" method="post" modelAttribute="operatorDataInputForm"  onsubmit="doTasksBeforeSubmission();" > 
 			<div class="col-md-10 col-lg-8">
                <div class="panel-group" id="accordion">
                		<div class="panel panel-default" id="tab-general"> <div class="panel-heading"><h4 class="panel-title">
@@ -2343,7 +2346,7 @@
 				</div> <!--fourth -->
     		</div>
             <div class="input-group pull-left">
-            <button type="submit" class="btn-lg btn-warning">Preview</button>
+            <!--  <button type="submit" class="btn-lg btn-warning">Preview</button>-->
             <button type="submit" class="btn-lg btn-success">Submit</button>
             </div><!--save clear button-->
 			</div>
@@ -2374,7 +2377,8 @@
 
     <!-- Custom JavaScript-->
     <script src="<c:url value="/resources/js/jqueryui/1.10/jquery-ui-1.10.js"/>"></script>
-    <script src="<c:url value="/resources/js/FITS_EDIT.js" />"></script> 
+   	<script src="<c:url value="/resources/js/FITS_EDIT.js" />"></script> 
+    
     <script type="text/javascript">
 	//fix the map showing problem
 	window.onload = function() {
@@ -2383,10 +2387,10 @@
     	//$('a[href="#collapseOne"]').addClass("highlight");
     	
     	//fix the map showing problem
-    	BlitzMap.setMap( 'myMap', true, 'mapData' );
+    	//BlitzMap.setMap( 'myMap', true, 'mapData' );
     	//BlitzMap.toggleEditable();// swith not to be editable
-    	BlitzMap.init();// initialize BlitzMap
-    	BlitzMap.setEditable(false);
+    	//BlitzMap.init();// initialize BlitzMap
+    	//BlitzMap.setEditable(false);
     	
    
     	// put it after the init of the map
@@ -2411,6 +2415,10 @@
     	
 	};
 	
+	
+	function doTasksBeforeSubmission(){
+		confirmMapChanges();
+	}
 	//var radioVal = $("input[name$='tab_elig_radioBtns']").val();
 	//  if(radioVal==1){
 	//      $("#tab-elig-openning-up").fadeOut('slow');

@@ -32,6 +32,12 @@ public class VehicleDAOImpl implements VehicleDAO{
 	}
 	
 	@Override
+	public void deleteVehicle(Vehicle vehicle) {
+		sessionFactory.getCurrentSession().delete(vehicle);
+		
+	}
+	
+	@Override
 	public Vehicle getVehicleById(int id) {
 		 return (Vehicle) sessionFactory.
 			      getCurrentSession().

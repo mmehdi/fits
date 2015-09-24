@@ -73,7 +73,17 @@
 													value="${email}" readyonly>
 											</div>
 										</div>
-															
+						
+						<div class="control-group">
+						<label class="control-label">User role</label>
+						<div class="controls">
+							<select name= "user_role">
+								  	<option value="1" <c:if test="${not empty user_role and user_role == '1'}"><c:out value="selected"/></c:if> >Admin</option>
+									<option value="3"<c:if test="${not empty user_role and user_role == '3'}"><c:out value="selected"/></c:if> >User</option>
+							</select>
+							</div>
+						</div>
+																					
 										<div class="control-group">
 											<label class="control-label">First Name</label>
 											<div class="controls">

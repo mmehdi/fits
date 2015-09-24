@@ -13,5 +13,6 @@ public interface UserRoleDAO {
 	
 	public void insertUserRole(UserRole userRole);
 	public void updateUserRole(UserRole userRole);
+	UserRole getUserRoleForUserId(int userId);
 
 }

@@ -16,4 +16,5 @@ public interface VehicleDAO {
 	Vehicle getVehicleByOpId(int OpId);
 	Vehicle getVehicleByType(String vehType);
 	List<Vehicle> getVehicles();
+	void deleteVehicle(Vehicle vehicle);
 }

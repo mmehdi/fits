@@ -20,7 +20,7 @@
 	<link href="<c:url value="/resources/css/jquery impromptu/jquery-impromptu.css" />" rel="stylesheet"  type="text/css" />
 	<link href="<c:url value="/resources/css/query-form.css" />" rel="stylesheet"  type="text/css" />
 	
-	<script type="text/javascript" src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>  
 	<script type="text/javascript" src="<c:url value="/resources/js/jqueryui/1.10/jquery-ui-1.10.js" />"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery.timepicker.js" />"></script>
@@ -37,7 +37,7 @@
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
 
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
-	
+
 	
 		<style>
 		td{
@@ -245,7 +245,7 @@
 				  	<p>Return required</p>
 				  	</div>
 				  		
-				  	<div id = "return_journey" class="hidden">
+				  	<div id = "return_journey" style="display:none;">
 				  		<div class="journey-title">
              			<label >From:</label>
              			</div>
@@ -384,7 +384,7 @@
 					</div>
 					
 		 
-					<div id="time_rtn" class="time-group hidden">
+					<div id="time_rtn" class="time-group" style="display:none;">
 					<p style="font-weight: bold; ">Return journey</p>
 				  	<div class = "inline">
 				  			<form:select path="time_constraint_rtn">

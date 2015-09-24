@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.abdn.fits.hibernate.model.User;
+import uk.ac.abdn.fits.hibernate.model.UserRole;
 import uk.ac.abdn.fits.hibernate.user.UserManager;
 
 @Controller
@@ -40,6 +41,8 @@ public class EditUserFormController {
 			model.addAttribute("email", user.getEmail());
 			model.addAttribute("phone", user.getPhone_number());
 			model.addAttribute("password", user.getPassword());
+			model.addAttribute("user_role", user.getRole().getId().toString());
+
 		}
 		
 		return new ModelAndView("edit_user");
@@ -88,7 +91,19 @@ public class EditUserFormController {
 			user.setPhone_number(editUserFormBean.getPhone());
 			user.setPassword(editUserFormBean.getPassword());
 
+			UserRole user_role= userManager.getUserRoleForUserId(user.getId());
+		
+			user_role.setRole_id(Integer.toString(editUserFormBean.getUser_role()));
 			userManager.updateUser(user);
+			userManager.updateUserRole(user_role);
+
+			user_role= userManager.getUserRoleForUserId(user.getId());
+
+			//System.out.println("xxxxxxxxxxxxxxxxx role id: " + user_role.getRole_id());
+			//System.out.println("xxxxxxxxxxxxxxxxx user id: " + user_role.getUser_id());
+
+			
+			
 			redirectAttrs.addFlashAttribute("success", true);
 		}
 		else{
