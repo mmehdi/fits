@@ -99,6 +99,12 @@
 
 	</style>
 	
+		<link href="<c:url value="/resources/css/bootstrap.css" />" type="text/css" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap.js" />"></script>
+		
+		
 	<script>
 
 	var dialog;
@@ -149,7 +155,7 @@
 			  console.log("click email this page");
 			  dialog.dialog( "open" );
 			  
-			  /*
+			  
 			  $.ajax({
 				    url: "sendMailSimple",  //   sendmail
 				    type: 'POST',
@@ -166,7 +172,7 @@
 				        console.log(er);
 				    }
 				});
-			  */
+			  
 			});
 		
 		
@@ -181,16 +187,6 @@
          <%@ include file="header.jsp" %>
       </div>
       <div id="main">
-      <div id="main-box">
-         <div id="quote">
-        	"If we could get a system in place...with a common booking entry, 
-        	so that somebody could call up a vehicle that was available, irrespective
-        	 of whether that was actually in the ownership of the health board, the council, 
-        	 the third sector, then it might lead to more viability, more sustainability 
-        	 all round...That is what we should be aiming for."
-		        <span style = "font-size: 14px;">---  Audit Scotland, 2011.</span>
-        	</div>
-      </div>
       <div id="content">
       
       
@@ -233,7 +229,7 @@
 	        		<c:forEach items="${options}" var="option">
 	        		<div class="option">
 	        		
-		            	<table cellspacing="0" cellpadding="0" class="ift">
+		            	<table cellspacing="0" cellpadding="0" class="ift table">
 	                    		<tr>
 	                    			<th rowspan="2" style="font-weight: normal;">
 	                    				<c:choose>
@@ -477,7 +473,7 @@
 	        		<c:forEach items="${options_rtn}" var="option">
 	        		<div class="option">
 	        		
-		            	<table cellspacing="0" cellpadding="0" class="ift">
+		            	<table cellspacing="0" cellpadding="0" class="ift table">
 		            
 	                    		<tr>
 	                    			<th rowspan="2" style="font-weight: normal;">

@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -226,14 +227,21 @@ public class MailController implements ServletConfigAware{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	path = request.getSession().getServletContext().getRealPath("/WEB-INF/files/");
+    	//path = request.getSession().getServletContext().getRealPath("/WEB-INF/files/");
+    	String server_uri = request.getScheme() + "://" +
+                request.getServerName() + 
+                ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+                request.getRequestURI() +
+               (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+    	
+    	server_uri = server_uri +"/result";
     	System.out.println("session path: "+path);
-    	path = "http://localhost:8585/ke/result";
+    //	path = "http://localhost:8585/ke/result";
 //    	path = "http://139.133.73.11:8080/ke/result";
 //    	path = "http://fits.abdn.ac.uk/ke/result";
     	
-		System.out.println("URL: "+path+"/"+fileName);
-    	return path+"/"+fileName;
+		System.out.println("URL: "+server_uri+"/"+fileName);
+    	return server_uri+"/"+fileName;
     }
     
     public String getFileName(){
