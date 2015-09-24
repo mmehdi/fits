@@ -16,6 +16,7 @@ import uk.ac.abdn.fits.hibernate.model.PassengerElig;
 public interface PassengerEligDAO {
 	
 	void insertPassengerElig(PassengerElig elig);
+	void updatePassengerElig(PassengerElig elig);
 	PassengerElig getPassengerEligByOpId(int operatorId);
 	List<PassengerElig> getPassengerEligs();
 	

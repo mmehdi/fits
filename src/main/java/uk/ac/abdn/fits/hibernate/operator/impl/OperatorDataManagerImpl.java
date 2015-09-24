@@ -249,8 +249,18 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 
 	@Override
 	public void updateOperatorOtherElig(OtherEligTable elg) {
-		// TODO Auto-generated method stub
+		otherEligDAO.updateOtherElig(elg);
+	}
+
+	@Override
+	public void deleteOperatorOtherEligsByOpID(int opID) {
+		List<OtherEligTable> otherEligs = getOperatorOtherEligByOpID(opID);
 		
+		if(otherEligs!=null){
+			for(OtherEligTable o: otherEligs)
+				otherEligDAO.deleteOtherElig(o);
+		}
+
 	}
 
 	@Override
@@ -306,8 +316,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 	
 	@Override
 	public void updatePassengerElig(PassengerElig elig) {
-		// TODO Auto-generated method stub
-		
+		passengerEligDAO.updatePassengerElig(elig);
 	}
 
 	@Override

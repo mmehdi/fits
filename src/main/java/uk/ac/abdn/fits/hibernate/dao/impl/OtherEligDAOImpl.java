@@ -26,6 +26,17 @@ public class OtherEligDAOImpl implements OtherEligDAO{
 	}
 
 	@Override
+	public void updateOtherElig(OtherEligTable otherElig) {
+		sessionFactory.getCurrentSession().update(otherElig);
+	}
+
+	@Override
+	public void deleteOtherElig(OtherEligTable otherElig) {
+		sessionFactory.getCurrentSession().delete(otherElig);
+	}
+	
+	
+	@Override
 	public OtherEligTable getOtherEligById(int id) {
 		 return (OtherEligTable) sessionFactory.
 			      getCurrentSession().

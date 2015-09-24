@@ -30,7 +30,14 @@ public class PassengerEligDAOImpl implements PassengerEligDAO{
 	public void insertPassengerElig(PassengerElig elig) {
 		sessionFactory.getCurrentSession().save(elig);
 	}
+	
+	@Override
+	public void updatePassengerElig(PassengerElig elig) {
+		sessionFactory.getCurrentSession().update(elig);
+		
+	}
 
+	
 	@Override
 	public PassengerElig getPassengerEligByOpId(int operatorId) {
 		Query query = sessionFactory.
@@ -52,5 +59,4 @@ public class PassengerEligDAOImpl implements PassengerEligDAO{
 			      createCriteria(PassengerElig.class);
 		return criteria.list();
 	}
-
 }

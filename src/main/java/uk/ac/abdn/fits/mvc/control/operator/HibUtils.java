@@ -707,6 +707,47 @@ public class HibUtils {
 		}
 	}
 	
+	public void updateElig(PassengerElig passenger_elig, Elig eligInfo, int opId){
+		
+		//PassengerElig passenger_elig = operatorDataManager.getPassengerElig(operator_id);
+		passenger_elig.setAge_under16(eligInfo.isAge_under16());
+		passenger_elig.setAge_17to21(eligInfo.isAge_17to21());
+		passenger_elig.setAge_22to54(eligInfo.isAge_22to54());
+		passenger_elig.setAge_55to59(eligInfo.isAge_55to59());
+		passenger_elig.setAge_over60(eligInfo.isAge_over60());
+		passenger_elig.setAble_bodied(eligInfo.isAble_bodied());
+		passenger_elig.setMobility_prevents_PT(eligInfo.isMobility_prevents_PT());
+		passenger_elig.setDiable_wheelchair_user(eligInfo.isDisable_wheelchair_user());
+		passenger_elig.setDiable_other(eligInfo.isDisable_other());
+		passenger_elig.setHealth_appointment(eligInfo.isHealth_appointment());
+		passenger_elig.setSocial_care(eligInfo.isSocial_care());
+		passenger_elig.setShopping(eligInfo.isShopping());
+		passenger_elig.setLeisure_or_visiting_friends(eligInfo.isLeisure_or_visiting_friends());
+		passenger_elig.setSchool_or_education(eligInfo.isSchool_or_education());
+		passenger_elig.setWork_or_commuting(eligInfo.isWork_or_commuting());
+		passenger_elig.setOther_purpose(eligInfo.isOther_purpose());
+		passenger_elig.setElig_radioBtns(eligInfo.getTab_elig_radioBtns());
+		passenger_elig.setExplain_opening_up_elig(eligInfo.getExplain_opening_up_elig());
+
+		//List<OtherEligTable> otherEligs = operatorDataManager.getOperatorOtherEligByOpID(passenger_elig.getOperator_id());
+		operatorDataManager.deleteOperatorOtherEligsByOpID(opId);
+		if(!eligInfo.getOther_elig_type().equals("none")){
+			OtherEligTable otherElig = new OtherEligTable();
+			if(eligInfo.getOther_elig_type().equals("other")){
+				if(!eligInfo.getOther_elig().equals("")){
+					otherElig.setOperator_id(passenger_elig.getOperator_id());
+					otherElig.setElig(eligInfo.getOther_elig());
+					operatorDataManager.insertOperatorOtherElig(otherElig);
+				}
+			}else{
+				otherElig.setElig(eligInfo.getOther_elig());
+			}
+		}
+		
+		operatorDataManager.updatePassengerElig(passenger_elig);
+
+	}
+	
 	public void insertFare(int operator_id, Fare fare){
 		
 		FareStructure fare_structure = new FareStructure();

@@ -10,6 +10,8 @@ import uk.ac.abdn.fits.hibernate.model.OtherEligTable;
 public interface OtherEligDAO {
 	
 	void insertOtherElig(OtherEligTable otherElig);
+	void updateOtherElig(OtherEligTable elg);
+	void deleteOtherElig(OtherEligTable otherElig);
 	OtherEligTable getOtherEligById(int id);
 	List<OtherEligTable> getOtherEligByOperatorId(int operatorId);
 	List<OtherEligTable> getAllOtherEligTable();

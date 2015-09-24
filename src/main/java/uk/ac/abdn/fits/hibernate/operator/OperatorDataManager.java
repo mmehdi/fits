@@ -51,6 +51,7 @@ public interface OperatorDataManager {
 	void updateSurchargeJourneyPurpose(SurchargeJourneyPurpose journey_purpose);
 	void insertOperatorOtherElig(OtherEligTable elg);
 	void updateOperatorOtherElig(OtherEligTable elg);
+	void deleteOperatorOtherEligsByOpID(int opID);
 	List<OtherEligTable> getOperatorOtherEligByOpID(int opID);
 	List<OtherEligTable> getOperatorOtherEligs();
 	void insertSurchargeOperatingTime(SurchargeOperatingTime operating_time);

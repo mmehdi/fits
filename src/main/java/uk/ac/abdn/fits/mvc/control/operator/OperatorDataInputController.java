@@ -192,9 +192,11 @@ public class OperatorDataInputController{
 		operatingAreaInfo.setFields(operatorInputForm);
 		utils.updateOperatingArea(operating_area,operatingAreaInfo);
 		
-		Elig elig = new Elig();
-		elig.setFields(operatorInputForm);
-		utils.insertElig(opId, elig);
+		Elig eligInfo = new Elig();
+		eligInfo.setFields(operatorInputForm);
+		PassengerElig passenger_elig = operatorDataManager.getPassengerElig(opId);
+
+		utils.updateElig(passenger_elig,eligInfo,opId);
 		
 		/*Fare fare = new Fare();
 		fare.setField(operatorInputForm);
