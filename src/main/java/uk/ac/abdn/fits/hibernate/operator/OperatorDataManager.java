@@ -70,5 +70,7 @@ public interface OperatorDataManager {
 	void updateSurchargeMileageBands(SurchargeMileageBands surcharge_mileage_bands);
 	void deleteOperatingArea(OperatingArea operating_area);
 	void deleteFareMileageBandsByFareStrctId(int fare_structure_id);
-	
+	void deleteOperationalHoursByOpId(int operator_id);
+	void deleteServiceNotAvailTimeByOpId(int opId);
+
 }

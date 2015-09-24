@@ -241,6 +241,13 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		return OperationalHoursDAO.getOperationalHoursByOpId(operatorId);
 	}
 
+
+	@Transactional
+	public void deleteOperationalHoursByOpId(int operatorId) {
+		
+		OperationalHoursDAO.deleteOperationalHoursByOpId(operatorId);
+	}
+	
 	@Override
 	public void updateOperatorLastUpdateTime(int operatorId, Date date) {
 		// TODO Auto-generated method stub
@@ -367,6 +374,13 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		serviceNotAvailableDAO.insertServiceNotAvailable(serviceNotAvailable);
 		
 	}
+
+	@Override
+	public void deleteServiceNotAvailTimeByOpId(int opId) {
+		serviceNotAvailableDAO.deleteServiceNotAvailable(opId);
+		
+	}
+
 
 	@Override
 	public List<ServiceNotAvailable> getServiceNotAvailableByOpId(int op_id) {

@@ -1746,8 +1746,16 @@
         			
         			</div> <!--form group for radio buttons-->
     				</div>
+    		
     				
-					<div id= "tab-fare-structure-form" style="display: none;">
+    				<c:choose>
+					    <c:when test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns == '0'}">
+							<div id= "tab-fare-structure-form" style="display:block;">
+					    </c:when>
+					    <c:otherwise>
+							<div id= "tab-fare-structure-form" style="display:none;">
+					    </c:otherwise>      
+					</c:choose>
 					<div class="form-group" >
         			<label class=" control-label" style="margin-top:10px;"> How do you charge fares?</label>
        				<div class="form-group"> <!--form group for radio buttons-->

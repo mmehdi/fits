@@ -401,7 +401,9 @@
 					</p>
 
 					<script>
-					   
+				    var nowDate = new Date();
+	                var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+			
 					    $('#datepair_rtn .date').datepicker({
 					        'format': 'dd/mm/yyyy',
 					        'autoclose': true,

@@ -51,5 +51,17 @@ public class OperationalHoursDAOImpl implements OperationalHoursDAO {
 		  }
 		  return null;
 	}
+	
+	@Override
+	public void deleteOperationalHoursByOpId(int operator_id) {
+		List<OperationalHours> opHours = getOperationalHoursByOpId(operator_id);
+		sessionFactory.getCurrentSession();
+		if(opHours!=null){
+			for(OperationalHours obj: opHours)
+				sessionFactory.getCurrentSession().delete(obj);
+		}
+
+	}
+	
 
 }

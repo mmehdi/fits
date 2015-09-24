@@ -38,5 +38,14 @@ public class ServiceNotAvailableDAOImpl implements ServiceNotAvailableDAO{
 		  }
 		  return null;
 	}
-
+	
+	@Override
+	public void deleteServiceNotAvailable(int operator_id) {
+		List<ServiceNotAvailable> servicesNA = getServiceNotAvailableByOpId(operator_id);
+		if(servicesNA!=null){
+			for(ServiceNotAvailable ser:servicesNA)
+				sessionFactory.getCurrentSession().delete(ser);
+		}
+	
+	}
 }

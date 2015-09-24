@@ -32,6 +32,7 @@ public class OtherEligDAOImpl implements OtherEligDAO{
 
 	@Override
 	public void deleteOtherElig(OtherEligTable otherElig) {
+		sessionFactory.getCurrentSession();
 		sessionFactory.getCurrentSession().delete(otherElig);
 	}
 	

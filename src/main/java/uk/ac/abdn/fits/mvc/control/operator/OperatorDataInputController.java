@@ -171,23 +171,26 @@ public class OperatorDataInputController{
 		
 		int opId = operatorInputForm.getOperator_id();
 
+		System.out.println("xxxxxxxxxxxxxxxxxxxx: "+operatorInputForm.getTab_fare_structure_radioBtns());
+		System.out.println("xxxxxxxxxxxxxxxxxxxx: "+operatorInputForm.getTab_fare_structure_how_charge_radioBtns());
+
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		OperatorDataManager operatorDataManager = 
 		        (OperatorDataManager) ctx.getBean("operatorDataManagerImpl");
 		Operator operator = operatorDataManager.getOperatorById(opId);
-		
-		GeneralInfo generalInfo = new GeneralInfo();
-		System.out.println("monday hours " + operatorInputForm.getTab_operating_hours_field_monday_1());
-		generalInfo.setFields(operatorInputForm);
-//		session.setAttribute("general_info", generalInfo);
 		HibUtils utils = new HibUtils();
+
+		GeneralInfo generalInfo = new GeneralInfo();
+		generalInfo.setFields(operatorInputForm);
 		utils.updateGeneralInfo(opId, generalInfo);
+	
+//		session.setAttribute("general_info", generalInfo);
+
+		//VehicleInfo vehInfo = new VehicleInfo();
+		//vehInfo.setFields(operatorInputForm);
+		//utils.updateVehicle(opId, vehInfo);
 		
-		VehicleInfo vehInfo = new VehicleInfo();
-		vehInfo.setFields(operatorInputForm);
-		utils.updateVehicle(opId, vehInfo);
-		
-		OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
+		/*OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
 		operatingAreaInfo.setFields(operatorInputForm);
 		utils.updateOperatingArea(opId,operatingAreaInfo);
 		
@@ -196,9 +199,9 @@ public class OperatorDataInputController{
 		PassengerElig passenger_elig = operatorDataManager.getPassengerElig(opId);
 
 		utils.updateElig(passenger_elig,eligInfo,opId);
-		
-		Fare fare = new Fare();
-		fare.setField(operatorInputForm);
+		*/
+		//Fare fare = new Fare();
+		//fare.setField(operatorInputForm);
 		//utils.updateFare(opId, fare);
 		
 		
@@ -376,7 +379,7 @@ public class OperatorDataInputController{
 		vehicles.add("minibus");
 		vehicles.add("Wheelchair Accessible Car");
 		vehicles.add("pickUpVan");*/
-		
+		model.addAttribute("vehicles", vehcleTypes);
 		model.addAttribute("veh_types", vehicles);
 		Vehicle veh = operatorDataManager.getVehicleByOpId(opId);
 
@@ -473,6 +476,7 @@ public class OperatorDataInputController{
 		
 		
 		FareStructure fare = operatorDataManager.getFareStructureByOpId(opId);
+		
 		if(fare != null){
 			if(fare.getFare_structure_radioBtns()!=null){
 				model.addAttribute("tab_fare_structure_radioBtns", fare.getFare_structure_radioBtns());

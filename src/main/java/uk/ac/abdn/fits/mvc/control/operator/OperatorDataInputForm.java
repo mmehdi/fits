@@ -276,14 +276,6 @@ public class OperatorDataInputForm {
 	}
 	
 	
-	public String getTab_fare_structure_radioBtns(){
-		return tab_fare_structure_radioBtns;
-	}
-	public void setTab_fare_structure_radioBtns(String tab_fare_structure_radioBtns){
-		this.tab_fare_structure_radioBtns = tab_fare_structure_radioBtns;
-	}
-	
-	
 	public double getFare_dist1_mile_2(){
 		return fare_dist1_mile_2;
 	}
@@ -1189,5 +1181,11 @@ public class OperatorDataInputForm {
 	}
 	public void setAdded_service_not_avail(String added_service_not_avail) {
 		this.added_service_not_avail = added_service_not_avail;
+	}
+	public String getTab_fare_structure_radioBtns() {
+		return tab_fare_structure_radioBtns;
+	}
+	public void setTab_fare_structure_radioBtns(String tab_fare_structure_radioBtns) {
+		this.tab_fare_structure_radioBtns = tab_fare_structure_radioBtns;
 	}
 }

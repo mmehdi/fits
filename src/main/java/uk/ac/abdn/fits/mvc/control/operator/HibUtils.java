@@ -369,118 +369,18 @@ public class HibUtils {
 
 		operatorDataManager.updateOperator(operator);
 		
-		List<OperationalHours> operationalHours = operatorDataManager.getOperationalHoursByOpId(operator_id);
-		
-		System.out.println("going to update additional hour asdasdasdasdasdas:"+operationalHours.size());
+		operatorDataManager.deleteOperationalHoursByOpId(operator_id);
+		insertOperatingHours(operator.getOperator_id(),genralInfo);
 
-		System.out.println(getTime(genralInfo.getOprHouMon1()));
-		for(OperationalHours hours: operationalHours){
-		
-					if(hours.getDay_of_week().equals(Day.Monday.toString())){
-						if(hours.getSession().equals(DaySession.Morning.toString())){
-									hours.setOpening_time(getTime(genralInfo.getOprHouMon1()));
-									hours.setClosing_time(getTime(genralInfo.getOprHouMon2()));
-								}
-						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
-							    	hours.setOpening_time(getTime(genralInfo.getOprHouMon3()));
-							    	hours.setClosing_time(getTime(genralInfo.getOprHouMon4()));
-								}
-						else{
-							
-						}
-					}
-					else if(hours.getDay_of_week().equals(Day.Tuesday.toString())){
-						if(hours.getSession().equals(DaySession.Morning.toString())){
-								hours.setOpening_time(getTime(genralInfo.getOprHouTue1()));
-								hours.setClosing_time(getTime(genralInfo.getOprHouTue2()));
-							}
-						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
-						    	hours.setOpening_time(getTime(genralInfo.getOprHouTue3()));
-						    	hours.setClosing_time(getTime(genralInfo.getOprHouTue4()));
-							}
-					}				
-					else if(hours.getDay_of_week().equals(Day.Wednesday.toString())){
-						if(hours.getSession().equals(DaySession.Morning.toString())){
-							hours.setOpening_time(getTime(genralInfo.getOprHouWed1()));
-							hours.setClosing_time(getTime(genralInfo.getOprHouWed2()));
-							
-						}
-						else if(hours.getSession().equals(DaySession.Afternoon.toString())){
-					    	hours.setOpening_time(getTime(genralInfo.getOprHouWed3()));
-					    	hours.setClosing_time(getTime(genralInfo.getOprHouWed4()));
-						}
-					}
-					else if(hours.getDay_of_week().equals(Day.Thursday)){
-						if(hours.getSession().equals(DaySession.Morning)){
-							hours.setOpening_time(getTime(genralInfo.getOprHouThu1()));
-							hours.setClosing_time(getTime(genralInfo.getOprHouThu2()));
-						}
-						else if(hours.getSession().equals(DaySession.Afternoon)){
-					    	hours.setOpening_time(getTime(genralInfo.getOprHouThu3()));
-					    	hours.setClosing_time(getTime(genralInfo.getOprHouThu4()));
-					}
-			
-				}
-					else if(hours.getDay_of_week().equals(Day.Friday)){
-						if(hours.getSession().equals(DaySession.Morning)){
-							hours.setOpening_time(getTime(genralInfo.getOprHouFri1()));
-							hours.setClosing_time(getTime(genralInfo.getOprHouFri2()));
-						}
-						else if(hours.getSession().equals(DaySession.Afternoon)){
-					    	hours.setOpening_time(getTime(genralInfo.getOprHouFri3()));
-					    	hours.setClosing_time(getTime(genralInfo.getOprHouFri4()));
-					    	}
-						}
-					else if(hours.getDay_of_week().equals(Day.Saturday)){
-						if(hours.getSession().equals(DaySession.Morning)){
-							hours.setOpening_time(getTime(genralInfo.getOprHouSat1()));
-							hours.setClosing_time(getTime(genralInfo.getOprHouSat2()));
-						}
-						else if(hours.getSession().equals(DaySession.Afternoon)){
-					    	hours.setOpening_time(getTime(genralInfo.getOprHouSat3()));
-					    	hours.setClosing_time(getTime(genralInfo.getOprHouSat4()));
-					    	}
-						}
-					else if(hours.getDay_of_week().equals(Day.Sunday)){
-						if(hours.getSession().equals(DaySession.Morning)){
-							hours.setOpening_time(getTime(genralInfo.getOprHouSun1()));
-							hours.setClosing_time(getTime(genralInfo.getOprHouSun2()));
-						}
-						else if(hours.getSession().equals(DaySession.Afternoon)){
-					    	hours.setOpening_time(getTime(genralInfo.getOprHouSun3()));
-					    	hours.setClosing_time(getTime(genralInfo.getOprHouSun4()));
-					}
-				}
-			
-				System.out.println("going to update additional hour:"+hours.getOpening_time());
-				operatorDataManager.updateOperationalHours(hours);
-
-			}
-			
-	
-		
+		operatorDataManager.deleteServiceNotAvailTimeByOpId(operator_id);
+		insertServiceNotAvailTime(operator.getOperator_id(),genralInfo);
+					
 
     	return operator.getOperator_id();
 	}
 
-	public int insertGeneralInfo(String username, GeneralInfo genralInfo){
-		
-		Operator operator = new Operator();
-		operator.setName(genralInfo.getName());
-		operator.setDescription(genralInfo.getDescription());
-		operator.setHow2book(genralInfo.getHow2book());
-		operator.setType_of_permit(genralInfo.getType_of_permit());
-		operator.setInactive(genralInfo.getCb_not_avail());
-		Date last_update = new Date(Calendar.getInstance().getTime().getTime());
-		operator.setLast_update(last_update);
-		// get user_id
-		User user = operatorDataManager.getUser(username);
-		if(user != null){
-			operator.setUser_id(user.getId());
-		}
-		operatorDataManager.insertOperator(operator);
-		operator = operatorDataManager.getOperatorById(operator.getOperator_id());
-		System.out.println("inserted operator: id " + operator.getOperator_id());
+	public void insertOperatingHours(int opId, GeneralInfo genralInfo){
+		Operator operator = operatorDataManager.getOperatorById(opId);
 		/* insert operational hours*/
 		ArrayList<OperationalHours> operationalHours = new ArrayList<OperationalHours>();
 		OperationalHours hours = null;
@@ -593,21 +493,9 @@ public class HibUtils {
 			hours = operationalHours.get(i);
 			operatorDataManager.insertOperationalHours(hours);
 		}
-//    	List<OperationalHours> operationalHours_t = operatorDataManager.getOperationalHoursByOpId(operator.getOperator_id());
-//    	for(OperationalHours oh: operationalHours_t){
-//    		System.out.print(oh.getDay_of_week());
-//    		if(oh.getOpening_time()!=null){
-//    			System.out.print(" "+ oh.getOpening_time().toGMTString());
-//    		}else{
-//    			System.out.print(" null ");
-//    		}
-//    		if(oh.getClosing_time()!=null){
-//    			System.out.println(oh.getClosing_time().toGMTString());
-//    		}else{
-//    			System.out.println(" null ");
-//    		}
-//    	}
-//    	insertOperatingArea(operator.getOperator_id(), genralInfo.getJsonData(), genralInfo.getKmlData());
+	}
+	public void insertServiceNotAvailTime(int opId,GeneralInfo genralInfo){
+		Operator operator = operatorDataManager.getOperatorById(opId);
     	Date date = null;
 		String service_not_avail = genralInfo.getAdded_service_not_avail();
 		StringTokenizer st = null;
@@ -653,6 +541,29 @@ public class HibUtils {
 		for(int i=0; i< sna_list.size(); i++){
 			operatorDataManager.insertServiceNotAvailable(sna_list.get(i));
 		}
+	}
+
+	public int insertGeneralInfo(String username, GeneralInfo genralInfo){
+		
+		Operator operator = new Operator();
+		operator.setName(genralInfo.getName());
+		operator.setDescription(genralInfo.getDescription());
+		operator.setHow2book(genralInfo.getHow2book());
+		operator.setType_of_permit(genralInfo.getType_of_permit());
+		operator.setInactive(genralInfo.getCb_not_avail());
+		Date last_update = new Date(Calendar.getInstance().getTime().getTime());
+		operator.setLast_update(last_update);
+		// get user_id
+		User user = operatorDataManager.getUser(username);
+		if(user != null){
+			operator.setUser_id(user.getId());
+		}
+		operatorDataManager.insertOperator(operator);
+		operator = operatorDataManager.getOperatorById(operator.getOperator_id());
+		System.out.println("inserted operator: id " + operator.getOperator_id());
+	
+		insertOperatingHours(operator.getOperator_id(),genralInfo);
+		insertServiceNotAvailTime(operator.getOperator_id(),genralInfo);
     	return operator.getOperator_id();
 	}
 	

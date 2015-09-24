@@ -11,5 +11,6 @@ public interface ServiceNotAvailableDAO {
 	
 	void insertServiceNotAvailable(ServiceNotAvailable serviceNotAvailable);
 	List<ServiceNotAvailable> getServiceNotAvailableByOpId(int op_id);
+	void deleteServiceNotAvailable(int operator_id);
 	
 }

@@ -19,5 +19,6 @@ public interface OperationalHoursDAO {
 	void insertOperationalHours(OperationalHours operational_hours);
 	void updateOperationalHours(OperationalHours operational_hours);
 	List<OperationalHours> getOperationalHoursByOpId(int operator_id);
+	void deleteOperationalHoursByOpId(int operator_id);
 		
 }
