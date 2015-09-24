@@ -117,6 +117,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		operatingAreaDAO.insertOperatingArea(operating_area);
 	}
 	
+	
 	@Transactional
 	public OperatingArea getOperatingAreaByOperatorId(int operatorId) {
 		return operatingAreaDAO.getOperatingAreaByOpId(operatorId);
@@ -132,6 +133,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		fareMileageBandsDAO.insertFareMileageBands(fare_mileage_bands);
 		
 	}
+
 	
 	@Override
 	public void insertSurchargeMileageBands(
@@ -142,7 +144,7 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 
 	@Override
 	public void updateFareStructure(FareStructure fare) {
-		// TODO Auto-generated method stub
+		fareStructureDAO.updateFareStructure(fare);
 		
 	}
 
@@ -189,6 +191,10 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		
 	}
 
+	@Override
+	public void deleteOperatingArea(OperatingArea operating_area) {
+		operatingAreaDAO.deleteOperatingArea(operating_area);
+	}
 	
 
 	@Override
@@ -325,6 +331,16 @@ public class OperatorDataManagerImpl implements OperatorDataManager{
 		return fareMileageBandsDAO.getFareMileageBandsByFareStrctId(fare_structure_id);
 	}
 
+	
+	@Override
+	public void deleteFareMileageBandsByFareStrctId(int fare_structure_id) {
+		List<FareMileageBands> fareMlgBands = getFareMileageBandsByFareStrctId(fare_structure_id);
+		if(fareMlgBands!=null){
+			for(FareMileageBands obj: fareMlgBands)
+				fareMileageBandsDAO.deleteFareMileageBands(obj);
+		}
+	}
+	
 	@Override
 	public Vehicle getVehicleByOpId(int opId) {
 		

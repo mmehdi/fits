@@ -33,6 +33,13 @@ public class FareStructureDAOImpl implements FareStructureDAO{
 	}
 
 	@Override
+	public void updateFareStructure(FareStructure fare) {
+		sessionFactory.
+	      getCurrentSession();
+		sessionFactory.getCurrentSession().update(fare);
+	}
+	
+	@Override
 	public FareStructure getFareStructureByOpId(int id) {
 		Query query = sessionFactory.
 			      getCurrentSession().

@@ -36,7 +36,13 @@ public class OperatingAreaDAOImpl implements OperatingAreaDAO{
 	      getCurrentSession();
 		sessionFactory.getCurrentSession().update(operating_area);
 	}
-
+	@Override
+	public void deleteOperatingArea(OperatingArea operating_area) {
+		sessionFactory.
+	      getCurrentSession();
+		sessionFactory.getCurrentSession().delete(operating_area);
+	}
+	
 	
 	@Override
 	public OperatingArea getOperatingAreaByOpId(int operator_id) {

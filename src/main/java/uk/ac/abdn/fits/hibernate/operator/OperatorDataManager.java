@@ -68,5 +68,7 @@ public interface OperatorDataManager {
 	List<FareMileageBands> getFareMileageBandsByFareStrctId(int fare_structure_id);
 	void insertSurchargeMileageBands(SurchargeMileageBands surcharge_mileage_bands);
 	void updateSurchargeMileageBands(SurchargeMileageBands surcharge_mileage_bands);
+	void deleteOperatingArea(OperatingArea operating_area);
+	void deleteFareMileageBandsByFareStrctId(int fare_structure_id);
 	
 }

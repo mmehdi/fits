@@ -187,10 +187,9 @@ public class OperatorDataInputController{
 		vehInfo.setFields(operatorInputForm);
 		utils.updateVehicle(opId, vehInfo);
 		
-		OperatingArea operating_area = operatorDataManager.getOperatingAreaByOpId(opId);
 		OperatingAreaInfo operatingAreaInfo = new OperatingAreaInfo();
 		operatingAreaInfo.setFields(operatorInputForm);
-		utils.updateOperatingArea(operating_area,operatingAreaInfo);
+		utils.updateOperatingArea(opId,operatingAreaInfo);
 		
 		Elig eligInfo = new Elig();
 		eligInfo.setFields(operatorInputForm);
@@ -198,14 +197,14 @@ public class OperatorDataInputController{
 
 		utils.updateElig(passenger_elig,eligInfo,opId);
 		
-		/*Fare fare = new Fare();
+		Fare fare = new Fare();
 		fare.setField(operatorInputForm);
-		utils.insertFare(opId, fare);
+		//utils.updateFare(opId, fare);
 		
 		
-		System.out.println("post /data_input_form_update");
-		System.out.println("added_service_not_avail: " + operatorInputForm.getAdded_service_not_avail());
-		System.out.println("not avail from: "+ operatorInputForm.getNot_valid_from());*/
+//		System.out.println("post /data_input_form_update");
+	//	System.out.println("added_service_not_avail: " + operatorInputForm.getAdded_service_not_avail());
+		//System.out.println("not avail from: "+ operatorInputForm.getNot_valid_from());*/
 		return updateDataInputTemplateConstraint(locale, model, session, principal);
 	
 	}

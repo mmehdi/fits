@@ -1423,7 +1423,7 @@
 						  	</c:if>
 							<option value="other">Other</option>
 						</select>
-						<input type="text" name="_vehicle_type" value="${vehicle_description}" style="display:none;">
+						<input type="text" name="_vehicle_type" value="${vehicle_type}" style="display:none;">
 						<input type="text" id = "other_vehicle" name="other_vehicle" class="form-control" placeholder="Please enter the vehicle type." value="" style="display: none;"/>
 	                </div>
 	            </div>

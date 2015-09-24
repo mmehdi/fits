@@ -17,6 +17,7 @@ import uk.ac.abdn.fits.hibernate.model.FareMileageBands;
 public interface FareMileageBandsDAO {
 	
 	void insertFareMileageBands(FareMileageBands fare_mileage_bands);
+	void deleteFareMileageBands(FareMileageBands fare_mileage_bands);
 	List<FareMileageBands> getFareMileageBandsByFareStrctId(int fare_structure_id);
 		
 }

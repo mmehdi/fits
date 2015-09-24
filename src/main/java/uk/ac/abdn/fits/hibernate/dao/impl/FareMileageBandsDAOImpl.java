@@ -32,6 +32,14 @@ public class FareMileageBandsDAOImpl implements FareMileageBandsDAO{
 	}
 
 	@Override
+	public void deleteFareMileageBands(FareMileageBands fare_mileage_bands) {
+		sessionFactory.
+	      getCurrentSession();
+		sessionFactory.getCurrentSession().delete(fare_mileage_bands);
+	}
+
+	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<FareMileageBands> getFareMileageBandsByFareStrctId(
 			int fare_structure_id) {

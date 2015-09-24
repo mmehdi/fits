@@ -664,10 +664,10 @@ public class HibUtils {
 		operatorDataManager.insertOperatingArea(operating_area);
 	}
 	
-	public void updateOperatingArea(OperatingArea operating_area,OperatingAreaInfo operatingAreaInfo){
-		operating_area.setJson(operatingAreaInfo.getJsonData());
-		operating_area.setKml(operatingAreaInfo.getKmlData());
-		operatorDataManager.updateOperatingArea(operating_area);
+	public void updateOperatingArea(int operator_id, OperatingAreaInfo operatingArea){
+		OperatingArea operating_area = operatorDataManager.getOperatingAreaByOpId(operator_id);
+		operatorDataManager.deleteOperatingArea(operating_area); //update was creating duplicates so I used delete!
+		insertOperatingArea(operator_id,operatingArea);
 	}
 	
 	public void insertElig(int operator_id, Elig elig){
@@ -729,8 +729,7 @@ public class HibUtils {
 		passenger_elig.setElig_radioBtns(eligInfo.getTab_elig_radioBtns());
 		passenger_elig.setExplain_opening_up_elig(eligInfo.getExplain_opening_up_elig());
 
-		//List<OtherEligTable> otherEligs = operatorDataManager.getOperatorOtherEligByOpID(passenger_elig.getOperator_id());
-		operatorDataManager.deleteOperatorOtherEligsByOpID(opId);
+		operatorDataManager.deleteOperatorOtherEligsByOpID(opId); //update was creating duplicates, so i had to delete
 		if(!eligInfo.getOther_elig_type().equals("none")){
 			OtherEligTable otherElig = new OtherEligTable();
 			if(eligInfo.getOther_elig_type().equals("other")){
@@ -764,6 +763,30 @@ public class HibUtils {
 //		int fare_structure_id = operatorDataManager.getFareStructureByOpId(operator_id).getId();
 		int fare_structure_id = fare_structure.getId();
 		List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fare);
+		for(FareMileageBands milage_band: mileage_bands){
+			operatorDataManager.insertFareMileageBands(milage_band);
+		}
+		
+	}
+	
+	public void updateFare(int operator_id, Fare fareInfo){
+		
+	//	FareStructure fare_structure = new FareStructure();
+		FareStructure fare_structure = operatorDataManager.getFareStructureByOpId(operator_id);
+		fare_structure.setFare_structure_radioBtns(fareInfo.getTab_fare_structure_radioBtns());
+		fare_structure.setHow_charge_radioBtns(fareInfo.getTab_fare_structure_how_charge_radioBtns());
+		fare_structure.setReturn_fare_multiplier(fareInfo.getReturn_fare_multiplier());
+		fare_structure.setDiscount_for_over60(new Double(fareInfo.getDiscount_for_over60()));
+		fare_structure.setDiscount_for_under16(new Double(fareInfo.getDiscount_for_under16()));
+		fare_structure.setDiscount_for_other_concessionary(new Double(fareInfo.getDiscount_for_other_concessionary()));
+		fare_structure.setHas_escort(fareInfo.isFare_structure_checkbox_escort());
+		fare_structure.setCharge_for_dead_mileage(fareInfo.isFare_structure_checkbox_charge_for_dead_mileage());
+		operatorDataManager.updateFareStructure(fare_structure);
+
+		int fare_structure_id = fare_structure.getId();
+		operatorDataManager.deleteFareMileageBandsByFareStrctId(fare_structure_id);//update was creating duplicates
+
+		List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
 		for(FareMileageBands milage_band: mileage_bands){
 			operatorDataManager.insertFareMileageBands(milage_band);
 		}

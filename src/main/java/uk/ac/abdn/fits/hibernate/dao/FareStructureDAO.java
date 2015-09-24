@@ -16,6 +16,7 @@ import uk.ac.abdn.fits.hibernate.model.FareStructure;
 public interface FareStructureDAO {
 	
 	void insertFareStructure(FareStructure fare);
+	void updateFareStructure(FareStructure fare);
 	FareStructure getFareStructureByOpId(int operator_id);
 	List<FareStructure> getFareStructures();
 	
