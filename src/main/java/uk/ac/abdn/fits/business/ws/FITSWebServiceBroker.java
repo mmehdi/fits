@@ -48,9 +48,9 @@ public class FITSWebServiceBroker {
 			}
 			not_relaxed.add(option);
 		}
-		options.clear();
-		options = reasoner.rank(not_relaxed, query);
-		options.addAll(relaxed);
+			options.clear();
+			options = reasoner.rank(not_relaxed, query);
+			options.addAll(relaxed);
 		return options;
 	}
 	

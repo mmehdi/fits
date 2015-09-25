@@ -51,9 +51,15 @@ public class FTSBusinessDelegate implements BusinessDelegate{
 		DirectionsResponse dir_res = getDirectionsResponse(query);
 		query.setDirectionsResponse(dir_res);
 		/* DB search */ 
-		options.addAll(dataAccessObject.query(query));
-		for(BSessionFacade sf: fts){
-			options.addAll(sf.query(query));
+		
+		try{
+			options.addAll(dataAccessObject.query(query));
+			for(BSessionFacade sf: fts){
+				options.addAll(sf.query(query));
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 		return options;
 	}

@@ -770,7 +770,7 @@
 			$("input[name='tab_fare_structure_radioBtns']").val([$("input[name='_tab_fare_structure_radioBtns']").val()]);
 			console.log("tab_fare_structure_radioBtns is restored ");
 		}
-		if($("input[name='tab_fare_structure_radioBtns']:checked").val() == "1"){
+		if($("input[name='tab_fare_structure_radioBtns']:checked").val() == "1" || $("input[name='tab_fare_structure_radioBtns']:checked").val() == "2"){
 			$("#tab-fare-structure-form").fadeOut("slow");
 		}else{
 			$("#tab-fare-structure-form").fadeIn("slow");
@@ -1728,38 +1728,25 @@
       			</a></h4></div>
 				<div id="collapseFour" class="panel-collapse collapse">
 				<div class="panel-body">
-    				<div class="form-group">
+    				<div class="form-group" id="">
         			<label for="tab-fare-structure-field-1" class=" control-label"> Do you charge a standard fare?</label>
        				<div class="form-group"> <!--form group for radio buttons-->
           			<label class="col-md-2">
-            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="0" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns == '0'}"><c:out value="checked"/></c:if>   disabled/>
-            		Yes
-        			</label>
+            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="0" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns eq '0'}"><c:out value="checked"/></c:if>/>Yes</label>
         			<label class="col-md-2">
             		<!-- form:radiobutton path="tab_fare_structure_radioBtns" value="1" checked="checked" disabled/ -->
-            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="1" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns == '1'}"><c:out value="checked"/></c:if> disabled />
-            		No
-        			</label>
+            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="1" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns eq '1'}"><c:out value="checked"/></c:if>/>No</label>
         			<label class="col-md-8">
-            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="2" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns == '2'}"><c:out value="checked"/></c:if> disabled />
-            		Donations appreciated
-        			</label>
-        			
+            		<input type="radio"  name="tab_fare_structure_radioBtns"  value="2" <c:if test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns eq '2'}"><c:out value="checked"/></c:if>/>Donations appreciated</label>
         			<input type="text" name="_tab_fare_structure_radioBtns" value="<c:if test="${not empty tab_fare_structure_radioBtns}"><c:out value="${tab_fare_structure_radioBtns}"/></c:if>" style="display:none;" />
         			
         			</div> <!--form group for radio buttons-->
     				</div>
-    		
+
     				
-    				<c:choose>
-					    <c:when test="${not empty tab_fare_structure_radioBtns and tab_fare_structure_radioBtns == '0'}">
-							<div id= "tab-fare-structure-form" style="display:block;">
-					    </c:when>
-					    <c:otherwise>
-							<div id= "tab-fare-structure-form" style="display:none;">
-					    </c:otherwise>      
-					</c:choose>
-					<div class="form-group" >
+
+					<div id= "tab-fare-structure-form" style="display:none;">
+					<div class="form-group" >					
         			<label class=" control-label" style="margin-top:10px;"> How do you charge fares?</label>
        				<div class="form-group"> <!--form group for radio buttons-->
           			<label class="col-md-2">
@@ -1780,8 +1767,10 @@
     				</div>
     				<!--  /div-->
 					
-            		<fieldset id = "distance_charge">
-                	<legend>Distance:</legend>
+					
+
+	        	<fieldset id = "distance_charge" style="display:none;">
+		            <legend>Distance:</legend>
 					<div id="fare_table">
 					<div class="row col-lg-12 col-sm-12 col-xs-12">
 						  <div class="col-md-3 "><label>From</label></div>
@@ -2406,12 +2395,22 @@
     		  $("#tab-elig-openning-up").fadeIn('slow');
     	  }
     	  radioVal = $("input[name='tab_fare_structure_radioBtns']:checked").val();
-      	  if(radioVal==1){
+      	  if(radioVal==1 || radioVal==2){
       	      $("#tab-fare-structure-form").fadeOut('slow');
       	  }
       	  else{
       		  $("#tab-fare-structure-form").fadeIn('slow');
       	  }
+      	  
+       	  radioVal = $("input[name='tab_fare_structure_how_charge_radioBtns']:checked").val();
+      	  if(radioVal==1){
+      	      $("#distance_charge").fadeOut('slow');
+      	  }
+      	  else{
+      		  $("#distance_charge").fadeIn('slow');
+      	  }
+      	  
+      	
     	
 	};
 	

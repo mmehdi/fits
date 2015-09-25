@@ -701,6 +701,7 @@ public class HibUtils {
 
 		List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
 		for(FareMileageBands milage_band: mileage_bands){
+			System.out.println("ooooooooooooooooooooooooo: "+ milage_band.getMile_2());
 			operatorDataManager.insertFareMileageBands(milage_band);
 		}
 		

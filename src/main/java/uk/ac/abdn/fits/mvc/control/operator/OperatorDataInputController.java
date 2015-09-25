@@ -171,7 +171,7 @@ public class OperatorDataInputController{
 		
 		int opId = operatorInputForm.getOperator_id();
 
-		System.out.println("xxxxxxxxxxxxxxxxxxxx json: "+operatorInputForm.getJsonData());
+		System.out.println("xxxxxxxxxxxxxxxxxxxx radio: "+ operatorInputForm.getTab_fare_structure_radioBtns());
 		System.out.println("");
 
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
@@ -189,7 +189,8 @@ public class OperatorDataInputController{
 		VehicleInfo vehInfo = new VehicleInfo();
 		vehInfo.setFields(operatorInputForm);
 		utils.updateVehicle(opId, vehInfo);
-		
+	
+		//jsonString empty crash
 		if(operatorInputForm.getJsonData()==null)
 			operatorInputForm.setJsonData("");
 		
@@ -202,9 +203,9 @@ public class OperatorDataInputController{
 
 		utils.updateElig(passenger_elig,eligInfo,opId);
 		
-		//Fare fare = new Fare();
-		//fare.setField(operatorInputForm);
-		//utils.updateFare(opId, fare);
+		Fare fare = new Fare();
+		fare.setField(operatorInputForm);
+		utils.updateFare(opId, fare);
 		
 		
 //		System.out.println("post /data_input_form_update");

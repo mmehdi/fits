@@ -189,12 +189,7 @@ public class Fare {
 	public void setField(OperatorDataInputForm form ){
 		// if yes, the value is 0. If no, the value is 1. The default is 0.
 		
-		//charge_standard_fare = (byte) (form.getTab_fare_structure_radioBtns().toString().equals("0")?0:1);
-		if(form.getTab_fare_structure_radioBtns().equals("0"))
-			charge_standard_fare = 0;
-		else if(form.getTab_fare_structure_radioBtns().equals("1") || form.getTab_fare_structure_radioBtns().equals("2"))
-			charge_standard_fare = 1;
-		
+		charge_standard_fare = (byte) (form.getTab_fare_structure_radioBtns().toString().equals("0")?0:1);
 		tab_fare_structure_radioBtns = form.getTab_fare_structure_radioBtns();
 		tab_fare_structure_how_charge_radioBtns = form.getTab_fare_structure_how_charge_radioBtns();
 		fare_dist1_mile_2 = form.getFare_dist1_mile_2();

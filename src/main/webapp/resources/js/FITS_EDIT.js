@@ -1,5 +1,6 @@
 $(document).ready(function() {
-		
+	$("#tab_fare_structure_radioBtns_group :input").attr("disabled", true);
+
 	$("#tab_fare_structure_form_radioBtns").change();
 	    $("input[name$='tab_fare_structure_radioBtns']").click(function() {
 	        var radioVal = $(this).val();
@@ -1316,8 +1317,9 @@ function toggleElig(){
 var editable_fare = false;
 function toggleFare(){
 	if(editable_fare){
-		 $("input[name='tab_fare_structure_radioBtns']").prop('disabled', false);
-		    $("input[name='tab_fare_structure_how_charge_radioBtns']").prop('disabled', false);
+		// $("input[name='tab_fare_structure_radioBtns']").prop('disabled', false); //fixed crash bug on fare structure
+
+		$("input[name='tab_fare_structure_how_charge_radioBtns']").prop('disabled', false);
 //		    $("input[name='fare_dist1_mile_2']").prop('disabled', false);
 //		    $("select[name='fare_dist1_type']").prop('disabled', false);
 //		    $("input[name='fare_dist1_charge']").prop('disabled', false);
@@ -1336,7 +1338,7 @@ function toggleFare(){
 		    $("input[name='fare_structure_checkbox_escort']").prop('disabled', false);
 		    $("input[name='fare_structure_checkbox_charge_for_dead_mileage']").prop('disabled', false);
 	}else{
-		 $("input[name='tab_fare_structure_radioBtns']").prop('disabled', true);
+		 //$("input[name='tab_fare_structure_radioBtns']").prop('disabled', true);
 		    $("input[name='tab_fare_structure_how_charge_radioBtns']").prop('disabled', true);
 //		    $("input[name='fare_dist1_mile_2']").prop('disabled', true);
 //		    $("select[name='fare_dist1_type']").prop('disabled', true);
