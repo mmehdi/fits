@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -63,8 +64,8 @@ import uk.ac.abdn.fits.query.operator.PassengerMobilityStatus;
 @Controller
 @RequestMapping("/query_fts")
 //@SessionAttributes("ftsQueryFormBean")
-//@SessionAttributes({"fname","lname","email","options", "relaxed_options", "date_of_travel", "origin_postcode", 
-//	"origin_postcode_rtn", "options_rtn", "relaxed_options_rtn"})
+@SessionAttributes({"fname","lname","email","options", "relaxed_options", "date_of_travel", "origin_postcode", 
+	"origin_postcode_rtn", "options_rtn", "relaxed_options_rtn","date_of_travel_rtn"})
 public class FtsQueryController {
 	
 	// Invoked on every request
@@ -134,9 +135,14 @@ public class FtsQueryController {
 		}else{
 			travel_of_day = query.getOriginalRequest().getArriveTime();
 		}
-		DateFormat df = new SimpleDateFormat("MMM dd, yyyy");
+		DateFormat df = new SimpleDateFormat("MMM dd, yyyy - hh:mm");
 		String formattedDate = df.format(travel_of_day.getTime()); 
 		model.addAttribute("date_of_travel", formattedDate);
+		
+		formattedDate = df.format(getTimeReturn(queryFormBean).getTime());
+		model.addAttribute("date_of_travel_rtn", formattedDate);
+
+		
 		/* the origin postcode will be used to show the taxi service info */
 		if(queryFormBean.getPostal_code_f_outward() != null){
 			model.addAttribute("origin_postcode", queryFormBean.getPostal_code_f_outward().replaceAll("\\s", ""));

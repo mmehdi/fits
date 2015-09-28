@@ -224,7 +224,7 @@
 	        	<tbody>
 	        	</tbody>
         	 </table>
-        	 <p style="font-size: 150%;">Outward journey</p>
+        	 <p style="font-size: 150%;">Outward journey - ${date_of_travel}</p>
         	 <div id="options" >
 	        		<c:forEach items="${options}" var="option">
 	        		<div class="option">
@@ -468,7 +468,7 @@
            	
         	
         	<c:if test="${not empty options_rtn}">
-        		<p style="font-size: 150%;margin-top:50px;">Return journey</p>
+        		<p style="font-size: 150%;margin-top:50px;">Return journey - ${date_of_travel_rtn}</p>
         		<div class="options" >
 	        		<c:forEach items="${options_rtn}" var="option">
 	        		<div class="option">

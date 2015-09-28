@@ -122,7 +122,7 @@ public class MailController implements ServletConfigAware{
     	
     	
     	 String recipientName = "Customer";
-    	 String recipientEmail = "c.zeng@abdn.ac.uk";
+    	 String recipientEmail = "recipient@email.com";
     	 String fname = (String)session.getAttribute("fname");
     	 String lname = (String)session.getAttribute("lname");
     	 String email = null;
@@ -145,6 +145,8 @@ public class MailController implements ServletConfigAware{
     	List<TOption> not_relaxed = (List<TOption>)session.getAttribute("options");
     	List<TOption> relaxed_options = (List<TOption>)session.getAttribute("relaxed_options");
     	String date_of_travel = (String)session.getAttribute("date_of_travel");
+    	String date_of_travel_rtn = (String)session.getAttribute("date_of_travel_rtn");
+
     	String origin_postcode = (String)session.getAttribute("origin_postcode");
     	
     	List<TOption> not_relaxed_rtn = (List<TOption>)session.getAttribute("options_rtn");
@@ -154,8 +156,10 @@ public class MailController implements ServletConfigAware{
     	
     	String url = null;
     	View resolvedView;
+    	
 		try {
 			model.addAttribute("date_of_travel", date_of_travel);
+			model.addAttribute("date_of_travel_rtn", date_of_travel_rtn);
 			model.addAttribute("origin_postcode",origin_postcode);
 			model.addAttribute("options", not_relaxed);
 			model.addAttribute("relaxed_options", relaxed_options);
