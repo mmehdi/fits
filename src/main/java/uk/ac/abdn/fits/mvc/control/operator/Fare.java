@@ -195,10 +195,26 @@ public class Fare {
 		fare_dist1_mile_2 = form.getFare_dist1_mile_2();
 		fare_dist1_type = form.getFare_dist1_type();
 		fare_dist1_charge = form.getFare_dist1_charge();
+		
 		fare_dist2_mile_1 = form.getFare_dist2_mile_1();
 		fare_dist2_mile_2 = form.getFare_dist2_mile_2();
 		fare_dist2_type = form.getFare_dist2_type();
 		fare_dist2_charge = form.getFare_dist2_charge();
+
+		if(form.getFare_dist3_mile_1()>0 && form.getFare_dist3_mile_2() > 0){
+			fare_dist3_mile_1 = form.getFare_dist3_mile_1();
+			fare_dist3_mile_2 = form.getFare_dist3_mile_2();
+			fare_dist3_type = form.getFare_dist3_type();
+			fare_dist3_charge = form.getFare_dist3_charge();
+		}
+		
+		if(form.getFare_dist4_mile_1()>0 && form.getFare_dist4_mile_2() > 0){
+			fare_dist4_mile_1 = form.getFare_dist4_mile_1();
+			fare_dist4_mile_2 = form.getFare_dist4_mile_2();
+			fare_dist4_type = form.getFare_dist4_type();
+			fare_dist4_charge = form.getFare_dist4_charge();
+		}
+		
 		added_fare_dist = form.getAdded_fare_dist();
 		return_fare_multiplier = form.getReturn_fare_multiplier();
 		discount_for_over60= form.getDiscount_for_over60();

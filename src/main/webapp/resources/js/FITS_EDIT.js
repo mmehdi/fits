@@ -107,6 +107,7 @@ $(document).ready(function() {
 });
 
 function createAddedFareDist(){
+
 	var ind = $('input[name="fare_dist_ind"]').val();
 	var added_ind = parseInt(ind);
 	var text = '';
@@ -124,6 +125,7 @@ function createAddedFareDist(){
 	    	text += '#';
 	    }
 	}
+	alert("added fare: "+text);
 	return text;
 }
 
@@ -174,7 +176,7 @@ $(document).ready(function() {
 	                }
 	            }
 	        },
-	        fare_dist1_mile_2: {
+	        /*fare_dist1_mile_2: {
 	            validators: {
 	            	between: {
 	                    min: 0.000,
@@ -272,7 +274,7 @@ $(document).ready(function() {
 	                    message: '*&nbsp;the surchage must be greater than or equal to 0.'
 	                }
 	            }
-	        },
+	        },*/
 	        return_fare_multiplier: {
 	            validators: {
 	                between: {
@@ -615,16 +617,17 @@ $(document).ready(function() {
 	        // Show or hide the additional fields
 	        // They will or will not be validated based on their visibilities
 	        if (target == '#fare_structure'){
+	        	//alert('toggle');
 	        		var ind = $('input[name="fare_dist_ind"]').val();
 	        		var added_ind = parseInt(ind);
 	        		var div_html = '';
         			div_html += '<div class="row col-lg-12 col-sm-12 col-xs-12 addedMore" id="addedMore'+(added_ind+1)+'">';
         			if($('input[name="fare_dist'+(added_ind)+'_mile_2"]').val().length >0 ){
-        				div_html += '<div class="col-md-3 "><input type="text" class="form-control" name="fare_dist'+(added_ind+1)+'_mile_1" placeholder="" value="'+$('input[name="fare_dist'+added_ind+'_mile_2"]').val()+'" readonly></div>';
+        				div_html += '<div class="col-md-3 "><input type="number" class="form-control" name="fare_dist'+(added_ind+1)+'_mile_1" placeholder="" value="'+$('input[name="fare_dist'+added_ind+'_mile_2"]').val()+'" readonly></div>';
         			}else{
-        				div_html += '<div class="col-md-3 "><input type="text" class="form-control" name="fare_dist'+(added_ind+1)+'_mile_1" placeholder=""></div>';
+        				div_html += '<div class="col-md-3 "><input type="number" class="form-control" name="fare_dist'+(added_ind+1)+'_mile_1" placeholder=""></div>';
         			}
-        			div_html +=  '<div class="col-md-3"><input type="text" class="form-control"  name="fare_dist'+(added_ind+1)+'_mile_2" placeholder=""></div>';
+        			div_html +=  '<div class="col-md-3"><input type="number" class="form-control"  name="fare_dist'+(added_ind+1)+'_mile_2" placeholder=""></div>';
         			div_html +=  '<div class="col-md-3">';
         			div_html +=  '<select name = "fare_dist'+(added_ind+1)+'_type" class="form-control">';
         			if($("input[name$='tab_fare_structure_how_charge_radioBtns']:checked").val() == 2){
@@ -635,7 +638,7 @@ $(document).ready(function() {
 	        			div_html +=  '<option value="fare per mile">Fare per mile</option>';
         			}
         			div_html +=  '</select></div>';
-        			div_html +=  '<div class="col-md-3">&pound; <input type="text" name = "fare_dist'+(added_ind+1)+'_charge" class="form-control charge"  placeholder="0.00"></div>';
+        			div_html +=  '<div class="col-md-3">&pound; <input type="number" name = "fare_dist'+(added_ind+1)+'_charge" class="form-control charge"  placeholder="0.00"></div>';
         			div_html +=  '</div>';
 //		        		$('#fare_table').append('\
 //		                	<div class="row col-lg-12 col-sm-12 col-xs-12">\
@@ -653,13 +656,27 @@ $(document).ready(function() {
 	        		$('input[name="fare_dist_ind"]').val(added_ind+1);
 //	        	}
 	        }else if(target == '#fare_structure_del'){
+	        	//var c = $("#fare_table > div").length;
+	        	//alert(c);
 	        	var ind = $('input[name="fare_dist_ind"]').val();
-	        	var added_ind = parseInt(ind);
-	        	if(added_ind > 1){
+
+	        	//var added_ind = parseInt(ind);
+	        	var added_ind = ind;
+	        	if(added_ind > 2){
+
 	        		$('#addedMore'+ind).remove();
+	        	//	$('#data_input_form_update').data('bootstrapValidator').enableFieldValidators("fare_dist"+ind+"_mile_1", false);
+	        		//$('#data_input_form_update').data('bootstrapValidator').enableFieldValidators("fare_dist"+ind+"_mile_2", false);
+	        		//$('#data_input_form_update').data('bootstrapValidator').enableFieldValidators("fare_dist"+ind+"_charge", false);
+
+	        		
 	        		$('input[name="fare_dist_ind"]').val(added_ind-1);
-	        	}else{
-	        		$.prompt("Can't delete the first row", {
+	        		//$('input[name="fare_dist_ind"]').val(10);
+	        		//alert("after: "+$('input[name="fare_dist_ind"]').val());
+	        		//$('#fare_dist_ind').val(9);
+	        	}
+	        	else{
+	           		$.prompt("Can't delete the first row", {
 	    				title: "Info",
 	    				buttons: { "Yes": true, "No": false },
 	    				submit: function(e,v,m,f){
@@ -667,7 +684,7 @@ $(document).ready(function() {
 	    				}
 	    			});
 	        	}
-	        }else if(target == '#service_not_avail'){
+	        }else if(target == '#service_not_avail' && $('input[name="service_not_avail_ind"]').val()>2){
 	        	var ind = $('input[name="service_not_avail_ind"]').val();
         		var added_ind = parseInt(ind);
         		var div_html = '';
@@ -867,21 +884,38 @@ $(document).ready(function() {
 	    $("input[name='tab_elig_radioBtns']").prop('disabled', false);
 	    $("textarea[name='explain_opening_up_elig']").prop('disabled', false);
 	    $("input[name='tab_fare_structure_how_charge_radioBtns']").prop('disabled', false);
-	    $("input[name='fare_dist1_mile_2']").prop('disabled', false);
-	    $("select[name='fare_dist1_type']").prop('disabled', false);
-	    $("input[name='fare_dist1_charge']").prop('disabled', false);
-	    $("input[name='fare_dist2_mile_1']").prop('disabled', false);
-	    $("input[name='fare_dist2_mile_2']").prop('disabled', false);
-	    $("select[name='fare_dist2_type']").prop('disabled', false);
-	    $("input[name='fare_dist2_charge']").prop('disabled', false);
-	    $("input[name='fare_dist3_mile_1']").prop('disabled', false);
-	    $("input[name='fare_dist3_mile_2']").prop('disabled', false);
-	    $("select[name='fare_dist3_type']").prop('disabled', false);
-	    $("input[name='fare_dist3_charge']").prop('disabled', false);
-	    $("input[name='fare_dist4_mile_1']").prop('disabled', false);
-	    $("input[name='fare_dist4_mile_2']").prop('disabled', false);
-	    $("select[name='fare_dist4_type']").prop('disabled', false);
-	    $("input[name='fare_dist4_charge']").prop('disabled', false);
+	    
+	    if( $("input[name='fare_dist1_mile_2']").length )
+	    	$("input[name='fare_dist1_mile_2']").prop('disabled', false);
+	    if( $("select[name='fare_dist1_type']").length )
+	    	$("select[name='fare_dist1_type']").prop('disabled', false);
+	    if( $("input[name='fare_dist1_charge']").length )
+	    	$("input[name='fare_dist1_charge']").prop('disabled', false);
+	    if( $("input[name='fare_dist2_mile_1']").length )
+	    	$("input[name='fare_dist2_mile_1']").prop('disabled', false);
+	    if( $("input[name='fare_dist2_mile_2']").length )
+	    	$("input[name='fare_dist2_mile_2']").prop('disabled', false);
+	    if( $("select[name='fare_dist2_type']").length )
+	    	$("select[name='fare_dist2_type']").prop('disabled', false);
+	    if( $("input[name='fare_dist2_charge']").length )
+	    	$("input[name='fare_dist2_charge']").prop('disabled', false);
+	    if( $("input[name='fare_dist3_mile_1']").length )
+	    	$("input[name='fare_dist3_mile_1']").prop('disabled', false);
+	    if( $("input[name='fare_dist3_mile_2']").length )
+	    	$("input[name='fare_dist3_mile_2']").prop('disabled', false);
+	    if( $("select[name='fare_dist3_type']").length )
+	    	$("select[name='fare_dist3_type']").prop('disabled', false);
+	    if( $("input[name='fare_dist3_charge']").length )
+	    	$("input[name='fare_dist3_charge']").prop('disabled', false);
+	    if( $("input[name='fare_dist4_mile_1']").length )
+	    	$("input[name='fare_dist4_mile_1']").prop('disabled', false);
+	    if( $("input[name='fare_dist4_mile_2']").length )
+	    	$("input[name='fare_dist4_mile_2']").prop('disabled', false);
+	    if( $("select[name='fare_dist4_type']").length )
+	    	$("select[name='fare_dist4_type']").prop('disabled', false);
+	    if( $("input[name='fare_dist4_charge']").length )
+	    	$("input[name='fare_dist4_charge']").prop('disabled', false);
+	    
 	    $("input[name='return_fare_multiplier']").prop('disabled', false);
 	    $("input[name='discount_for_over60']").prop('disabled', false);
 	    $("input[name='discount_for_under16']").prop('disabled', false);

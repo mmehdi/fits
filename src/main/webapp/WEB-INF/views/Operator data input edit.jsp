@@ -39,7 +39,6 @@
 		.lead { margin-bottom: 0px; }
 	</style>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing,geometry"></script>
-	<script src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>  
 	<script type="text/javascript" src="<c:url value="/resources/js/geoxml/polys/geoxml3.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/geoxml/ProjectedOverlay.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/blitz-gmap-editor/jscolor/jscolor.js" />"></script>
@@ -48,6 +47,7 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/blitz-gmap-editor/blitz.gmap3.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap-datepicker.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery impromptu/jquery-impromptu.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>  
 	
 	
 	
@@ -1781,8 +1781,8 @@
 					<div class="row col-lg-12 col-sm-12 col-xs-12">
 						<div class="col-md-3"><label>0 mile</label></div>
 						<div class="col-md-3">
-						<input name="fare_dist1_mile_2" type="text" class="form-control" placeholder="1.0" value="<c:if test="${empty distance1_mile}"><c:out value="1"/></c:if><c:if test="${not empty distance1_mile}"><c:out value="${distance1_mile}"/></c:if>" disabled />
-						<input name="_fare_dist1_mile_2" type="text" style="display:none;" value="<c:if test="${empty distance1_mile}"><c:out value="1"/></c:if><c:if test="${not empty distance1_mile}"><c:out value="${distance1_mile}"/></c:if>"  />
+						<input name="fare_dist1_mile_2" type="number" class="form-control" placeholder="1.0" value="<c:if test="${empty distance1_mile}"><c:out value="1"/></c:if><c:if test="${not empty distance1_mile}"><c:out value="${distance1_mile}"/></c:if>" disabled />
+						<input name="_fare_dist1_mile_2" type="number" style="display:none;" value="<c:if test="${empty distance1_mile}"><c:out value="1"/></c:if><c:if test="${not empty distance1_mile}"><c:out value="${distance1_mile}"/></c:if>"  />
 						</div>
 						<div class="col-md-3">
 						<select name= "fare_dist1_type" class="form-control" disabled>
@@ -1801,8 +1801,8 @@
 							
 						 </div>
 						 <div class="col-md-3">£ 
-						 <input name = "fare_dist1_charge" type="text" class="form-control charge"  placeholder="0.00" value="<c:if test="${empty dist1_charge}"><c:out value="0"/></c:if><c:if test="${not empty dist1_charge}"><c:out value="${dist1_charge}"/></c:if>" disabled/>
-						 <input name = "_fare_dist1_charge" type="text" style="display:none;" value="<c:if test="${empty dist1_charge}"><c:out value="0"/></c:if><c:if test="${not empty dist1_charge}"><c:out value="${dist1_charge}"/></c:if>" />
+						 <input name = "fare_dist1_charge" type="number" class="form-control charge"  placeholder="0.00" value="<c:if test="${empty dist1_charge}"><c:out value="0"/></c:if><c:if test="${not empty dist1_charge}"><c:out value="${dist1_charge}"/></c:if>" disabled/>
+						 <input name = "_fare_dist1_charge" type="number" style="display:none;" value="<c:if test="${empty dist1_charge}"><c:out value="0"/></c:if><c:if test="${not empty dist1_charge}"><c:out value="${dist1_charge}"/></c:if>" />
 						 
 						 <span class="question" data-toggle="tooltip" data-placement="right" title="If you have flat rate, please specify 0 mile - 1 mile as flat rate.">?</span>
 						 </div>
@@ -1841,14 +1841,14 @@
 					<c:if test="${not empty fare_dist_band}">
 					
 					<c:forEach items="${fare_dist_band}" var="band" varStatus="status">
-						<div class="row col-lg-12 col-sm-12 col-xs-12" >
+						<div class="row col-lg-12 col-sm-12 col-xs-12" id="addedMore${status.index+2}" >
 							<div class="col-md-3 ">
-							<input name="fare_dist${status.index +2}_mile_1" type="text" class="form-control" placeholder="2.0" value="${band.getMile_1()}" disabled readonly/>
-							<input name="_fare_dist${status.index +2}_mile_1" type="text" style="display:none;"  value="${band.getMile_1()}" />
+							<input name="fare_dist${status.index +2}_mile_1" type="number" class="form-control" placeholder="2.0" value="${band.getMile_1()}" disabled/>
+							<input name="_fare_dist${status.index +2}_mile_1" type="number" style="display:none;"  value="${band.getMile_1()}" />
 							</div>
 							<div class="col-md-3">
-							<input name="fare_dist${status.index+2}_mile_2" type="text" class="form-control" placeholder="2.0" value="${band.getMile_2()}" disabled/>
-							<input name="_fare_dist${status.index+2}_mile_2" type="text" style="display:none;" value="${band.getMile_2()}" />
+							<input name="fare_dist${status.index+2}_mile_2" type="number" class="form-control" placeholder="2.0" value="${band.getMile_2()}" disabled/>
+							<input name="_fare_dist${status.index+2}_mile_2" type="number" style="display:none;" value="${band.getMile_2()}" />
 							</div>
 							<div class="col-md-3">
 						  	<select name="fare_dist${status.index+2}_type" class="form-control" disabled>
@@ -1866,8 +1866,8 @@
 							<input type="text" name="_fare_dist${status.index+2}_type" style="display:none;" value="${ band.getType()}" >
 							</div>
 							<div class="col-md-3">£ 
-							<input name = "fare_dist${status.index+2}_charge" type="text" class="form-control charge" value="${ band.getCharge()}" placeholder="0.00" disabled/>
-							<input name = "_fare_dist${status.index+2}_charge" type="text" style="display:none;" value="${ band.getCharge()}" />
+							<input name = "fare_dist${status.index+2}_charge" type="number" class="form-control charge" value="${ band.getCharge()}" placeholder="0.00" disabled/>
+							<input name = "_fare_dist${status.index+2}_charge" type="number" style="display:none;" value="${ band.getCharge()}" />
 							</div>
 						</div>
 					</c:forEach>
@@ -1941,7 +1941,7 @@
 					  	<button type="button" class="btn btn-info btn-sm addMore" data-toggle="#fare_structure" disabled>
                 		Add more
             			</button>
-            			<input type="text" name="fare_dist_ind" value = "<c:if test="${not empty fare_dist_ind}"><c:out value="${fare_dist_ind}"/></c:if><c:if test="${empty fare_dist_ind}"><c:out value="1"/></c:if>" style="display:none;" >
+            			<input type="text" name="fare_dist_ind" id="fare_dist_ind" value = "<c:if test="${not empty fare_dist_ind}"><c:out value="${fare_dist_ind}"/></c:if><c:if test="${empty fare_dist_ind}"><c:out value="1"/></c:if>" style="display:none;" >
             			<input type="text" name="_fare_dist_ind" value = "<c:if test="${not empty fare_dist_ind}"><c:out value="${fare_dist_ind}"/></c:if><c:if test="${empty fare_dist_ind}"><c:out value="1"/></c:if>" style="display:none;" >
             			
             			<input type="text" name="added_fare_dist" value = "added_fare_dist" style="display:none;" >

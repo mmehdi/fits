@@ -90,6 +90,9 @@ public class HibUtils {
 		ArrayList<FareMileageBands> mileage_bands = new ArrayList<FareMileageBands>();
 		FareMileageBands mileage_band = null;
 		if(fare.getFare_dist1_mile_2()>0){
+			
+			System.out.println("ooooooooooooooooooooooooo1: "+ fare.getFare_dist1_mile_2());
+
 			mileage_band = new FareMileageBands();
 			mileage_band.setFare_structure_id(fare_structure_id);
 			mileage_band.setMile_1(0);
@@ -99,6 +102,9 @@ public class HibUtils {
 			mileage_bands.add(mileage_band);
 		}
 		if(fare.getFare_dist2_mile_1() > 0 && fare.getFare_dist2_mile_2() > 0){
+			System.out.println("ooooooooooooooooooooooooo2: "+ fare.getFare_dist2_mile_1());
+			System.out.println("ooooooooooooooooooooooooo2: "+ fare.getFare_dist2_mile_2());
+
 			mileage_band = new FareMileageBands();
 			mileage_band.setFare_structure_id(fare_structure_id);
 			mileage_band.setMile_1(fare.getFare_dist2_mile_1());
@@ -107,6 +113,35 @@ public class HibUtils {
 			mileage_band.setCharge(fare.getFare_dist2_charge());
 			mileage_bands.add(mileage_band);
 		}
+		
+		if(fare.getFare_dist3_mile_1() > 0 && fare.getFare_dist3_mile_2() > 0){
+			
+			System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist3_mile_1());
+			System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist3_mile_2());
+
+			
+		mileage_band = new FareMileageBands();
+		mileage_band.setFare_structure_id(fare_structure_id);
+		mileage_band.setMile_1(fare.getFare_dist3_mile_1());
+		mileage_band.setMile_2(fare.getFare_dist3_mile_2());
+		mileage_band.setType(fare.getFare_dist3_type());
+		mileage_band.setCharge(fare.getFare_dist3_charge());
+		mileage_bands.add(mileage_band);
+	}
+	if(fare.getFare_dist4_mile_1() > 0 && fare.getFare_dist4_mile_2() > 0){
+		
+		System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist4_mile_1());
+		System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist4_mile_2());
+		
+		mileage_band = new FareMileageBands();
+		mileage_band.setFare_structure_id(fare_structure_id);
+		mileage_band.setMile_1(fare.getFare_dist4_mile_1());
+		mileage_band.setMile_2(fare.getFare_dist4_mile_2());
+		mileage_band.setType(fare.getFare_dist4_type());
+		mileage_band.setCharge(fare.getFare_dist4_charge());
+		mileage_bands.add(mileage_band);
+	
+	}
 		
 		String fare_dist = fare.getAdded_fare_dist();
 //		String entry = null;
@@ -366,15 +401,13 @@ public class HibUtils {
 		operator.setInactive(genralInfo.getCb_not_avail());
 		Date last_update = new Date(Calendar.getInstance().getTime().getTime());
 		operator.setLast_update(last_update);
-
 		operatorDataManager.updateOperator(operator);
-		
+
 		operatorDataManager.deleteOperationalHoursByOpId(operator_id);
 		insertOperatingHours(operator.getOperator_id(),genralInfo);
 
 		operatorDataManager.deleteServiceNotAvailTimeByOpId(operator_id);
 		insertServiceNotAvailTime(operator.getOperator_id(),genralInfo);
-					
 
     	return operator.getOperator_id();
 	}
@@ -496,50 +529,52 @@ public class HibUtils {
 	}
 	public void insertServiceNotAvailTime(int opId,GeneralInfo genralInfo){
 		Operator operator = operatorDataManager.getOperatorById(opId);
-    	Date date = null;
-		String service_not_avail = genralInfo.getAdded_service_not_avail();
-		StringTokenizer st = null;
-		StringTokenizer entryST = null;
-		String ind = null;
-		String from = null;
-		String to = null;
-		ServiceNotAvailable sna = null;
-		List<ServiceNotAvailable> sna_list = new ArrayList<ServiceNotAvailable>();
-		if(genralInfo.getCb_not_avail() == true){
-			if(genralInfo.getNot_valid_from() != null && genralInfo.getNot_valid_from().length()>0){
-				date = getStartOfDay(genralInfo.getNot_valid_from());
-				sna = new ServiceNotAvailable();
-				sna.setOperator_id(operator.getOperator_id());
-				sna.setFrom(date);
-				if(genralInfo.getNot_valid_to() != null && genralInfo.getNot_valid_to().length()>0){
-					date = getEndOfDay(genralInfo.getNot_valid_to());
-					sna.setTo(date);
+		if(operator!=null){
+	    	Date date = null;
+			String service_not_avail = genralInfo.getAdded_service_not_avail();
+			StringTokenizer st = null;
+			StringTokenizer entryST = null;
+			String ind = null;
+			String from = null;
+			String to = null;
+			ServiceNotAvailable sna = null;
+			List<ServiceNotAvailable> sna_list = new ArrayList<ServiceNotAvailable>();
+			if(genralInfo.getCb_not_avail() == true){
+				if(genralInfo.getNot_valid_from() != null && genralInfo.getNot_valid_from().length()>0){
+					date = getStartOfDay(genralInfo.getNot_valid_from());
+					sna = new ServiceNotAvailable();
+					sna.setOperator_id(operator.getOperator_id());
+					sna.setFrom(date);
+					if(genralInfo.getNot_valid_to() != null && genralInfo.getNot_valid_to().length()>0){
+						date = getEndOfDay(genralInfo.getNot_valid_to());
+						sna.setTo(date);
+					}
+					sna_list.add(sna);
 				}
-				sna_list.add(sna);
-			}
-			if(service_not_avail != null && service_not_avail.length()>0){
-				st = new StringTokenizer(service_not_avail, "#");
-				while(st.hasMoreTokens()){
-					entryST = new StringTokenizer(st.nextToken(), ",");
-					ind = entryST.nextToken();
-					from = entryST.nextToken().trim();
-					to = entryST.nextToken().trim();
-					if(from.length()>0){
-						sna = new ServiceNotAvailable();
-						sna.setOperator_id(operator.getOperator_id());
-						date = getStartOfDayAddedPeriod(from);
-						sna.setFrom(date);
-						if(to!=null && to.length()>0){
-							date = getEndOfDayAddedPeriod(to);
-							sna.setTo(date);
+				if(service_not_avail != null && service_not_avail.length()>0){
+					st = new StringTokenizer(service_not_avail, "#");
+					while(st.hasMoreTokens()){
+						entryST = new StringTokenizer(st.nextToken(), ",");
+						ind = entryST.nextToken();
+						from = entryST.nextToken().trim();
+						to = entryST.nextToken().trim();
+						if(from.length()>0){
+							sna = new ServiceNotAvailable();
+							sna.setOperator_id(operator.getOperator_id());
+							date = getStartOfDayAddedPeriod(from);
+							sna.setFrom(date);
+							if(to!=null && to.length()>0){
+								date = getEndOfDayAddedPeriod(to);
+								sna.setTo(date);
+							}
+							sna_list.add(sna);
 						}
-						sna_list.add(sna);
 					}
 				}
 			}
-		}
-		for(int i=0; i< sna_list.size(); i++){
-			operatorDataManager.insertServiceNotAvailable(sna_list.get(i));
+			for(int i=0; i< sna_list.size(); i++){
+				operatorDataManager.insertServiceNotAvailable(sna_list.get(i));
+			}
 		}
 	}
 
@@ -701,7 +736,6 @@ public class HibUtils {
 
 		List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
 		for(FareMileageBands milage_band: mileage_bands){
-			System.out.println("ooooooooooooooooooooooooo: "+ milage_band.getMile_2());
 			operatorDataManager.insertFareMileageBands(milage_band);
 		}
 		
