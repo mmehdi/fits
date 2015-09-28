@@ -235,8 +235,7 @@ public class MailController implements ServletConfigAware{
     	String server_uri = request.getScheme() + "://" +
                 request.getServerName() + 
                 ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
-                request.getRequestURI() +
-               (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+                request.getRequestURI();
     	
     	server_uri = server_uri +"/result";
     	System.out.println("session path: "+path);
