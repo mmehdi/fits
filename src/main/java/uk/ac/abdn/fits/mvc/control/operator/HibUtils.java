@@ -91,7 +91,6 @@ public class HibUtils {
 		FareMileageBands mileage_band = null;
 		if(fare.getFare_dist1_mile_2()>0){
 			
-			System.out.println("ooooooooooooooooooooooooo1: "+ fare.getFare_dist1_mile_2());
 
 			mileage_band = new FareMileageBands();
 			mileage_band.setFare_structure_id(fare_structure_id);
@@ -102,8 +101,6 @@ public class HibUtils {
 			mileage_bands.add(mileage_band);
 		}
 		if(fare.getFare_dist2_mile_1() > 0 && fare.getFare_dist2_mile_2() > 0){
-			System.out.println("ooooooooooooooooooooooooo2: "+ fare.getFare_dist2_mile_1());
-			System.out.println("ooooooooooooooooooooooooo2: "+ fare.getFare_dist2_mile_2());
 
 			mileage_band = new FareMileageBands();
 			mileage_band.setFare_structure_id(fare_structure_id);
@@ -115,11 +112,6 @@ public class HibUtils {
 		}
 		
 		if(fare.getFare_dist3_mile_1() > 0 && fare.getFare_dist3_mile_2() > 0){
-			
-			System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist3_mile_1());
-			System.out.println("ooooooooooooooooooooooooo3: "+ fare.getFare_dist3_mile_2());
-
-			
 		mileage_band = new FareMileageBands();
 		mileage_band.setFare_structure_id(fare_structure_id);
 		mileage_band.setMile_1(fare.getFare_dist3_mile_1());
@@ -734,11 +726,13 @@ public class HibUtils {
 		int fare_structure_id = fare_structure.getId();
 		operatorDataManager.deleteFareMileageBandsByFareStrctId(fare_structure_id);//update was creating duplicates
 
-		List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
-		for(FareMileageBands milage_band: mileage_bands){
-			operatorDataManager.insertFareMileageBands(milage_band);
+		//if the company charge fare and (either its a Flat fare or Fare per mile)
+		if(fare_structure.getFare_structure_radioBtns().equals("0") && (fare_structure.getHow_charge_radioBtns().equals("0") || fare_structure.getHow_charge_radioBtns().equals("0"))){
+			List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
+			for(FareMileageBands milage_band: mileage_bands){
+				operatorDataManager.insertFareMileageBands(milage_band);
+			}
 		}
-		
 	}
 	
 	public void insertVehicle(int operator_id, VehicleInfo vehicleInfo){

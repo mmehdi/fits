@@ -1010,16 +1010,6 @@
 			<%@ include file="header.jsp" %>
         </div>
         <div id="main">
-            <div id="main-box">
-                <div id="quote">
-                    "If we could get a system in place...with a common booking entry, 
-                    so that somebody could call up a vehicle that was available, irrespective
-                    of whether that was actually in the ownership of the health board, the council, 
-                    the third sector, then it might lead to more viability, more sustainability 
-                    all round...That is what we should be aiming for."
-                    <span style = "font-size: 14px;">---  Audit Scotland, 2011.</span>
-                </div>
-            </div>
             <div id="input-content">
                 <div class="container">
 				<div class="row">
