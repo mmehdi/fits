@@ -204,6 +204,8 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 
 	  //Session session = sessionFactory.getCurrentSession();
   	  session = getSession();
+  	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 
 	  //String sql = "SELECT * FROM query_log";
 	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS Total FROM query_log WHERE timestamp > '2015-09-02 11:00:00' GROUP BY Cast(timestamp as date)";
@@ -211,6 +213,17 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	  List<QueryLogGroupedDTO> res = new ArrayList<QueryLogGroupedDTO>();
 	  
 	  try{
+		  
+		  	if(end!=null && end.length()>0){
+			  Date endDate = formatter.parse(end);
+			  //increment end date by one day - 
+			  Calendar c = Calendar.getInstance(); 
+			  c.setTime(endDate); 
+			  c.add(Calendar.DATE, 1);
+			  endDate = c.getTime();
+			  end = formatter.format(endDate);
+		  }	  
+			  
 		  String where_clause="";
 		  if(start!=null && start.length()>0){
 			  where_clause = " WHERE timestamp>='"+start+"'";
@@ -225,7 +238,8 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 		  
 		  SQLQuery query = session.createSQLQuery(sql);
 	        
-	
+		  System.out.println("SQLQuery : "+ sql);
+
 		  List<Object[]> rows = query.list();
 	
 		  for(Object[] item:rows){

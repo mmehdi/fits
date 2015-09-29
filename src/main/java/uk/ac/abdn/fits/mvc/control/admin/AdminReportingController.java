@@ -62,7 +62,7 @@ public class AdminReportingController {
 		List<QueryLogGroupedDTO> date_data = generateGroupedData("date",startDate,endDate);
 		List<QueryLog> all_data = generateQueryLogData(startDate,endDate);
 		
-		writeToCSV(all_data);
+		//writeToCSV(all_data);
 		
 		int return_journeys_count=0;
 		int outward_journeys_count =0;
