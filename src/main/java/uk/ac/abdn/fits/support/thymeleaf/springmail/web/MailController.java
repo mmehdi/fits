@@ -232,19 +232,16 @@ public class MailController implements ServletConfigAware{
 			e.printStackTrace();
 		}
     	//path = request.getSession().getServletContext().getRealPath("/WEB-INF/files/");
-    	String server_uri = request.getScheme() + "://" +
-                request.getServerName() + 
-                ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
-                request.getRequestURI();
+    	String server_uri = request.getScheme() + "://" + request.getServerName() +  ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +request.getContextPath();
     	
     	server_uri = server_uri +"/result";
     	System.out.println("session path: "+path);
-    //	path = "http://localhost:8585/ke/result";
+    	path = "http://localhost1:8585/ke/result";
 //    	path = "http://139.133.73.11:8080/ke/result";
 //    	path = "http://fits.abdn.ac.uk/ke/result";
-    	
-		System.out.println("URL: "+server_uri+"/"+fileName);
-    	return server_uri+"/"+fileName;
+    	path = server_uri; 	
+		System.out.println("URL: "+path+"/"+fileName);
+    	return path+"/"+fileName;
     }
     
     public String getFileName(){

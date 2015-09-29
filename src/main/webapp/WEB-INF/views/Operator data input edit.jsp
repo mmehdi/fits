@@ -38,6 +38,7 @@
 		label.left-margin{margin-left: 15px;}
 		.lead { margin-bottom: 0px; }
 	</style>
+	<script src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>  
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing,geometry"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/geoxml/polys/geoxml3.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/geoxml/ProjectedOverlay.js" />"></script>
@@ -47,7 +48,6 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/blitz-gmap-editor/blitz.gmap3.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap/bootstrap-datepicker.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery impromptu/jquery-impromptu.js" />"></script>
-	<script src="<c:url value="/resources/js/jquery/1.10/jquery-1.10.2.js" />"></script>  
 	
 	
 	

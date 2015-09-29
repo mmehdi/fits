@@ -242,6 +242,7 @@ public class OperatorDataInputController{
 		OperationalHours hours = null;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.UK);
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		if(operationalHours!=null)
 		for(int i=0; i< operationalHours.size();i++){
 			hours = operationalHours.get(i);
 			if(hours != null){
@@ -534,18 +535,27 @@ public class OperatorDataInputController{
 		/* start to process service not available */
 		dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		List<ServiceNotAvailable> service_not_avail_list = operatorDataManager.getServiceNotAvailableByOpId(opId);
-		if(service_not_avail_list != null && service_not_avail_list.size() >0){
-			if(operator.isInactive()){
-				model.addAttribute("not_valid_from", dateFormat.format(service_not_avail_list.get(0).getFrom()));
-				model.addAttribute("not_valid_to", dateFormat.format(service_not_avail_list.get(0).getTo()));
-				service_not_avail_list.remove(0);
-				if(service_not_avail_list.size()>0){
-					model.addAttribute("service_not_avail_list", service_not_avail_list);
-					model.addAttribute("service_not_avail_ind", service_not_avail_list.size()+1);
+		
+		try{
+			List<ServiceNotAvailable> service_not_avail_list = operatorDataManager.getServiceNotAvailableByOpId(opId);
+			if(service_not_avail_list != null && service_not_avail_list.size() >0){
+				if(operator.isInactive()){
+					model.addAttribute("not_valid_from", dateFormat.format(service_not_avail_list.get(0).getFrom()));
+					model.addAttribute("not_valid_to", dateFormat.format(service_not_avail_list.get(0).getTo()));
+					service_not_avail_list.remove(0);
+					if(service_not_avail_list.size()>0){
+						model.addAttribute("service_not_avail_list", service_not_avail_list);
+						model.addAttribute("service_not_avail_ind", service_not_avail_list.size()+1);
+					}
 				}
 			}
 		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		
 		return new ModelAndView("Operator data input edit");
 	}
 	
