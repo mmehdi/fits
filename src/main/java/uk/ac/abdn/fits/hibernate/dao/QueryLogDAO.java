@@ -22,4 +22,7 @@ public interface QueryLogDAO {
 	  List<QueryLogGroupedDTO> getPurposeByDate(String start, String end);
 	  
 	  List<QueryLogGroupedDTO> getAllQueryLogDataGroupByDate(String start, String end);
+	  
+	  public void closeSession();
+
 }

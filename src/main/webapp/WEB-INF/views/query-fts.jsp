@@ -158,9 +158,9 @@
 				  		</div>
 				  		
 				  		<div>
-				  		<label for = "search_from">search:</label>
+				  		<label for = "search_from" class="col-md-8">search:</label>
       					<input id="autocomplete_f_outward" placeholder="Enter your address"
-             				onFocus="geolocate_f_outward()" type="text" ></input>
+             				onFocus="geolocate_f_outward()" type="text" class="col-md-8" ></input>
              			<div class = "table_from">
 				  			<table class="address">
 				  			<tr>
@@ -203,9 +203,9 @@
 						<input type="checkbox" id="outward_slct_home_dstn" value="" > <p>Select home address as the destination address</p>
 					</div>
 					<div>
-				  	<label for = "search_to">search:</label>
+				  	<label for = "search_to" class="col-md-8">search:</label>
       				<input id="autocomplete_t_outward" placeholder="Enter your address"
-             				onFocus="geolocate_t_outward()" type="text"></input>
+             				onFocus="geolocate_t_outward()" type="text" class="col-md-8"></input>
              		<div class = "table_from">
 				  		<table class="address">
 				  		<tr>
@@ -256,9 +256,9 @@
 				  		</div>
 				  		
 				  		<div>
-				  		<label for = "search_from">search:</label>
+				  		<label for = "search_from" class="col-md-8">search:</label>
       					<input id="autocomplete_f_return" placeholder="Enter your address"
-             				onFocus="geolocate_f_return()" type="text"></input>
+             				onFocus="geolocate_f_return()" type="text" class="col-md-8"></input>
              			<div class = "table_from">
 				  			<table class="address">
 				  			 <tr>
@@ -301,9 +301,9 @@
 						<input type="checkbox" id="return_select_home_dstn" value="" > <p>Select home address as the destination address</p>
 						</div>
 						<div>
-				  		<label for = "search_to">search:</label>
+				  		<label for = "search_to" class="col-md-8">search:</label>
       					<input id="autocomplete_t_return" placeholder="Enter your address"
-             				onFocus="geolocate_t_return()" type="text"></input>
+             				onFocus="geolocate_t_return()" type="text" class="col-md-8"></input>
              			<div class = "table_from">
 				  		<table class="address">
 				  		 <tr>
@@ -357,9 +357,9 @@
 					    <label for = "timepicker" >time<span class="compulsory">*</span>: </label>
 					    
 					    <!--  input type="text" class="time" /-->
-					    <form:input path="timepicker" class="time "/>
+					    <form:input path="timepicker" class="time " pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"/>
 					    
-					    <span style="display: inline-flex; width: 255px;">(please enter the time using 24 hour clock in the format of HHmm)</span> 
+					    <span style="display: inline-flex; width: 255px;">(please enter the time using 24 hour clock in the format of HH:mm)</span> 
 					    <form:errors path="timepicker" cssClass="error" />
 					</p>
 
@@ -395,7 +395,7 @@
 				  	<p id="datepair_rtn">
 					    <form:input path ="datepicker_rtn" class="date"/><form:errors path="datepicker_rtn" cssClass="error" />
 					    <label for = "timepicker_rtn" >time<span class="compulsory">*</span>: </label>
-					    <form:input path="timepicker_rtn" class="time "/>
+					    <form:input path="timepicker_rtn" class="time" pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"/>
 					    <span style="display: inline-flex; width: 255px;">(please enter the time using 24 hour clock in the format of HHmm)</span> 
 					    <form:errors path="timepicker_rtn" cssClass="error" />
 					</p>

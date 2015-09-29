@@ -29,6 +29,7 @@ public class FareMileageBandsDAOImpl implements FareMileageBandsDAO{
 		sessionFactory.
 	      getCurrentSession();
 		sessionFactory.getCurrentSession().save(fare_mileage_bands);
+		
 	}
 
 	@Override

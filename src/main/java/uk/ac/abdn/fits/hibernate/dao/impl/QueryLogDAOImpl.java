@@ -33,11 +33,14 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	
   @Autowired
   private SessionFactory sessionFactory;
+  private Session session;
+
   
   
   @Override
   public void insertQueryLog(QueryLog query_log) {
     sessionFactory.getCurrentSession().save(query_log);
+    sessionFactory.getCurrentSession().close();
     
   }
   
@@ -77,7 +80,8 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   	  Date startDate = null;
   	  Date endDate = null;
 
-  	  Session session = sessionFactory.getCurrentSession();
+  	  //Session session = sessionFactory.getCurrentSession();
+  	  session = getSession();
 
   	  Criteria criteria = session.createCriteria(QueryLog.class);
 
@@ -126,6 +130,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
       
   	  results = criteria.list();
   	  
+  	//  session.close();
   	  return results;
   	  
   }
@@ -141,7 +146,9 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   	  Date startDate = null;
   	  Date endDate = null;
 
-  	  Session session = sessionFactory.getCurrentSession();
+  	  //Session session = sessionFactory.getCurrentSession();
+
+  	  session = getSession();
 
   	  Criteria criteria = session.createCriteria(QueryLog.class);
 
@@ -183,6 +190,7 @@ public class QueryLogDAOImpl implements QueryLogDAO {
       
   	  results = criteria.list();
   	  
+  	//  session.close();
   	  return results;
     }
   
@@ -194,7 +202,9 @@ public class QueryLogDAOImpl implements QueryLogDAO {
   @Override
   public  List<QueryLogGroupedDTO> getAllQueryLogDataGroupByDate(String start, String end) {
 
-	  Session session = sessionFactory.getCurrentSession();
+	  //Session session = sessionFactory.getCurrentSession();
+  	  session = getSession();
+
 	  //String sql = "SELECT * FROM query_log";
 	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS Total FROM query_log WHERE timestamp > '2015-09-02 11:00:00' GROUP BY Cast(timestamp as date)";
 	  String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS count FROM query_log";
@@ -234,7 +244,24 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	  catch (Exception e){
 		  e.printStackTrace();
 	  }
+	  
+	 // session.close();
 	    return res;
+  }
+  
+  private Session getSession(){
+	  if(session==null || !session.isOpen())
+		  session = sessionFactory.getCurrentSession();
+	  
+	  return session;
+  }
+  
+  public void closeSession(){
+	  if(session!=null)
+	  {
+		  session.close();
+		  session=null;
+	  }
   }
   
   @Override

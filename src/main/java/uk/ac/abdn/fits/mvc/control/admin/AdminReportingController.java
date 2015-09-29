@@ -138,7 +138,12 @@ public class AdminReportingController {
 
 
 
-
+		//end hibernate connection
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
+		queryLogDAOImpl.closeSession();
+		
+		
 		return new ModelAndView("reports");
 		
 	}
@@ -176,7 +181,11 @@ public class AdminReportingController {
 	        for (QueryLog query : all_data) {
 	            csvWriter.write(query, header);
 	        }
-	 
+			
+	        ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+			QueryLogDAO QueryLog = (QueryLogDAO) ctx.getBean("QueryLogDAO");
+			QueryLog.closeSession();
+			
 	        csvWriter.close();
 	    }
 	   
@@ -184,6 +193,8 @@ public class AdminReportingController {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
 		QueryLogDAO QueryLog = (QueryLogDAO) ctx.getBean("QueryLogDAO");
 		List<QueryLog> query_log = QueryLog.getQueryLogByDateRange(startDate, endDate);
+		
+		//QueryLog.closeSession();
 		return query_log;
 	}
 	

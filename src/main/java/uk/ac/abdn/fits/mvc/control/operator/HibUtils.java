@@ -727,7 +727,7 @@ public class HibUtils {
 		operatorDataManager.deleteFareMileageBandsByFareStrctId(fare_structure_id);//update was creating duplicates
 
 		//if the company charge fare and (either its a Flat fare or Fare per mile)
-		if(fare_structure.getFare_structure_radioBtns().equals("0") && (fare_structure.getHow_charge_radioBtns().equals("0") || fare_structure.getHow_charge_radioBtns().equals("0"))){
+		if(fare_structure.getFare_structure_radioBtns().equals("0") && (fare_structure.getHow_charge_radioBtns().equals("0") || fare_structure.getHow_charge_radioBtns().equals("2"))){
 			List<FareMileageBands> mileage_bands = getFareMileageBands(fare_structure_id, fareInfo);
 			for(FareMileageBands milage_band: mileage_bands){
 				operatorDataManager.insertFareMileageBands(milage_band);
