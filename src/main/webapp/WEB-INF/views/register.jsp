@@ -107,6 +107,16 @@
 				  			Re-enter password <form:errors path="passwordRepeat" cssClass="error" />
 				 		</form:label>
 				  		<form:password path="passwordRepeat" />
+				  		
+				  		
+						<label class="control-label">User role</label>
+						<div class="controls">
+							<select name= "user_role">
+								  	<option value="1">Admin</option>
+									<option value="3">User</option>
+							</select>
+						</div>
+						
 				  	</fieldset>
 		
 					<p><button type="submit">Submit</button></p>

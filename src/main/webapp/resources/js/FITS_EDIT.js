@@ -125,7 +125,7 @@ function createAddedFareDist(){
 	    	text += '#';
 	    }
 	}
-	alert("added fare: "+text);
+	//alert("added fare: "+text);
 	return text;
 }
 

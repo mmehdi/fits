@@ -62,6 +62,10 @@ public class RegisterFormBean {
 	@NotEmpty
 	private String passwordRepeat;
 	
+	@NotEmpty
+	private String user_role;
+	
+	
 	
 //	@NumberFormat(pattern="$###,###.00")
 //	private BigDecimal currency;
@@ -161,6 +165,14 @@ public class RegisterFormBean {
 //		this.inquiryDetails = inquiryDetails;
 //	}
 
+
+	public String getUser_role() {
+		return user_role;
+	}
+
+	public void setUser_role(String user_role) {
+		this.user_role = user_role;
+	}
 
 	public String toString() {
         StringBuilder sb = new StringBuilder();

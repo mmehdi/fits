@@ -96,13 +96,13 @@ public class RegisterController {
 //		role.setRole("user");
 //		user.setRole(role);
 		userManager.insertUser(user);
-		System.out.println("user "+ user.getUsername() +" is created.");
+		//System.out.println("user "+ user.getUsername() +" is created.");
 		user = userManager.getUser(registerFormBean.getUserName());
 		UserRole userRole = new UserRole();
 		userRole.setUser_id(user.getId());
-		userRole.setRole_id(""+3);
+		userRole.setRole_id(registerFormBean.getUser_role());
 		userManager.insertUserRole(userRole);
-		System.out.println("user role is created.");
+		//System.out.println("user role is created.");
 		
 		
 		

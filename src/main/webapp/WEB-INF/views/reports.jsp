@@ -132,6 +132,13 @@
 					
 				</div>
 				
+				<div class="panel panel-default">
+				<div class="panel-heading" style="font-weigth:bold !important; font-size:15px;">Days frequency</div>
+					  <div class="panel-body">
+							<div id="days-bar-chart"><p class="no-data">No data found</p></div>
+					  </div>
+					</div>
+					
 			</div>
 		</div>
 		<div id="footer">				
@@ -150,6 +157,19 @@
 			  ykeys: ['value'],
 			  labels: ['Queries']
 			});
+		
+		var days_data = JSON.parse('${days_data_json}');
+
+		Morris.Bar({
+		    element: 'days-bar-chart',
+			data: days_data,
+		    xkey: 'day',
+		    ykeys: ['value'],
+		    labels: ['Queries'],
+		    barRatio: 0.4,
+		    xLabelAngle: 35,
+		    hideHover: 'auto'
+		  });
 		
 		var mobility_data = JSON.parse('${mobility_data_json}');
 		var age_data = JSON.parse('${age_group_data_json}');

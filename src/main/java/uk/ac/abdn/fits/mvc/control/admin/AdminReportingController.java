@@ -48,6 +48,8 @@ import uk.ac.abdn.fits.hibernate.model.QueryLogGroupedDTO;
 //@SessionAttributes("registerFormBean")
 public class AdminReportingController {
 
+	private final ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
+	private final QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
 	
 	@RequestMapping(value="/reports",method=RequestMethod.GET) 
 	public ModelAndView form(Locale locale, Model model,HttpServletRequest request) {
@@ -60,6 +62,8 @@ public class AdminReportingController {
 		List<QueryLogGroupedDTO> age_grouped_data = generateGroupedData("age_group",startDate,endDate);
 		List<QueryLogGroupedDTO> purpose_data = generateGroupedData("purpose",startDate,endDate);
 		List<QueryLogGroupedDTO> date_data = generateGroupedData("date",startDate,endDate);
+		List<QueryLogGroupedDTO> days_data = generateGroupedData("day",startDate,endDate);
+
 		List<QueryLog> all_data = generateQueryLogData(startDate,endDate);
 		
 		//writeToCSV(all_data);
@@ -121,6 +125,10 @@ public class AdminReportingController {
 		date_data_json=date_data_json.replace("column_name", "day");
 		date_data_json=date_data_json.replace("count", "value");
 
+		String days_data_json = new Gson().toJson(days_data);
+		days_data_json=days_data_json.replace("column_name", "day");
+		days_data_json=days_data_json.replace("count", "value");
+
 
 		model.addAttribute("mobility_data", mobility_status_grouped_data);
 		model.addAttribute("age_group_data", age_grouped_data);	
@@ -131,6 +139,7 @@ public class AdminReportingController {
 		model.addAttribute("age_group_data_json", age_group_data_json);	
 		model.addAttribute("purpose_data_json", purpose_data_json);	
 		model.addAttribute("date_data_json", date_data_json);	
+		model.addAttribute("days_data_json", days_data_json);	
 
 		model.addAttribute("total_journeys", all_data.size());	
 		model.addAttribute("outward_journeys", outward_journeys_count);	
@@ -199,8 +208,6 @@ public class AdminReportingController {
 	}
 	
 	private List<QueryLogGroupedDTO> generateGroupedData(String dataType, String startDate, String endDate){
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("../spring/appServlet/hibernate.xml");
-		QueryLogDAO queryLogDAOImpl = (QueryLogDAO) ctx.getBean("QueryLogDAO");
 		List<QueryLogGroupedDTO> query_log = null;
 		//List<Map<String, Long>> query_log = new ArrayList<QueryLogGroupedDTO>();
 		switch (dataType){
@@ -215,6 +222,9 @@ public class AdminReportingController {
 				break;
 			case "date":
 				query_log = queryLogDAOImpl.getAllQueryLogDataGroupByDate(startDate,endDate);
+				break;
+			case "day":
+				query_log = queryLogDAOImpl.getAllQueryLogDataGroupByDayOfWeek(startDate,endDate);
 				break;
 			default:
 				break;
@@ -232,58 +242,6 @@ public class AdminReportingController {
 		return count;
 	}
 	
-	/*
-	 * method not being used anymore
-	 */
-	private void writeToCSV(List<QueryLog> query_log_array)
-    {
-	    String CSV_SEPARATOR = ",";
-    	String path = this.getClass().getClassLoader().getResource("").getPath();
-    	path = path+"../files";
-    	File  dir = new File(path);
-    	if(!dir.exists()){
-    		dir.mkdirs();
-    	}
-
-        try
-        {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path+File.separator+"log.csv"), "UTF-8"));
-            for (QueryLog query : query_log_array)
-            {
-                StringBuffer oneLine = new StringBuffer();
-                //oneLine.append(query.getId() <=0 ? "" : query.getId());
-                oneLine.append(query.getId());
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getFrom_postcode().trim().length() == 0? "" : query.getFrom_postcode());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getFrom_postcode()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getTo_postcode().trim().length() == 0? "" : query.getTo_postcode());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getTo_postcode()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getFrom_address().trim().length() == 0? "" : query.getFrom_address());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getFrom_address()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getTo_address().trim().length() == 0? "" : query.getTo_address());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getTo_address()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getAge_group().trim().length() == 0? "" : query.getAge_group());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getAge_group()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getMobility_status().trim().length() == 0? "" : query.getMobility_status());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getMobility_status()));
-                oneLine.append(CSV_SEPARATOR);
-                //oneLine.append(query.getPurpose().trim().length() == 0? "" : query.getPurpose());
-                oneLine.append(StringEscapeUtils.escapeCsv(query.getPurpose()));
-                bw.write(oneLine.toString());
-                bw.newLine();
-            }
-            bw.flush();
-            bw.close();
-        }
-        catch (Exception e){
-        	e.printStackTrace();
-        }
-    }
 
 	   private String getFileName(String startDate, String endDate){
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

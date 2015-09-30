@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -263,6 +262,101 @@ public class QueryLogDAOImpl implements QueryLogDAO {
 	    return res;
   }
   
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  public  List<QueryLogGroupedDTO> getAllQueryLogDataGroupByDayOfWeek(String start, String end) {
+
+	  //Session session = sessionFactory.getCurrentSession();
+  	  session = getSession();
+  	  DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+
+	  //String sql = "SELECT * FROM query_log";
+	  //String sql = "SELECT Cast(timestamp as date) queryDate, Count(*) AS Total FROM query_log WHERE timestamp > '2015-09-02 11:00:00' GROUP BY Cast(timestamp as date)";
+	  String sql = "SELECT DAYOFWEEK(timestamp) day,Count(*) AS count FROM query_log";
+	  List<QueryLogGroupedDTO> res = new ArrayList<QueryLogGroupedDTO>();
+	  try{
+		  
+		  	if(end!=null && end.length()>0){
+			  Date endDate = formatter.parse(end);
+			  //increment end date by one day - 
+			  Calendar c = Calendar.getInstance(); 
+			  c.setTime(endDate); 
+			  c.add(Calendar.DATE, 1);
+			  endDate = c.getTime();
+			  end = formatter.format(endDate);
+		  }	  
+			  
+		  String where_clause="";
+		  if(start!=null && start.length()>0){
+			  where_clause = " WHERE timestamp>='"+start+"'";
+			  	if(end!=null && end.length()>0)
+			  		where_clause = where_clause +" && timestamp<='"+end+"'";
+		  }
+		  else if(end!=null && end.length()>0)
+			  	where_clause = " WHERE timestamp<='"+end+"'";
+		   
+		  sql = sql + where_clause;
+		  sql = sql + " GROUP BY DAYOFWEEK(timestamp) ORDER BY timestamp ASC";
+		  
+		  SQLQuery query = session.createSQLQuery(sql);
+	        
+		  System.out.println("SQLQuery : "+ sql);
+
+		  List<Object[]> rows = query.list();
+	
+		  for(Object[] item:rows){
+			  QueryLogGroupedDTO query_log_dto = new QueryLogGroupedDTO();
+			  	Map<String, BigInteger> map_obj = new HashMap<String,BigInteger>();
+			  	query_log_dto.setCount(((BigInteger)item[1]).longValue());
+			  	query_log_dto.setColumn_name(returnDayOfWeek((int) item[0]));
+			  	//query_log_dto.setColumn_name((String)item[0].toString());
+			  	
+			  	map_obj.put((String)item[0].toString(),((BigInteger) item[1]));
+			  	res.add(query_log_dto);
+	//			System.out.println("return size ----------- " + item[0] +":"+item[1]);
+	
+			}
+
+	  }
+	  catch (Exception e){
+		  e.printStackTrace();
+	  }
+	  
+	 // session.close();
+	    return res;
+  }
+  
+  private String returnDayOfWeek(int day){
+	  String day_str="";
+	  switch (day){
+	  case 1:
+		  day_str="Sunday";
+		 break;
+	  case 2:
+		  day_str="Monday";
+		 break;
+	  case 3:
+		  day_str="Tuesday";
+		 break;
+	  case 4:
+		  day_str="Wednesday";
+		 break;
+	  case 5:
+		  day_str="Thursday";
+		 break;
+	  case 6:
+		  day_str="Friday";
+		 break;
+	  case 7:
+		  day_str="Saturday";
+		 break;
+	  }
+	  
+	 // System.out.println("DAY of the week ---------------: " + day_str);
+	return day_str;
+  }
   private Session getSession(){
 	  if(session==null || !session.isOpen())
 		  session = sessionFactory.getCurrentSession();
